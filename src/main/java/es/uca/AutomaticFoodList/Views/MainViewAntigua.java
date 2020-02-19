@@ -1,4 +1,4 @@
-package es.uca.AutomaticFoodList;
+package es.uca.AutomaticFoodList.Views;
 
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -9,6 +9,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
+import es.uca.AutomaticFoodList.GreetService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -24,13 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * browser tab/window.
  */
 @Route
-@PWA(name = "Vaadin Application",
-        shortName = "Vaadin App",
-        description = "This is an example Vaadin application.",
-        enableInstallPrompt = true)
-@CssImport("./styles/shared-styles.css")
-@CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
-public class MainView extends VerticalLayout {
+
+public class MainViewAntigua extends VerticalLayout {
 
     /**
      * Construct a new Vaadin view.
@@ -39,7 +35,7 @@ public class MainView extends VerticalLayout {
      *
      * @param service The message service. Automatically injected Spring managed bean.
      */
-    public MainView(@Autowired GreetService service) {
+    public MainViewAntigua(@Autowired GreetService service) {
 
         // Use TextField for standard text input
         TextField textField = new TextField("Your name");
