@@ -15,4 +15,8 @@ public class Ingrediente {
     private String id_api = "", nombre = "";
     @OneToMany(mappedBy = "ingrediente") //esto para decir la cardinalidad y a que variable se asocia
     private Set<PreferenciasIngrediente> preferenciasIngredienteSet = new HashSet<>();
+    @OneToMany(mappedBy = "ingrediente")
+    private Set<RecetaIngrediente> recetaIngredientes = new HashSet<>();
+    @OneToOne(mappedBy = "ingrediente", cascade=CascadeType.ALL)
+    private Producto producto;
 }

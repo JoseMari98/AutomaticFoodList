@@ -28,15 +28,22 @@ public class Usuario implements UserDetails {
     private Set<PreferenciasIngrediente> preferenciasIngredienteSet = new HashSet<>();
     @ManyToMany
     private Set<Intolerancia> intolerancias = new HashSet<>();
-
+    @OneToOne
+    private ValoresNutricionales valoresNutricionales;
+    @OneToMany(mappedBy = "usuario")
+    private Set<ListaCompra> listaCompras = new HashSet<>();
     //Getters
     public Long getId() {
         return id;
     }
 
-    /*public Set<Reserva> getReservas() {
-        return reservaSet;
-    }*/
+    public Set<Intolerancia> getIntolerancias() {
+        return intolerancias;
+    }
+
+    public Set<PreferenciasIngrediente> getPreferenciasIngredienteSet() {
+        return preferenciasIngredienteSet;
+    }
 
     public String getApellido1() {
         return apellido1;
@@ -50,9 +57,13 @@ public class Usuario implements UserDetails {
         return email;
     }
 
-    /*public Set<Reserva> getReservaSet() {
-        return reservaSet;
-    }*/
+    public void setIntolerancias(Set<Intolerancia> intolerancias) {
+        this.intolerancias = intolerancias;
+    }
+
+    public void setPreferenciasIngredienteSet(Set<PreferenciasIngrediente> preferenciasIngredienteSet) {
+        this.preferenciasIngredienteSet = preferenciasIngredienteSet;
+    }
 
     public String getRole() {
         return role;
@@ -82,10 +93,6 @@ public class Usuario implements UserDetails {
     public void setPassword(String Contrasena) {
         this.password = Contrasena;
     }
-
-    /*public void setReservaSet(Set<Reserva> reservaSet) {
-        this.reservaSet = reservaSet;
-    }*/
 
     public void setUsername(String nombreUsuario) {
         this.username = nombreUsuario;

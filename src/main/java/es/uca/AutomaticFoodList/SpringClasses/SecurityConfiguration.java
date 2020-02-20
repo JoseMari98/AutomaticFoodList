@@ -49,12 +49,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     /**
      * Constructor
      */
-    /*@Autowired
+    @Autowired
     @Lazy
-    public SecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
+    public SecurityConfiguration(/*UserDetailsService userDetailsService,*/ PasswordEncoder passwordEncoder) {
+        //this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
-    }*/
+    }
 
     /**
      * Registers our UserDetailsService and the password encoder to be used on login

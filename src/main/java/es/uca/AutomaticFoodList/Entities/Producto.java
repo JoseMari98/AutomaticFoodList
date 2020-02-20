@@ -2,6 +2,8 @@ package es.uca.AutomaticFoodList.Entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Producto {
@@ -13,9 +15,14 @@ public class Producto {
     @NotEmpty(message = "Este campo es obligatorio")
     private double precio;
     @NotEmpty(message = "Este campo es obligatorio")
+    @Enumerated(EnumType.STRING)
     private UnidadMedida unidad;
     @NotEmpty(message = "Este campo es obligatorio")
     private double peso;
+    @OneToMany(mappedBy = "producto")
+    private Set<ListaCompra> listaCompras = new HashSet<>();
+    @OneToOne
+    private Ingrediente ingrediente;
 
     public double getPeso() {
         return peso;

@@ -13,5 +13,6 @@ public class PreferenciasIngrediente {
     @ManyToOne
     private Ingrediente ingrediente;
     @NotEmpty(message = "Este campo es obligatorio")
+    @Enumerated(EnumType.STRING)
     private Gusto gusto;
 }
