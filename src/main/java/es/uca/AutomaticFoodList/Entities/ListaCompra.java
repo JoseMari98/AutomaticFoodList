@@ -1,9 +1,6 @@
 package es.uca.AutomaticFoodList.Entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class ListaCompra {
@@ -15,4 +12,36 @@ public class ListaCompra {
     private Producto producto;
     @ManyToOne
     private Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public double getCantidad() {
+        return cantidad;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
+    }
 }

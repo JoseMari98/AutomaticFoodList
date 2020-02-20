@@ -1,0 +1,37 @@
+package es.uca.AutomaticFoodList.Services;
+
+import es.uca.AutomaticFoodList.Entities.Producto;
+import es.uca.AutomaticFoodList.Repositories.ProductoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Optional;
+
+public class ProductoService {
+    private ProductoRepository productoRepository;
+
+    @Autowired
+    public ProductoService(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
+    }
+
+    public Producto create(Producto producto) {
+        return productoRepository.save(producto);
+    }
+
+    public Producto update(Producto producto) {
+        return productoRepository.save(producto);
+    }
+
+    public Optional<Producto> buscarId(Long id) {
+        return productoRepository.findById(id);
+    }
+
+    public List<Producto> findAll() {
+        return productoRepository.findAll();
+    }
+
+    public void delete(Producto producto) {
+        productoRepository.delete(producto);
+    }
+}

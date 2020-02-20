@@ -25,7 +25,7 @@ public class Usuario implements UserDetails {
     private String role = "";
     private double presupuestoPlato;
     @OneToMany(mappedBy = "usuario") //esto para decir la cardinalidad y a que variable se asocia
-    private Set<PreferenciasIngrediente> preferenciasIngredienteSet = new HashSet<>();
+    private Set<PreferenciaIngrediente> preferenciaIngredienteSet = new HashSet<>();
     @ManyToMany
     private Set<Intolerancia> intolerancias = new HashSet<>();
     @OneToOne
@@ -41,8 +41,8 @@ public class Usuario implements UserDetails {
         return intolerancias;
     }
 
-    public Set<PreferenciasIngrediente> getPreferenciasIngredienteSet() {
-        return preferenciasIngredienteSet;
+    public Set<PreferenciaIngrediente> getPreferenciaIngredienteSet() {
+        return preferenciaIngredienteSet;
     }
 
     public String getApellido1() {
@@ -61,8 +61,8 @@ public class Usuario implements UserDetails {
         this.intolerancias = intolerancias;
     }
 
-    public void setPreferenciasIngredienteSet(Set<PreferenciasIngrediente> preferenciasIngredienteSet) {
-        this.preferenciasIngredienteSet = preferenciasIngredienteSet;
+    public void setPreferenciaIngredienteSet(Set<PreferenciaIngrediente> preferenciaIngredienteSet) {
+        this.preferenciaIngredienteSet = preferenciaIngredienteSet;
     }
 
     public String getRole() {

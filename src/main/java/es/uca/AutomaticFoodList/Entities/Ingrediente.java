@@ -14,9 +14,57 @@ public class Ingrediente {
     @Column(unique = true)
     private String id_api = "", nombre = "";
     @OneToMany(mappedBy = "ingrediente") //esto para decir la cardinalidad y a que variable se asocia
-    private Set<PreferenciasIngrediente> preferenciasIngredienteSet = new HashSet<>();
+    private Set<PreferenciaIngrediente> preferenciaIngredienteSet = new HashSet<>();
     @OneToMany(mappedBy = "ingrediente")
     private Set<RecetaIngrediente> recetaIngredientes = new HashSet<>();
     @OneToOne(mappedBy = "ingrediente", cascade=CascadeType.ALL)
     private Producto producto;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public Set<PreferenciaIngrediente> getPreferenciaIngredienteSet() {
+        return preferenciaIngredienteSet;
+    }
+
+    public Set<RecetaIngrediente> getRecetaIngredientes() {
+        return recetaIngredientes;
+    }
+
+    public String getId_api() {
+        return id_api;
+    }
+
+    public void setId_api(String id_api) {
+        this.id_api = id_api;
+    }
+
+    public void setPreferenciaIngredienteSet(Set<PreferenciaIngrediente> preferenciaIngredienteSet) {
+        this.preferenciaIngredienteSet = preferenciaIngredienteSet;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public void setRecetaIngredientes(Set<RecetaIngrediente> recetaIngredientes) {
+        this.recetaIngredientes = recetaIngredientes;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

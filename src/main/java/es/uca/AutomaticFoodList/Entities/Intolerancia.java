@@ -15,4 +15,28 @@ public class Intolerancia {
     private String nombre = "";
     @ManyToMany(mappedBy = "intolerancias")
     private Set<Usuario> usuarios = new HashSet<>();
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Set<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setUsuarios(Set<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 }
