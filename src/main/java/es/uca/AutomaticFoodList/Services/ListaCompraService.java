@@ -3,10 +3,12 @@ package es.uca.AutomaticFoodList.Services;
 import es.uca.AutomaticFoodList.Entities.ListaCompra;
 import es.uca.AutomaticFoodList.Repositories.ListaCompraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ListaCompraService {
     private ListaCompraRepository listaCompraRepository;
 

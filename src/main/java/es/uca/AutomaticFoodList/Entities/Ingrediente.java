@@ -19,6 +19,8 @@ public class Ingrediente {
     private Set<RecetaIngrediente> recetaIngredientes = new HashSet<>();
     @OneToOne(mappedBy = "ingrediente", cascade=CascadeType.ALL)
     private Producto producto;
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
 
     public Long getId() {
         return id;
@@ -42,6 +44,14 @@ public class Ingrediente {
 
     public String getId_api() {
         return id_api;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public void setId_api(String id_api) {

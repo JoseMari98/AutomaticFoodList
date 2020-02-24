@@ -26,19 +26,40 @@ public class Usuario implements UserDetails {
     private double presupuestoPlato;
     @OneToMany(mappedBy = "usuario") //esto para decir la cardinalidad y a que variable se asocia
     private Set<PreferenciaIngrediente> preferenciaIngredienteSet = new HashSet<>();
-    @ManyToMany
-    private Set<Intolerancia> intolerancias = new HashSet<>();
     @OneToOne
     private ValoresNutricionales valoresNutricionales;
     @OneToMany(mappedBy = "usuario")
     private Set<ListaCompra> listaCompras = new HashSet<>();
+    @OneToMany(mappedBy = "usuario")
+    private Set<IntoleranciaUsuario> intoleranciaUsuarioSet;
+
     //Getters
     public Long getId() {
         return id;
     }
 
-    public Set<Intolerancia> getIntolerancias() {
-        return intolerancias;
+    public Set<ListaCompra> getListaCompras() {
+        return listaCompras;
+    }
+
+    public ValoresNutricionales getValoresNutricionales() {
+        return valoresNutricionales;
+    }
+
+    public Set<IntoleranciaUsuario> getIntoleranciaUsuarioSet() {
+        return intoleranciaUsuarioSet;
+    }
+
+    public void setValoresNutricionales(ValoresNutricionales valoresNutricionales) {
+        this.valoresNutricionales = valoresNutricionales;
+    }
+
+    public void setListaCompras(Set<ListaCompra> listaCompras) {
+        this.listaCompras = listaCompras;
+    }
+
+    public void setIntoleranciaUsuarioSet(Set<IntoleranciaUsuario> intoleranciaUsuarioSet) {
+        this.intoleranciaUsuarioSet = intoleranciaUsuarioSet;
     }
 
     public Set<PreferenciaIngrediente> getPreferenciaIngredienteSet() {
@@ -55,10 +76,6 @@ public class Usuario implements UserDetails {
 
     public String getEmail() {
         return email;
-    }
-
-    public void setIntolerancias(Set<Intolerancia> intolerancias) {
-        this.intolerancias = intolerancias;
     }
 
     public void setPreferenciaIngredienteSet(Set<PreferenciaIngrediente> preferenciaIngredienteSet) {

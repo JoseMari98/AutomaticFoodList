@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-
 public class UsuarioService implements UserDetailsService {
 
     private UsuarioRepository repo;

@@ -3,10 +3,11 @@ package es.uca.AutomaticFoodList.Services;
 import es.uca.AutomaticFoodList.Entities.Producto;
 import es.uca.AutomaticFoodList.Repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class ProductoService {
     private ProductoRepository productoRepository;
 

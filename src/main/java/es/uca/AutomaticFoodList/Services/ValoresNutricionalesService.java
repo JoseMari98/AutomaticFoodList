@@ -1,14 +1,14 @@
 package es.uca.AutomaticFoodList.Services;
 
-import es.uca.AutomaticFoodList.Entities.Receta;
 import es.uca.AutomaticFoodList.Entities.ValoresNutricionales;
-import es.uca.AutomaticFoodList.Repositories.RecetaRepository;
 import es.uca.AutomaticFoodList.Repositories.ValoresNutricionalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ValoresNutricionalesService {
     private ValoresNutricionalesRepository valoresNutricionalesRepository;
 

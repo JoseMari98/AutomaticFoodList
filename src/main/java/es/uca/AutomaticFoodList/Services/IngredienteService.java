@@ -3,9 +3,12 @@ package es.uca.AutomaticFoodList.Services;
 import es.uca.AutomaticFoodList.Entities.Ingrediente;
 import es.uca.AutomaticFoodList.Repositories.IngredienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class IngredienteService {
     private IngredienteRepository ingredienteRepository;
 

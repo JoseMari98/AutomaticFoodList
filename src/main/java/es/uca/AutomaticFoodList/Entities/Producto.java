@@ -23,6 +23,8 @@ public class Producto {
     private Set<ListaCompra> listaCompras = new HashSet<>();
     @OneToOne
     private Ingrediente ingrediente;
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
 
     public double getPeso() {
         return peso;
@@ -42,6 +44,30 @@ public class Producto {
 
     public UnidadMedida getUnidad() {
         return unidad;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public Ingrediente getIngrediente() {
+        return ingrediente;
+    }
+
+    public Set<ListaCompra> getListaCompras() {
+        return listaCompras;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setIngrediente(Ingrediente ingrediente) {
+        this.ingrediente = ingrediente;
+    }
+
+    public void setListaCompras(Set<ListaCompra> listaCompras) {
+        this.listaCompras = listaCompras;
     }
 
     public void setId(Long id) {
