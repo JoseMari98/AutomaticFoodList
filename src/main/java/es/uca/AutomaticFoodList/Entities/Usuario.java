@@ -32,6 +32,8 @@ public class Usuario implements UserDetails {
     private Set<ListaCompra> listaCompras = new HashSet<>();
     @OneToMany(mappedBy = "usuario")
     private Set<IntoleranciaUsuario> intoleranciaUsuarioSet;
+    private String SignosValoresNutrcionales;
+
 
     //Getters
     public Long getId() {
@@ -86,6 +88,10 @@ public class Usuario implements UserDetails {
         return role;
     }
 
+    public String getSignosValoresNutrcionales() {
+        return SignosValoresNutrcionales;
+    }
+
     public double getPresupuestoPlato() {
         return presupuestoPlato;
     }
@@ -97,6 +103,10 @@ public class Usuario implements UserDetails {
 
     public void setApellido1(String Apellido1) {
         this.apellido1 = Apellido1;
+    }
+
+    public void setSignosValoresNutrcionales(String signosValoresNutrcionales) {
+        SignosValoresNutrcionales = signosValoresNutrcionales;
     }
 
     public void setNombre(String Nombre) {

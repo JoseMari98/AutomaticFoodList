@@ -40,20 +40,41 @@ public class MainView extends AppLayout {
     final DrawerToggle drawerToggle = new DrawerToggle();
     final VerticalLayout menuLayout = new VerticalLayout();
     Image img = new Image("https://i.imgur.com/GPpnszs.png", "Vaadin Logo");
+
     final boolean touchOptimized = true;
     Button logout = new Button(new Icon(VaadinIcon.SIGN_OUT));
     public MainView(){
         logout.addClickListener(e -> signOut());
         logout.addThemeVariants(ButtonVariant.LUMO_ERROR);
         img.setHeight("44px");
+        img.addClickListener(e -> UI.getCurrent().navigate(""));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.add(createTab(VaadinIcon.SIGN_IN, "Iniciar sesion", LoginView.class));
-        tabs.add(createTab(VaadinIcon.HANDSHAKE, "Ejemplo", EjemploView.class));
+
+        if(!SecurityUtils.isUserLoggedIn()) {
+            tabs.add(createTab(VaadinIcon.SIGN_IN, "Iniciar sesion", LoginView.class));
+            //appLayoutMenu.addMenuItem(registro, "Registrarse", "UsuarioView");
+        } else {
+            tabs.add(createTab(VaadinIcon.HANDSHAKE, "Ejemplo", EjemploView.class));
+            if(SecurityUtils.hasRole("User")){
+               tabs.add(createTab(VaadinIcon.COGS, "IntoleranciasUsuarioView", IntoleranciasUsuarioView.class));
+            }
+
+            if(SecurityUtils.hasRole("Admin") || SecurityUtils.hasRole("Gerente")) {
+                /*appLayoutMenu.addMenuItem(gestion3, "Gestión Vehículo", "GestionVehiculo");
+                appLayoutMenu.addMenuItem(gestion2, "Gestión Reservas", "GestionReservas");
+                appLayoutMenu.addMenuItem(gestion1, "Gestión Modelo", "GestionModelo");
+                appLayoutMenu.addMenuItem(gestion, "Gestión Marca", "GestionMarca");
+                appLayoutMenu.addMenuItem(gestion4, "Gestión Tipo", "GestionTipo");
+                appLayoutMenu.addMenuItem(postpago, "Gestión Postpago", "GestionPostpago");*/
+                /*if(SecurityUtils.hasRole("Gerente")){
+                    appLayoutMenu.addMenuItem(estadistica, "Estadísticas", "Charts");
+                }*/
+            }
+        }
         addToDrawer(menuLayout, tabs); //anadirlo al desplegable
         addToNavbar(touchOptimized, drawerToggle, img); //anadirlo a la barra vertical
-        if(SecurityUtils.isUserLoggedIn()) {
+        if(SecurityUtils.isUserLoggedIn())
             addToDrawer(logout);
-        }
     }
 
     public static Tab createTab(Component content) {

@@ -6,7 +6,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
 import es.uca.AutomaticFoodList.Entities.IntoleranciaUsuario;
 import es.uca.AutomaticFoodList.Entities.Intolerancia;
 import es.uca.AutomaticFoodList.Entities.Usuario;
@@ -19,12 +18,10 @@ import java.util.Vector;
 
 public class IntoleranciasUsuarioForm extends FormLayout {
     private Vector<Checkbox> checkboxVector = new Vector<>(9);
-    private BeanValidationBinder<Usuario> binder = new BeanValidationBinder<>(Usuario.class);
     private IntoleranciasUsuarioView intoleranciasUsuarioView;
     private IntoleranciaUsuarioService intoleranciaUsuarioService;
     private IntoleranciaService intoleranciaService;
     private Button save = new Button("Siguiente");
-    private List<Intolerancia> intoleranciaList;
     private List<IntoleranciaUsuario> intoleranciaUsuarioList;
 
     public IntoleranciasUsuarioForm(IntoleranciasUsuarioView intoleranciasUsuarioView, IntoleranciaUsuarioService intoleranciaUsuarioService, IntoleranciaService intoleranciaService) {
@@ -55,6 +52,7 @@ public class IntoleranciasUsuarioForm extends FormLayout {
     }
 
     public void save() {
+        int cont = 0;
         for(Intolerancia intolerancia : intoleranciaService.findAllOrderById()){
             IntoleranciaUsuario intoleranciaUsuario = intoleranciaUsuarioService.buscarPorUsuarioEIntolerancia(UI.getCurrent().getSession().getAttribute(Usuario.class), intolerancia);
             if(checkboxVector.elementAt(Long.valueOf(intolerancia.getId() - 1).intValue()).getValue() && intoleranciaUsuario == null){ //Para el caso de que se haya marcado y no exista
@@ -68,6 +66,6 @@ public class IntoleranciasUsuarioForm extends FormLayout {
                 }
             }
         }
-        UI.getCurrent().navigate("ValoresNutricionales");
+        UI.getCurrent().navigate("ValoresNutricionalesUsuarioView");
     }
 }

@@ -28,6 +28,10 @@ public class IngredienteService {
         return ingredienteRepository.findById(id);
     }
 
+    public List<Ingrediente> findByIngredient(String ingrediente){
+        return ingredienteRepository.findByNombreStartsWithIgnoreCase(ingrediente);
+    }
+
     public List<Ingrediente> findAll() {
         return ingredienteRepository.findAll();
     }

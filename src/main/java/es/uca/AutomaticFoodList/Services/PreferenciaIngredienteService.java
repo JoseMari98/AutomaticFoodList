@@ -1,6 +1,8 @@
 package es.uca.AutomaticFoodList.Services;
 
+import es.uca.AutomaticFoodList.Entities.Ingrediente;
 import es.uca.AutomaticFoodList.Entities.PreferenciaIngrediente;
+import es.uca.AutomaticFoodList.Entities.Usuario;
 import es.uca.AutomaticFoodList.Repositories.PreferenciaIngredienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,10 @@ public class PreferenciaIngredienteService {
 
     public PreferenciaIngrediente update(PreferenciaIngrediente preferenciaIngrediente) {
         return preferenciaIngredienteRepository.save(preferenciaIngrediente);
+    }
+
+    public PreferenciaIngrediente findByUsuarioAndIngrediente(Usuario usuario, Ingrediente ingrediente){
+        return preferenciaIngredienteRepository.findByUsuarioAndIngrediente(usuario, ingrediente);
     }
 
     public Optional<PreferenciaIngrediente> buscarId(Long id) {

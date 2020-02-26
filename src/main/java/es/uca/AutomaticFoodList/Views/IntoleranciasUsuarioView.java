@@ -16,7 +16,6 @@ public class IntoleranciasUsuarioView extends AbstractView {
     private IntoleranciaUsuarioService intoleranciasService;
     private IntoleranciaService intoleranciaService;
 
-
     @Autowired
     IntoleranciasUsuarioView(IntoleranciaUsuarioService intoleranciaUsuarioService, IntoleranciaService intoleranciaService){
         this.intoleranciasService = intoleranciaUsuarioService;
