@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import es.uca.AutomaticFoodList.Entities.IntoleranciaUsuario;
 import es.uca.AutomaticFoodList.Entities.Intolerancia;
 import es.uca.AutomaticFoodList.Entities.Usuario;
@@ -28,6 +29,7 @@ public class IntoleranciasUsuarioForm extends FormLayout {
         this.intoleranciaService = intoleranciaService;
         this.intoleranciasUsuarioView = intoleranciasUsuarioView;
         this.intoleranciaUsuarioService = intoleranciaUsuarioService;
+        VerticalLayout checkboxes = new VerticalLayout();
 
         for(Intolerancia intolerancia : intoleranciaService.findAllOrderById()){
             checkboxVector.add(new Checkbox(intolerancia.getIntolerancia()));
@@ -44,8 +46,9 @@ public class IntoleranciasUsuarioForm extends FormLayout {
 
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         for(Intolerancia intolerancia : intoleranciaService.findAllOrderById())
-            add(checkboxVector.elementAt(Long.valueOf(intolerancia.getId() - 1).intValue()));
-        add(save);
+            checkboxes.add(checkboxVector.elementAt(Long.valueOf(intolerancia.getId() - 1).intValue()));
+        checkboxes.add(save);
+        add(checkboxes);
         save.addClickShortcut(Key.ENTER);
         save.addClickListener(e -> save());
 

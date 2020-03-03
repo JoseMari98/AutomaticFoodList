@@ -13,9 +13,7 @@ import es.uca.AutomaticFoodList.Entities.Gusto;
 import es.uca.AutomaticFoodList.Entities.Ingrediente;
 import es.uca.AutomaticFoodList.Entities.PreferenciaIngrediente;
 import es.uca.AutomaticFoodList.Entities.Usuario;
-import es.uca.AutomaticFoodList.Services.IngredienteService;
 import es.uca.AutomaticFoodList.Services.PreferenciaIngredienteService;
-import es.uca.AutomaticFoodList.Services.UsuarioService;
 import es.uca.AutomaticFoodList.Views.IngredientesUsuarioView;
 
 public class IngredientesUsuarioForm extends FormLayout {
@@ -25,14 +23,10 @@ public class IngredientesUsuarioForm extends FormLayout {
     private IngredientesUsuarioView ingredientesUsuarioView;
     private BeanValidationBinder<PreferenciaIngrediente> binder = new BeanValidationBinder<>(PreferenciaIngrediente.class);
     private PreferenciaIngredienteService preferenciaIngredienteService;
-    private IngredienteService ingredienteService;
-    private UsuarioService usuarioService;
     private Ingrediente ingrediente;
 
-    public IngredientesUsuarioForm(IngredientesUsuarioView ingredientesUsuarioView, IngredienteService ingredienteService, PreferenciaIngredienteService preferenciaIngredienteService, UsuarioService usuarioService) {
+    public IngredientesUsuarioForm(IngredientesUsuarioView ingredientesUsuarioView, PreferenciaIngredienteService preferenciaIngredienteService) {
         this.preferenciaIngredienteService = preferenciaIngredienteService;
-        this.usuarioService = usuarioService;
-        this.ingredienteService = ingredienteService;
         this.ingredientesUsuarioView = ingredientesUsuarioView;
 
         gusto.setRequiredIndicatorVisible(true);
@@ -77,7 +71,7 @@ public class IngredientesUsuarioForm extends FormLayout {
         preferenciaIngrediente.setGusto(gusto.getValue());
         if(binder.validate().isOk()) {
             preferenciaIngredienteService.create(preferenciaIngrediente);
-            this.ingredientesUsuarioView.updateList();
+            //this.ingredientesUsuarioView.updateList();
             setPreferenciaIngrediente(null, null);
         }
         else {
@@ -90,7 +84,7 @@ public class IngredientesUsuarioForm extends FormLayout {
         if(binder.validate().isOk() && preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente) != null) {
             preferenciaIngrediente = preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente);
             preferenciaIngredienteService.delete(preferenciaIngrediente);
-            this.ingredientesUsuarioView.updateList();
+            //this.ingredientesUsuarioView.updateList();
             setPreferenciaIngrediente(null, null);
         } else
             Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);

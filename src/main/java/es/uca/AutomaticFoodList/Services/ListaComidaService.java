@@ -1,12 +1,12 @@
 package es.uca.AutomaticFoodList.Services;
 
-import es.uca.AutomaticFoodList.Entities.ListaComida;
-import es.uca.AutomaticFoodList.Entities.ListaCompra;
+import es.uca.AutomaticFoodList.Entities.*;
 import es.uca.AutomaticFoodList.Repositories.ListaComidaRepository;
 import es.uca.AutomaticFoodList.Repositories.ListaCompraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +29,14 @@ public class ListaComidaService {
 
     public Optional<ListaComida> buscarId(Long id) {
         return listaComidaRepository.findById(id);
+    }
+
+    public Optional<ListaComida> findByUsuarioAndComidaAndPlatoAndFecha(Usuario usuario, Comida comida, Plato plato, LocalDate fecha){
+        return listaComidaRepository.findByUsuarioAndComidaAndFechaAndPlato(usuario, comida, fecha, plato);
+    }
+
+    public List<ListaComida> findByUsuario(Usuario usuario){
+        return listaComidaRepository.findByUsuario(usuario);
     }
 
     public List<ListaComida> findAll() {

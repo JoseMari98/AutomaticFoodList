@@ -29,20 +29,18 @@ public class IngredientesUsuarioView extends AbstractView{
     private TextField filterText = new TextField();
     private IngredienteService ingredienteService;
     private PreferenciaIngredienteService preferenciaIngredienteService;
-    private UsuarioService usuarioService;
     private IngredientesUsuarioForm ingredientesUsuarioForm;
     private Button continuar = new Button("Continuar");
 
     @Autowired
-    public IngredientesUsuarioView(IngredienteService ingredienteService, PreferenciaIngredienteService preferenciaIngredienteService, UsuarioService usuarioService) {
+    public IngredientesUsuarioView(IngredienteService ingredienteService, PreferenciaIngredienteService preferenciaIngredienteService) {
         //agregar el filtro por categoria y la paginacion
         this.ingredienteService = ingredienteService;
         this.preferenciaIngredienteService = preferenciaIngredienteService;
-        this.usuarioService = usuarioService;
-        this.ingredientesUsuarioForm = new IngredientesUsuarioForm(this, ingredienteService, preferenciaIngredienteService, usuarioService);
+        this.ingredientesUsuarioForm = new IngredientesUsuarioForm(this, preferenciaIngredienteService);
 
-        H1 titulo = new H1("Lista de ingredientes, para que introduzcas el nivel de agrado");
-        Paragraph descripcion = new Paragraph("Aqui podras introducir tus preferencias para los ingredientes, si no introduces nada se presupone que te gusta.");
+        H1 titulo = new H1("Lista de ingredientes");
+        Paragraph descripcion = new Paragraph("Aqui podras introducir tu nivel de agrado para los ingredientes, si no introduces nada se presupone que te gusta.");
         filterText.setPlaceholder("Filtrar por ingrediente"); //poner el campo
         filterText.setClearButtonVisible(true); //poner la cruz para borrar
         filterText.setValueChangeMode(ValueChangeMode.EAGER); //que se hagan los cambios cuando se escriba

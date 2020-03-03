@@ -1,6 +1,8 @@
 package es.uca.AutomaticFoodList.Entities;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class ListaComida {
@@ -15,6 +17,8 @@ public class ListaComida {
     private Receta receta;
     @ManyToOne
     private Usuario usuario;
+    @Column(nullable = false)
+    private LocalDate fecha;
 
     public Long getId() {
         return id;
@@ -22,6 +26,10 @@ public class ListaComida {
 
     public Comida getComida() {
         return comida;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
     }
 
     public Plato getPlato() {
@@ -42,6 +50,10 @@ public class ListaComida {
 
     public void setComida(Comida comida) {
         this.comida = comida;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     public void setPlato(Plato plato) {

@@ -33,6 +33,10 @@ public class RecetaService {
         return recetaRepository.findAll();
     }
 
+    public Optional<Receta> findById(Receta receta){
+        return recetaRepository.findById(receta.getId());
+    }
+
     public void delete(Receta receta) {
         recetaRepository.delete(receta);
     }

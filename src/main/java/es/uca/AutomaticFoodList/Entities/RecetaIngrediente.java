@@ -8,7 +8,6 @@ public class RecetaIngrediente {
     @Id //esto sirve para decir cual es el id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
     private Long id;
-    @NotEmpty(message = "Este campo es obligatorio")
     @Enumerated(EnumType.STRING)
     private UnidadMedida unidadMedida;
     private double cantidad;

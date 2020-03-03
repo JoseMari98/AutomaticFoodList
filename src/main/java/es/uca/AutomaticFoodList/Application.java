@@ -1,12 +1,7 @@
 package es.uca.AutomaticFoodList;
 
-import es.uca.AutomaticFoodList.Entities.Categoria;
-import es.uca.AutomaticFoodList.Entities.Ingrediente;
-import es.uca.AutomaticFoodList.Entities.Intolerancia;
-import es.uca.AutomaticFoodList.Entities.Usuario;
-import es.uca.AutomaticFoodList.Services.IngredienteService;
-import es.uca.AutomaticFoodList.Services.IntoleranciaService;
-import es.uca.AutomaticFoodList.Services.UsuarioService;
+import es.uca.AutomaticFoodList.Entities.*;
+import es.uca.AutomaticFoodList.Services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.time.LocalDate;
 import java.util.Vector;
 
 @SpringBootApplication
@@ -29,7 +25,8 @@ public class Application extends SpringBootServletInitializer {
     }
 
     @Bean
-    public CommandLineRunner loadData(UsuarioService usuarioService, IntoleranciaService intoleranciaService, IngredienteService ingredienteService) {
+    public CommandLineRunner loadData(UsuarioService usuarioService, IntoleranciaService intoleranciaService, IngredienteService ingredienteService,
+                                      RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ListaComidaService listaComidaService) {
         return (args) -> {
             try {
                 boolean valido = usuarioService.loadUserByUsername("admin").getRole().equals("Admin");
@@ -62,10 +59,10 @@ public class Application extends SpringBootServletInitializer {
             } catch (UsernameNotFoundException e) {
                 Usuario u = new Usuario();
                 u.setNombre("usuario");
-                u.setPassword("usuario");
+                u.setPassword("user1234");
                 u.setApellido1("usuario");
                 u.setEmail("usuario@usuario.es");
-                u.setUsername("usuario");
+                u.setUsername("user");
                 u.setRole("User");
                 u.setPresupuestoPlato(-1);
                 usuarioService.create(u);
@@ -96,6 +93,56 @@ public class Application extends SpringBootServletInitializer {
             ingrediente1.setCategoria(Categoria.Carnes);
             ingrediente1.setNombre("Ternera");
             ingredienteService.create(ingrediente1);
+
+            Receta receta = new Receta();
+            receta.setId_api("1");
+            receta.setNombre("Lechuguita");
+            receta.setPrecioAproximado(2);
+            recetaService.create(receta);
+
+            RecetaIngrediente recetaIngrediente = new RecetaIngrediente();
+            recetaIngrediente.setCantidad(1);
+            recetaIngrediente.setIngrediente(ingrediente);
+            recetaIngrediente.setUnidadMedida(UnidadMedida.gramos);
+            recetaIngrediente.setReceta(receta);
+            recetaIngredienteService.create(recetaIngrediente);
+
+            Receta receta1 = new Receta();
+            receta1.setId_api("2");
+            receta1.setNombre("Carnecita");
+            receta1.setPrecioAproximado(1);
+            recetaService.create(receta1);
+
+            RecetaIngrediente recetaIngrediente1 = new RecetaIngrediente();
+            recetaIngrediente1.setCantidad(1);
+            recetaIngrediente1.setIngrediente(ingrediente1);
+            recetaIngrediente1.setUnidadMedida(UnidadMedida.gramos);
+            recetaIngrediente1.setReceta(receta1);
+            recetaIngredienteService.create(recetaIngrediente1);
+
+            ListaComida listaComida = new ListaComida();
+            listaComida.setComida(Comida.Almuerzo);
+            listaComida.setPlato(Plato.Postre);
+            listaComida.setReceta(receta);
+            listaComida.setUsuario(usuarioService.loadUserByUsername("user"));
+            listaComida.setFecha(LocalDate.now());
+            listaComidaService.create(listaComida);
+
+            ListaComida listaComida1 = new ListaComida();
+            listaComida1.setComida(Comida.Cena);
+            listaComida1.setPlato(Plato.Primero);
+            listaComida1.setReceta(receta1);
+            listaComida1.setUsuario(usuarioService.loadUserByUsername("user"));
+            listaComida1.setFecha(LocalDate.now());
+            listaComidaService.create(listaComida1);
+
+            ListaComida listaComida2 = new ListaComida();
+            listaComida2.setComida(Comida.Desayuno);
+            listaComida2.setPlato(Plato.Primero);
+            listaComida2.setReceta(receta1);
+            listaComida2.setUsuario(usuarioService.loadUserByUsername("user"));
+            listaComida2.setFecha(LocalDate.now());
+            listaComidaService.create(listaComida2);
         };
     }
 }

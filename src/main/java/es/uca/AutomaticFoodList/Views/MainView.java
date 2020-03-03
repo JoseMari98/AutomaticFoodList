@@ -10,6 +10,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -49,6 +50,7 @@ public class MainView extends AppLayout {
         img.setHeight("44px");
         img.addClickListener(e -> UI.getCurrent().navigate(""));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
+        tabs.add(createTab(VaadinIcon.HOME, "Inicio", MainView.class));
 
         if(!SecurityUtils.isUserLoggedIn()) {
             tabs.add(createTab(VaadinIcon.SIGN_IN, "Iniciar sesion", LoginView.class));
@@ -56,7 +58,8 @@ public class MainView extends AppLayout {
         } else {
             tabs.add(createTab(VaadinIcon.HANDSHAKE, "Ejemplo", EjemploView.class));
             if(SecurityUtils.hasRole("User")){
-               tabs.add(createTab(VaadinIcon.COGS, "IntoleranciasUsuarioView", IntoleranciasUsuarioView.class));
+               tabs.add(createTab(VaadinIcon.COGS, "Configuracion dietetica", IntoleranciasUsuarioView.class));
+               tabs.add(createTab(VaadinIcon.CALENDAR, "Lista de Comidas", ListaComidasView.class));
             }
 
             if(SecurityUtils.hasRole("Admin") || SecurityUtils.hasRole("Gerente")) {

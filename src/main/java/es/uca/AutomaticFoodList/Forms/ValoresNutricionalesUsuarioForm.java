@@ -7,6 +7,8 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -106,13 +108,18 @@ public class ValoresNutricionalesUsuarioForm extends FormLayout {
 
         caloriasPlato.setMin(0);
 
-        add(caloriasPlato, selectVector.elementAt(0), grasaPlato, selectVector.elementAt(1),
-                hidratosPlato, selectVector.elementAt(2), proteinaPlato, selectVector.elementAt(3));
+        HorizontalLayout calorias = new HorizontalLayout(caloriasPlato, selectVector.elementAt(0));
+        HorizontalLayout grasa = new HorizontalLayout(grasaPlato, selectVector.elementAt(1));
+        HorizontalLayout hidratos = new HorizontalLayout(hidratosPlato, selectVector.elementAt(2));
+        HorizontalLayout proteina = new HorizontalLayout(proteinaPlato, selectVector.elementAt(3));
+
+
+        add(calorias, grasa, hidratos, proteina);
 
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        for(int i = 0 ; i < selectVector.size() ; i++){
+        /*for(int i = 0 ; i < selectVector.size() ; i++){
             add(selectVector.elementAt(i));
-        }
+        }*/
 
         add(save);
         save.addClickShortcut(Key.ENTER);

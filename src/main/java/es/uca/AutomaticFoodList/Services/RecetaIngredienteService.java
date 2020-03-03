@@ -1,5 +1,6 @@
 package es.uca.AutomaticFoodList.Services;
 
+import es.uca.AutomaticFoodList.Entities.Receta;
 import es.uca.AutomaticFoodList.Entities.RecetaIngrediente;
 import es.uca.AutomaticFoodList.Repositories.RecetaIngredienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class RecetaIngredienteService {
 
     public RecetaIngrediente update(RecetaIngrediente recetaIngrediente) {
         return recetaIngredienteRepository.save(recetaIngrediente);
+    }
+
+    public List<RecetaIngrediente> findByReceta(Receta receta){
+        return recetaIngredienteRepository.findByReceta(receta);
     }
 
     public Optional<RecetaIngrediente> buscarId(Long id) {

@@ -21,7 +21,7 @@ public class IntoleranciasUsuarioView extends AbstractView {
         this.intoleranciasService = intoleranciaUsuarioService;
         this.intoleranciaService = intoleranciaService;
         this.intoleranciasUsuarioForm = new IntoleranciasUsuarioForm( this, intoleranciaUsuarioService, intoleranciaService);
-        H1 titulo = new H1("Lista de intolerancias o alergias");
+        H1 titulo = new H1("Intolerancias o alergias");
         VerticalLayout contenido = new VerticalLayout(titulo, intoleranciasUsuarioForm);
         contenido.setSizeFull();
         add(contenido);
