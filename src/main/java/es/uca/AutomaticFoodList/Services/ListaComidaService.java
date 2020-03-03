@@ -35,6 +35,10 @@ public class ListaComidaService {
         return listaComidaRepository.findByUsuarioAndComidaAndFechaAndPlato(usuario, comida, fecha, plato);
     }
 
+    public List<ListaComida> findByUsuarioAndComida(Usuario usuario, Comida comida){
+        return listaComidaRepository.findByUsuarioAndComida(usuario, comida);
+    }
+
     public List<ListaComida> findByUsuario(Usuario usuario){
         return listaComidaRepository.findByUsuario(usuario);
     }

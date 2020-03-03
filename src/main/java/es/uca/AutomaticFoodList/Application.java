@@ -125,7 +125,7 @@ public class Application extends SpringBootServletInitializer {
             listaComida.setPlato(Plato.Postre);
             listaComida.setReceta(receta);
             listaComida.setUsuario(usuarioService.loadUserByUsername("user"));
-            listaComida.setFecha(LocalDate.now());
+            listaComida.setFecha(LocalDate.now().plusDays(1));
             listaComidaService.create(listaComida);
 
             ListaComida listaComida1 = new ListaComida();
@@ -133,7 +133,7 @@ public class Application extends SpringBootServletInitializer {
             listaComida1.setPlato(Plato.Primero);
             listaComida1.setReceta(receta1);
             listaComida1.setUsuario(usuarioService.loadUserByUsername("user"));
-            listaComida1.setFecha(LocalDate.now());
+            listaComida1.setFecha(LocalDate.now().plusDays(1));
             listaComidaService.create(listaComida1);
 
             ListaComida listaComida2 = new ListaComida();
@@ -141,7 +141,7 @@ public class Application extends SpringBootServletInitializer {
             listaComida2.setPlato(Plato.Primero);
             listaComida2.setReceta(receta1);
             listaComida2.setUsuario(usuarioService.loadUserByUsername("user"));
-            listaComida2.setFecha(LocalDate.now());
+            listaComida2.setFecha(LocalDate.now().plusDays(1));
             listaComidaService.create(listaComida2);
         };
     }

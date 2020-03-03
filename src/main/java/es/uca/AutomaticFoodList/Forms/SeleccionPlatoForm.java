@@ -7,6 +7,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -33,8 +34,8 @@ public class SeleccionPlatoForm extends FormLayout {
 
     public SeleccionPlatoForm(ListaComidasView listaComidasView, ListaComidaService listaComidaService, RecetaService recetaService){
         this.recetaService = recetaService;
-        listaComidaService = listaComidaService;
-        listaComidasView = listaComidasView;
+        this.listaComidaService = listaComidaService;
+        this.listaComidasView = listaComidasView;
         listaComida = new ListaComida();
         H1 titulo = new H1("Introduce lo siguiente:");
         fecha.setValue(LocalDate.now());
@@ -48,7 +49,8 @@ public class SeleccionPlatoForm extends FormLayout {
         fecha.setRequiredIndicatorVisible(true);
         platoSelect.setRequiredIndicatorVisible(true);
         comidaSelect.setRequiredIndicatorVisible(true);
-        VerticalLayout contenido = new VerticalLayout(titulo, fecha, comidaSelect, platoSelect, generar, cancelar);
+        HorizontalLayout botones = new HorizontalLayout(cancelar, generar);
+        VerticalLayout contenido = new VerticalLayout(titulo, fecha, comidaSelect, platoSelect, botones);
         generar.addClickListener(e -> generarAleatoria());
         cancelar.addClickListener(e -> this.setVisible(false));
         cancelar.addThemeVariants(ButtonVariant.LUMO_ERROR);

@@ -21,7 +21,7 @@ public class ValoresNutrcionalesUsuarioView extends AbstractView{
         this.valoresNutricionalesService = valoresNutricionalesService;
         this.usuarioService = usuarioService;
         this.valoresNutricionalesUsuarioForm = new ValoresNutricionalesUsuarioForm( this, valoresNutricionalesService, usuarioService);
-        H1 titulo = new H1("Umbrales de valores nutricionales por cada 100g del plato");
+        H1 titulo = new H1("Valores nutricionales");
         VerticalLayout contenido = new VerticalLayout(titulo, valoresNutricionalesUsuarioForm);
         contenido.setSizeFull();
         add(contenido);

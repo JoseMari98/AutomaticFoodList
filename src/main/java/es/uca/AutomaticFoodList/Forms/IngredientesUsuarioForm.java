@@ -35,6 +35,7 @@ public class IngredientesUsuarioForm extends FormLayout {
         save.addClickShortcut(Key.ENTER);
 
         HorizontalLayout buttons = new HorizontalLayout(save, delete);
+        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         add(gusto, buttons);
 

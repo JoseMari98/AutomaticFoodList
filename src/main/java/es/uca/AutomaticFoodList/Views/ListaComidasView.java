@@ -17,9 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.vaadin.klaudeta.PaginatedGrid;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 @Route(value = "ListaComidasView", layout = MainView.class)
 @Secured({"User", "Admin", "Gerente"})
 public class ListaComidasView extends AbstractView{
@@ -47,7 +44,7 @@ public class ListaComidasView extends AbstractView{
         grid.addColumn(ListaComida -> ListaComida.getReceta().getNombre()).setHeader("Receta").setSortable(true);
         grid.addColumn(ListaComida::getComida).setHeader("Comida").setSortable(true);
         grid.addColumn(ListaComida::getPlato).setHeader("Plato").setSortable(true);
-        grid.addColumn(ListaComida -> ListaComida.getFecha().getDayOfMonth() + 1 + "/" + ListaComida.getFecha().getMonthValue()).setHeader("Fecha").setSortable(true);
+        grid.addColumn(ListaComida -> ListaComida.getFecha().getDayOfMonth() + "/" + ListaComida.getFecha().getMonthValue()).setHeader("Fecha").setSortable(true);
         //grid.setColumns("receta.nombre", "comida", "plato", "fecha");
         //grid.setItems(listaComidaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
 
