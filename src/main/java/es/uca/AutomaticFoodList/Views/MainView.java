@@ -60,6 +60,7 @@ public class MainView extends AppLayout {
             if(SecurityUtils.hasRole("User")){
                tabs.add(createTab(VaadinIcon.COGS, "Configuracion dietetica", IntoleranciasUsuarioView.class));
                tabs.add(createTab(VaadinIcon.CALENDAR, "Lista de Comidas", ListaComidasView.class));
+               tabs.add(createTab(VaadinIcon.LIST, "Lista de la compra", ListaCompraView.class));
             }
 
             if(SecurityUtils.hasRole("Admin") || SecurityUtils.hasRole("Gerente")) {

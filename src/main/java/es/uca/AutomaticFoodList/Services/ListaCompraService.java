@@ -1,6 +1,8 @@
 package es.uca.AutomaticFoodList.Services;
 
 import es.uca.AutomaticFoodList.Entities.ListaCompra;
+import es.uca.AutomaticFoodList.Entities.Producto;
+import es.uca.AutomaticFoodList.Entities.Usuario;
 import es.uca.AutomaticFoodList.Repositories.ListaCompraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,14 @@ public class ListaCompraService {
 
     public ListaCompra update(ListaCompra listaCompra) {
         return listaCompraRepository.save(listaCompra);
+    }
+
+    public List<ListaCompra> findByProducto(String producto){
+        return listaCompraRepository.findByProducto_NombreStartsWithIgnoreCase(producto);
+    }
+
+    public List<ListaCompra> findByUsuario(Usuario usuario){
+        return listaCompraRepository.findByUsuario(usuario);
     }
 
     public Optional<ListaCompra> buscarId(Long id) {

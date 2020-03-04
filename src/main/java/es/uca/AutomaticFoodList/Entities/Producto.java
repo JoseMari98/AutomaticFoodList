@@ -12,12 +12,9 @@ public class Producto {
     private Long id;
     @NotEmpty(message = "Este campo es obligatorio")
     private String nombre = "";
-    @NotEmpty(message = "Este campo es obligatorio")
     private double precio;
-    @NotEmpty(message = "Este campo es obligatorio")
     @Enumerated(EnumType.STRING)
     private UnidadMedida unidad;
-    @NotEmpty(message = "Este campo es obligatorio")
     private double peso;
     @OneToMany(mappedBy = "producto")
     private Set<ListaCompra> listaCompras = new HashSet<>();

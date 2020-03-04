@@ -26,7 +26,8 @@ public class Application extends SpringBootServletInitializer {
 
     @Bean
     public CommandLineRunner loadData(UsuarioService usuarioService, IntoleranciaService intoleranciaService, IngredienteService ingredienteService,
-                                      RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ListaComidaService listaComidaService) {
+                                      RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ListaComidaService listaComidaService,
+                                      ProductoService productoService, ListaCompraService listaCompraService) {
         return (args) -> {
             try {
                 boolean valido = usuarioService.loadUserByUsername("admin").getRole().equals("Admin");
@@ -103,7 +104,7 @@ public class Application extends SpringBootServletInitializer {
             RecetaIngrediente recetaIngrediente = new RecetaIngrediente();
             recetaIngrediente.setCantidad(1);
             recetaIngrediente.setIngrediente(ingrediente);
-            recetaIngrediente.setUnidadMedida(UnidadMedida.gramos);
+            recetaIngrediente.setUnidadMedida(UnidadMedida.Gramos);
             recetaIngrediente.setReceta(receta);
             recetaIngredienteService.create(recetaIngrediente);
 
@@ -116,7 +117,7 @@ public class Application extends SpringBootServletInitializer {
             RecetaIngrediente recetaIngrediente1 = new RecetaIngrediente();
             recetaIngrediente1.setCantidad(1);
             recetaIngrediente1.setIngrediente(ingrediente1);
-            recetaIngrediente1.setUnidadMedida(UnidadMedida.gramos);
+            recetaIngrediente1.setUnidadMedida(UnidadMedida.Gramos);
             recetaIngrediente1.setReceta(receta1);
             recetaIngredienteService.create(recetaIngrediente1);
 
@@ -143,6 +144,36 @@ public class Application extends SpringBootServletInitializer {
             listaComida2.setUsuario(usuarioService.loadUserByUsername("user"));
             listaComida2.setFecha(LocalDate.now().plusDays(1));
             listaComidaService.create(listaComida2);
+
+            Producto producto = new Producto();
+            producto.setNombre("Lechuga iceberg");
+            producto.setCategoria(Categoria.Verduras);
+            producto.setIngrediente(ingrediente);
+            producto.setUnidad(UnidadMedida.Gramos);
+            producto.setPeso(100);
+            producto.setPrecio(1);
+            productoService.create(producto);
+
+            Producto producto1 = new Producto();
+            producto1.setNombre("Lomo ternera");
+            producto1.setCategoria(Categoria.Carnes);
+            producto1.setIngrediente(ingrediente1);
+            producto1.setUnidad(UnidadMedida.Gramos);
+            producto1.setPeso(500);
+            producto1.setPrecio(5);
+            productoService.create(producto1);
+
+            ListaCompra listaCompra = new ListaCompra();
+            listaCompra.setCantidad(200);
+            listaCompra.setProducto(producto);
+            listaCompra.setUsuario(usuarioService.loadUserByUsername("user"));
+            listaCompraService.create(listaCompra);
+
+            ListaCompra listaCompra1 = new ListaCompra();
+            listaCompra1.setCantidad(500);
+            listaCompra1.setProducto(producto1);
+            listaCompra1.setUsuario(usuarioService.loadUserByUsername("user"));
+            listaCompraService.create(listaCompra1);
         };
     }
 }

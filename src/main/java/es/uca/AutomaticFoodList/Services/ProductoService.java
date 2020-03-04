@@ -1,5 +1,6 @@
 package es.uca.AutomaticFoodList.Services;
 
+import es.uca.AutomaticFoodList.Entities.Ingrediente;
 import es.uca.AutomaticFoodList.Entities.Producto;
 import es.uca.AutomaticFoodList.Repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class ProductoService {
 
     public Optional<Producto> buscarId(Long id) {
         return productoRepository.findById(id);
+    }
+
+    public Producto findByIngrediente(Ingrediente ingrediente){
+        return productoRepository.findByIngrediente(ingrediente);
     }
 
     public List<Producto> findAll() {
