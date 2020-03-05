@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface IngredienteRepository extends JpaRepository<Ingrediente, Long> {
     List<Ingrediente> findByNombreStartsWithIgnoreCase(String ingrediente);
+    Ingrediente findByNombre(String ingrediente);
 }

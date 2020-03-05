@@ -95,6 +95,12 @@ public class Application extends SpringBootServletInitializer {
             ingrediente1.setNombre("Ternera");
             ingredienteService.create(ingrediente1);
 
+            Ingrediente ingrediente2 = new Ingrediente();
+            ingrediente2.setId_api("3");
+            ingrediente2.setCategoria(Categoria.Condimentos);
+            ingrediente2.setNombre("Sal");
+            ingredienteService.create(ingrediente2);
+
             Receta receta = new Receta();
             receta.setId_api("1");
             receta.setNombre("Lechuguita");
@@ -102,11 +108,18 @@ public class Application extends SpringBootServletInitializer {
             recetaService.create(receta);
 
             RecetaIngrediente recetaIngrediente = new RecetaIngrediente();
-            recetaIngrediente.setCantidad(1);
+            recetaIngrediente.setCantidad(200);
             recetaIngrediente.setIngrediente(ingrediente);
             recetaIngrediente.setUnidadMedida(UnidadMedida.Gramos);
             recetaIngrediente.setReceta(receta);
             recetaIngredienteService.create(recetaIngrediente);
+
+            RecetaIngrediente recetaIngrediente2 = new RecetaIngrediente();
+            recetaIngrediente2.setCantidad(5);
+            recetaIngrediente2.setIngrediente(ingrediente2);
+            recetaIngrediente2.setUnidadMedida(UnidadMedida.Gramos);
+            recetaIngrediente2.setReceta(receta);
+            recetaIngredienteService.create(recetaIngrediente2);
 
             Receta receta1 = new Receta();
             receta1.setId_api("2");
@@ -115,11 +128,18 @@ public class Application extends SpringBootServletInitializer {
             recetaService.create(receta1);
 
             RecetaIngrediente recetaIngrediente1 = new RecetaIngrediente();
-            recetaIngrediente1.setCantidad(1);
+            recetaIngrediente1.setCantidad(500);
             recetaIngrediente1.setIngrediente(ingrediente1);
             recetaIngrediente1.setUnidadMedida(UnidadMedida.Gramos);
             recetaIngrediente1.setReceta(receta1);
             recetaIngredienteService.create(recetaIngrediente1);
+
+            RecetaIngrediente recetaIngrediente3 = new RecetaIngrediente();
+            recetaIngrediente3.setCantidad(10);
+            recetaIngrediente3.setIngrediente(ingrediente2);
+            recetaIngrediente3.setUnidadMedida(UnidadMedida.Gramos);
+            recetaIngrediente3.setReceta(receta1);
+            recetaIngredienteService.create(recetaIngrediente3);
 
             ListaComida listaComida = new ListaComida();
             listaComida.setComida(Comida.Almuerzo);
@@ -163,17 +183,26 @@ public class Application extends SpringBootServletInitializer {
             producto1.setPrecio(5);
             productoService.create(producto1);
 
-            ListaCompra listaCompra = new ListaCompra();
-            listaCompra.setCantidad(200);
+            Producto producto2 = new Producto();
+            producto2.setNombre("Sal escamas");
+            producto2.setCategoria(Categoria.Condimentos);
+            producto2.setIngrediente(ingrediente2);
+            producto2.setUnidad(UnidadMedida.Gramos);
+            producto2.setPeso(500);
+            producto2.setPrecio(1);
+            productoService.create(producto2);
+
+            /*ListaCompra listaCompra = new ListaCompra();
+            listaCompra.setCantidad(2);
             listaCompra.setProducto(producto);
             listaCompra.setUsuario(usuarioService.loadUserByUsername("user"));
             listaCompraService.create(listaCompra);
 
             ListaCompra listaCompra1 = new ListaCompra();
-            listaCompra1.setCantidad(500);
+            listaCompra1.setCantidad(1);
             listaCompra1.setProducto(producto1);
             listaCompra1.setUsuario(usuarioService.loadUserByUsername("user"));
-            listaCompraService.create(listaCompra1);
+            listaCompraService.create(listaCompra1);*/
         };
     }
 }

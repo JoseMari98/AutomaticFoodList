@@ -2,7 +2,11 @@ package es.uca.AutomaticFoodList.Views;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -10,6 +14,7 @@ import es.uca.AutomaticFoodList.Entities.ListaComida;
 import es.uca.AutomaticFoodList.Entities.Usuario;
 import es.uca.AutomaticFoodList.Forms.ListaComidasForm;
 import es.uca.AutomaticFoodList.Forms.SeleccionPlatoForm;
+import es.uca.AutomaticFoodList.GenerarListaComida;
 import es.uca.AutomaticFoodList.Services.ListaComidaService;
 import es.uca.AutomaticFoodList.Services.RecetaIngredienteService;
 import es.uca.AutomaticFoodList.Services.RecetaService;
@@ -31,6 +36,24 @@ public class ListaComidasView extends AbstractView{
         this.listaComidaService = listaComidaService;
         this.listaComidasForm = new ListaComidasForm(this, listaComidaService, recetaService, recetaIngredienteService);
         this.seleccionPlatoForm = new SeleccionPlatoForm(this, listaComidaService, recetaService);
+
+        if(listaComidaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()){
+            Dialog dialog = new Dialog();
+
+            Label label = new Label("Oh, parece que no tienes ninguna lista de comidas, quieres generar una?");
+            Button confirmButton = new Button("Confirmar", event -> {
+                GenerarListaComida.generarListaComida();
+                UI.getCurrent().navigate("ListaComidasView");
+                dialog.close();
+            });
+            confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+            Button cancelButton = new Button("Cancelar", event -> {
+                dialog.close();
+                UI.getCurrent().navigate("Inicio");
+            });
+            dialog.add(label, confirmButton, cancelButton);
+            dialog.open();
+        }
 
         Button addPlatoButton = new Button ("Añade un plato");
         addPlatoButton.addClickListener(e -> {

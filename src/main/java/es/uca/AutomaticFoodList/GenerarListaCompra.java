@@ -2,10 +2,7 @@ package es.uca.AutomaticFoodList;
 
 import com.vaadin.flow.component.UI;
 import es.uca.AutomaticFoodList.Entities.*;
-import es.uca.AutomaticFoodList.Services.ListaComidaService;
-import es.uca.AutomaticFoodList.Services.ListaCompraService;
-import es.uca.AutomaticFoodList.Services.ProductoService;
-import es.uca.AutomaticFoodList.Services.RecetaIngredienteService;
+import es.uca.AutomaticFoodList.Services.*;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -13,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GenerarListaCompra {
-    public static void generadorListaCompra(Usuario usuario, ListaComidaService listaComidaService, RecetaIngredienteService recetaIngredienteService, ProductoService productoService, ListaCompraService listaCompraService) {
+    public static void generadorListaCompra(Usuario usuario, ListaComidaService listaComidaService, RecetaIngredienteService recetaIngredienteService, ProductoService productoService, ListaCompraService listaCompraService, IngredienteService ingredienteService) {
         List<ListaComida> platosSemanales = listaComidaService.findByUsuario(usuario); //lista de todos las recetas del usuario
         List<Receta> recetaList = new LinkedList<>();
         Map<Ingrediente, Map<UnidadMedida, Double>> ingredienteMap = new HashMap<>();
@@ -25,7 +22,8 @@ public class GenerarListaCompra {
         for(Receta receta : recetaList){ //loop para todas las recetas
             List<RecetaIngrediente> recetaIngredienteList = recetaIngredienteService.findByReceta(receta); //lista con todos los ingredientes de la receta
             for(RecetaIngrediente recetaIngrediente : recetaIngredienteList){
-                if(ingredienteMap.containsKey(recetaIngrediente.getIngrediente())){ //si esta el ingrediente en el map
+                Ingrediente ingrediente = ingredienteService.findByNombre(recetaIngrediente.getIngrediente().getNombre());
+                if(ingredienteMap.containsKey(ingrediente)){ //si esta el ingrediente en el map
                     if(ingredienteMap.get(recetaIngrediente.getIngrediente()).containsKey(recetaIngrediente.getUnidadMedida())){ //si esta la unidad de medida
                         double cantidad = ingredienteMap.get(recetaIngrediente.getIngrediente()).get(recetaIngrediente.getUnidadMedida());
                         cantidad += recetaIngrediente.getCantidad();
@@ -66,6 +64,8 @@ public class GenerarListaCompra {
                     break;
                 }
             }
+            double cantidadComprar = Math.ceil(listaCompra.getCantidad() / producto.getPeso());
+            listaCompra.setCantidad(cantidadComprar);
             listaCompraService.create(listaCompra);
         }
     }

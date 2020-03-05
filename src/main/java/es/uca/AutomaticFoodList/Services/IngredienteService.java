@@ -32,6 +32,10 @@ public class IngredienteService {
         return ingredienteRepository.findByNombreStartsWithIgnoreCase(ingrediente);
     }
 
+    public Ingrediente findByNombre(String ingrediente){
+        return ingredienteRepository.findByNombre(ingrediente);
+    }
+
     public List<Ingrediente> findAll() {
         return ingredienteRepository.findAll();
     }

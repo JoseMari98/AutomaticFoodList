@@ -2,23 +2,21 @@ package es.uca.AutomaticFoodList.Views;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H6;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
-import es.uca.AutomaticFoodList.Entities.ListaComida;
 import es.uca.AutomaticFoodList.Entities.ListaCompra;
-import es.uca.AutomaticFoodList.Entities.Producto;
 import es.uca.AutomaticFoodList.Entities.Usuario;
-import es.uca.AutomaticFoodList.Forms.ListaComidasForm;
-import es.uca.AutomaticFoodList.Forms.SeleccionPlatoForm;
-import es.uca.AutomaticFoodList.Services.ListaComidaService;
-import es.uca.AutomaticFoodList.Services.ListaCompraService;
-import es.uca.AutomaticFoodList.Services.RecetaIngredienteService;
-import es.uca.AutomaticFoodList.Services.RecetaService;
+import es.uca.AutomaticFoodList.GenerarListaCompra;
+import es.uca.AutomaticFoodList.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.vaadin.klaudeta.PaginatedGrid;
@@ -35,11 +33,46 @@ public class ListaCompraView extends AbstractView{
     private ListaCompraService listaCompraService;
     private TextField filterText = new TextField();
     private Button delete = new Button("Borrar seleccion");
+    private double precioTotal = 0;
+    private H6 precio = new H6();
 
     @Autowired
-    public ListaCompraView(ListaComidaService listaComidaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ListaCompraService listaCompraService) {
+    public ListaCompraView(ListaComidaService listaComidaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService,
+                           ListaCompraService listaCompraService, ProductoService productoService, IngredienteService ingredienteService) {
         this.listaComidaService = listaComidaService;
         this.listaCompraService = listaCompraService;
+        if(listaCompraService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()){
+            if(!listaComidaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()){
+                Dialog dialog = new Dialog();
+
+                Label label = new Label("Oh, parece que no tienes lista de compra, quieres generar una?");
+                Button confirmButton = new Button("Confirmar", event -> {
+                    GenerarListaCompra.generadorListaCompra(UI.getCurrent().getSession().getAttribute(Usuario.class), listaComidaService, recetaIngredienteService, productoService, listaCompraService, ingredienteService);
+                    List<ListaCompra> compraList = listaCompraService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
+                    for(ListaCompra listaCompra : compraList)
+                        precioTotal += listaCompra.getProducto().getPrecio() * listaCompra.getCantidad();
+                    precio.removeAll();
+                    precio.add("Precio total de: " + precioTotal + "€");
+                    updateList();
+                    dialog.close();
+                });
+                confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+                Button cancelButton = new Button("Cancelar", event -> {
+                    dialog.close();
+                    UI.getCurrent().navigate("Inicio");
+                });
+                dialog.add(label, confirmButton, cancelButton);
+                dialog.open();
+            } else {
+                UI.getCurrent().navigate("ListaComidasView");
+            }
+        } else{
+            List<ListaCompra> compraList = listaCompraService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
+            for(ListaCompra listaCompra : compraList)
+                precioTotal += listaCompra.getProducto().getPrecio() * listaCompra.getCantidad();
+            precio.removeAll();
+            precio.add("Precio total de: " + precioTotal + "€");
+        }
 
         filterText.setPlaceholder("Filtrar por producto"); //poner el campo
         filterText.setClearButtonVisible(true); //poner la cruz para borrar
@@ -54,7 +87,7 @@ public class ListaCompraView extends AbstractView{
         });
         grid.addColumn(ListaCompra -> ListaCompra.getProducto().getNombre()).setHeader("Producto").setSortable(true);
         grid.addColumn(ListaCompra -> ListaCompra.getProducto().getPrecio() + "€").setHeader("Precio/Ud").setSortable(true);
-        grid.addColumn(ListaCompra -> ListaCompra.getCantidad() + " " + ListaCompra.getProducto().getUnidad()).setHeader("Cantidad").setSortable(true);
+        grid.addColumn(ListaCompra -> ListaCompra.getCantidad()).setHeader("Cantidad de producto").setSortable(true);
 
         // Sets the max number of items to be rendered on the grid for each page
         grid.setPageSize(9);
@@ -65,14 +98,19 @@ public class ListaCompraView extends AbstractView{
 
         delete.addClickListener(e -> {
             Set<ListaCompra> listaCompras = grid.asMultiSelect().getSelectedItems();
+            for(ListaCompra listaCompra : listaCompras)
+                precioTotal -= listaCompra.getProducto().getPrecio() * listaCompra.getCantidad();
+            precio.removeAll();
+            precio.add("Precio total de: " + precioTotal + "€");
             if(!listaCompras.isEmpty())
                 delete(listaCompras);
         });
 
-        VerticalLayout mainContent = new VerticalLayout(filterText, grid, delete); //metemos en un objeto el grid y formulario
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, delete, precio);
+
+        VerticalLayout mainContent = new VerticalLayout(toolbar, grid); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();
         grid.setSizeFull();
-
         add(mainContent);
 
         setSizeFull();

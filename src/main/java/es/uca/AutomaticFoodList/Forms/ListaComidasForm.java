@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -36,7 +37,7 @@ public class ListaComidasForm extends FormLayout {
     private ListaComidaService listaComidaService;
     private H1 titulo = new H1("Informacion de receta");
     private H2 titulo2 = new H2("Ingredientes");
-    private Paragraph datos = new Paragraph();
+    private Label datos = new Label();
     private Paragraph ingredientes = new Paragraph();
     private VerticalLayout informacion = new VerticalLayout();
     private HorizontalLayout buttons = new HorizontalLayout();
@@ -75,15 +76,15 @@ public class ListaComidasForm extends FormLayout {
     }
 
     public void datosReceta(ListaComida listaComida){
-        datos = new Paragraph();
-        ingredientes = new Paragraph();
-        informacion = new VerticalLayout();
-        contenido = new VerticalLayout();
+        datos.removeAll();
+        informacion.removeAll();
+        ingredientes.removeAll();
+        contenido.removeAll();
         this.removeAll();
         if(listaComida != null) {
             Optional<Receta> receta = recetaService.findById(listaComida.getReceta());
-            datos = new Paragraph(receta.get().getNombre() + '\n' +
-                    receta.get().getPrecioAproximado());
+            String s = receta.get().getNombre() + "\n" + receta.get().getPrecioAproximado();
+            datos = new Label(s);
             List<RecetaIngrediente> recetaIngredienteList = recetaIngredienteService.findByReceta(receta.get());
             for (RecetaIngrediente recetaIngrediente : recetaIngredienteList) {
                 ingredientes.add(recetaIngrediente.getIngrediente().getNombre() + '\n');
