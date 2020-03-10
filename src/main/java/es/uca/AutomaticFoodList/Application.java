@@ -84,19 +84,19 @@ public class Application extends SpringBootServletInitializer {
                 intoleranciaService.create(intolerancia);
             }
             Ingrediente ingrediente = new Ingrediente();
-            ingrediente.setId_api("1");
+            ingrediente.setIdApi("1");
             ingrediente.setCategoria(Categoria.Verduras);
             ingrediente.setNombre("Lechuga");
             ingredienteService.create(ingrediente);
 
             Ingrediente ingrediente1 = new Ingrediente();
-            ingrediente1.setId_api("2");
+            ingrediente1.setIdApi("2");
             ingrediente1.setCategoria(Categoria.Carnes);
             ingrediente1.setNombre("Ternera");
             ingredienteService.create(ingrediente1);
 
             Ingrediente ingrediente2 = new Ingrediente();
-            ingrediente2.setId_api("3");
+            ingrediente2.setIdApi("3");
             ingrediente2.setCategoria(Categoria.Condimentos);
             ingrediente2.setNombre("Sal");
             ingredienteService.create(ingrediente2);

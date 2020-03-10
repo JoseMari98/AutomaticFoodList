@@ -1,5 +1,6 @@
 package es.uca.AutomaticFoodList.Services;
 
+import es.uca.AutomaticFoodList.Entities.Ingrediente;
 import es.uca.AutomaticFoodList.Entities.Receta;
 import es.uca.AutomaticFoodList.Entities.RecetaIngrediente;
 import es.uca.AutomaticFoodList.Repositories.RecetaIngredienteRepository;
@@ -28,6 +29,10 @@ public class RecetaIngredienteService {
 
     public List<RecetaIngrediente> findByReceta(Receta receta){
         return recetaIngredienteRepository.findByReceta(receta);
+    }
+
+    public List<RecetaIngrediente> findByIngrediente(Ingrediente ingrediente){
+        return recetaIngredienteRepository.findByIngrediente(ingrediente);
     }
 
     public Optional<RecetaIngrediente> buscarId(Long id) {

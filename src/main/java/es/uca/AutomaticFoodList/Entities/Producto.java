@@ -18,7 +18,7 @@ public class Producto {
     private double peso;
     @OneToMany(mappedBy = "producto")
     private Set<ListaCompra> listaCompras = new HashSet<>();
-    @OneToOne
+    @ManyToOne
     private Ingrediente ingrediente;
     @Enumerated(EnumType.STRING)
     private Categoria categoria;

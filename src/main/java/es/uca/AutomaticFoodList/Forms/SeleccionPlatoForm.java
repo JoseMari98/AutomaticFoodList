@@ -63,7 +63,7 @@ public class SeleccionPlatoForm extends FormLayout {
             listaComida.setPlato(platoSelect.getValue());
             listaComida.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
             listaComida.setComida(comidaSelect.getValue());
-            if(!listaComidaService.findByUsuarioAndComidaAndPlatoAndFecha(listaComida.getUsuario(), listaComida.getComida(), listaComida.getPlato(), listaComida.getFecha()).isPresent()){ //buscar si existe esta tupla
+            if(!listaComidaService.findByUsuarioAndComidaAndPlatoAndFecha(listaComida.getUsuario(), listaComida.getComida(), listaComida.getPlato(), listaComida.getFecha().plusDays(1)).isPresent()){ //buscar si existe esta tupla
                 Random random = new Random();
                 LocalDate fecha = listaComida.getFecha();
                 List<Receta> recetaList = recetaService.findAll();

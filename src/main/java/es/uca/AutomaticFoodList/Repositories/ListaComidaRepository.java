@@ -15,5 +15,5 @@ public interface ListaComidaRepository extends JpaRepository<ListaComida, Long> 
     List<ListaComida> findByUsuario(Usuario usuario);
     Optional<ListaComida> findByUsuarioAndComidaAndFechaAndPlato(Usuario usuario, Comida comida, LocalDate fecha, Plato plato);
     List<ListaComida> findByUsuarioAndComida(Usuario usuario, Comida comida);
-
+    List<ListaComida> findByUsuarioAndComidaAndPlato(Usuario usuario, Comida comida, Plato plato);
 }

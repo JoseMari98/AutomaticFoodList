@@ -108,7 +108,7 @@ public class UsuarioDatosForm extends FormLayout {
                         "No es un formato válido. Ejemplo de formato válido: usuario@gmail.com"))
                 .bind(Usuario::getEmail, Usuario::setEmail);
         if(binder.validate().isOk()) {
-            if(password.getValue() == confirmPassword.getValue()){
+            if(password.getValue().equals(confirmPassword.getValue())){
                 usuario.setRole("User");
                 usuario.setUsername(username.getValue());
                 usuario.setNombre(nombre.getValue());

@@ -66,12 +66,8 @@ public class MainView extends AppLayout {
             }
 
             if(SecurityUtils.hasRole("Admin") || SecurityUtils.hasRole("Gerente")) {
-                /*appLayoutMenu.addMenuItem(gestion3, "Gestión Vehículo", "GestionVehiculo");
-                appLayoutMenu.addMenuItem(gestion2, "Gestión Reservas", "GestionReservas");
-                appLayoutMenu.addMenuItem(gestion1, "Gestión Modelo", "GestionModelo");
-                appLayoutMenu.addMenuItem(gestion, "Gestión Marca", "GestionMarca");
-                appLayoutMenu.addMenuItem(gestion4, "Gestión Tipo", "GestionTipo");
-                appLayoutMenu.addMenuItem(postpago, "Gestión Postpago", "GestionPostpago");*/
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion ingrediente", IngredienteView.class));
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion producto", ProductoView.class));
                 /*if(SecurityUtils.hasRole("Gerente")){
                     appLayoutMenu.addMenuItem(estadistica, "Estadísticas", "Charts");
                 }*/

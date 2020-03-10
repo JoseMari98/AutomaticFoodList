@@ -13,13 +13,15 @@ public class Ingrediente {
     private Long id;
     @NotEmpty(message = "Este campo es obligatorio")
     @Column(unique = true)
-    private String id_api = "", nombre = "";
+    private String nombre = "";
+    @Column(unique = true)
+    private String idApi = "";
     @OneToMany(mappedBy = "ingrediente") //esto para decir la cardinalidad y a que variable se asocia
     private Set<PreferenciaIngrediente> preferenciaIngredienteSet = new HashSet<>();
     @OneToMany(mappedBy = "ingrediente")
     private Set<RecetaIngrediente> recetaIngredientes = new HashSet<>();
-    @OneToOne(mappedBy = "ingrediente", cascade=CascadeType.ALL)
-    private Producto producto;
+    @OneToMany(mappedBy = "ingrediente", cascade=CascadeType.ALL)
+    private Set<Producto> productos;
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
@@ -31,8 +33,8 @@ public class Ingrediente {
         return nombre;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public Set<Producto> getProducto() {
+        return productos;
     }
 
     public Set<PreferenciaIngrediente> getPreferenciaIngredienteSet() {
@@ -43,8 +45,8 @@ public class Ingrediente {
         return recetaIngredientes;
     }
 
-    public String getId_api() {
-        return id_api;
+    public String getIdApi() {
+        return idApi;
     }
 
     public Categoria getCategoria() {
@@ -55,16 +57,16 @@ public class Ingrediente {
         this.categoria = categoria;
     }
 
-    public void setId_api(String id_api) {
-        this.id_api = id_api;
+    public void setIdApi(String id_api) {
+        this.idApi = id_api;
     }
 
     public void setPreferenciaIngredienteSet(Set<PreferenciaIngrediente> preferenciaIngredienteSet) {
         this.preferenciaIngredienteSet = preferenciaIngredienteSet;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public Set<Producto> getProductos() {
+        return productos;
     }
 
     public void setRecetaIngredientes(Set<RecetaIngrediente> recetaIngredientes) {

@@ -5,6 +5,7 @@ import es.uca.AutomaticFoodList.Entities.Producto;
 import es.uca.AutomaticFoodList.Repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.plugin.perf.PluginRollup;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,10 @@ public class ProductoService {
 
     public Producto findByIngrediente(Ingrediente ingrediente){
         return productoRepository.findByIngrediente(ingrediente);
+    }
+
+    public List<Producto> findByProducto(String nombre){
+        return productoRepository.findByNombreStartsWithIgnoreCase(nombre);
     }
 
     public List<Producto> findAll() {
