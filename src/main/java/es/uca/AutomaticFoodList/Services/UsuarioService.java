@@ -1,6 +1,7 @@
 package es.uca.AutomaticFoodList.Services;
 
 import es.uca.AutomaticFoodList.Entities.Usuario;
+import es.uca.AutomaticFoodList.Entities.ValoresNutricionales;
 import es.uca.AutomaticFoodList.Repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -61,6 +62,10 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario listarPorEmail(String email) { return repo.findByEmail(email); }
+
+    public List<Usuario> findByValores(ValoresNutricionales valoresNutricionales){
+        return repo.findByValoresNutricionales(valoresNutricionales);
+    }
 
     public Usuario listarPorUsername(Usuario usuario) { return repo.findByUsername(usuario); }
 

@@ -1,6 +1,7 @@
 package es.uca.AutomaticFoodList.Services;
 
 import es.uca.AutomaticFoodList.Entities.Receta;
+import es.uca.AutomaticFoodList.Entities.ValoresNutricionales;
 import es.uca.AutomaticFoodList.Repositories.RecetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,10 @@ public class RecetaService {
 
     public Optional<Receta> buscarId(Long id) {
         return recetaRepository.findById(id);
+    }
+
+    public List<Receta> findByValores(ValoresNutricionales valoresNutricionales){
+        return recetaRepository.findByValoresNutricionales(valoresNutricionales);
     }
 
     public List<Receta> findAll() {

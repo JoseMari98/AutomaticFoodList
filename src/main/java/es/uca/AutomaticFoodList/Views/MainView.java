@@ -68,6 +68,7 @@ public class MainView extends AppLayout {
             if(SecurityUtils.hasRole("Admin") || SecurityUtils.hasRole("Gerente")) {
                 tabs.add(createTab(VaadinIcon.RECORDS, "Gestion ingrediente", IngredienteView.class));
                 tabs.add(createTab(VaadinIcon.RECORDS, "Gestion producto", ProductoView.class));
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion valores nutricionales", ValoresNutrcionalesView.class));
                 /*if(SecurityUtils.hasRole("Gerente")){
                     appLayoutMenu.addMenuItem(estadistica, "Estadísticas", "Charts");
                 }*/

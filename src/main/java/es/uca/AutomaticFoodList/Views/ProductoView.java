@@ -50,7 +50,7 @@ public class ProductoView extends AbstractView {
 
         grid.setColumns("nombre", "categoria", "peso", "unidad");
         grid.addColumn(Producto -> Producto.getPrecio() + "€").setSortable(true).setHeader("Precio");
-        grid.addColumn(Producto -> Producto.getIngrediente() == null ? "Sin ingrediente" : Producto.getIngrediente().getNombre());
+        grid.addColumn(Producto -> Producto.getIngrediente() == null ? "Sin ingrediente" : Producto.getIngrediente().getNombre()).setHeader("Ingrediente").setSortable(true);
 
         HorizontalLayout mainContent = new HorizontalLayout(grid, productoForm); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();

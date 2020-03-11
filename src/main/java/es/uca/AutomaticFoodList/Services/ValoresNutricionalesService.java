@@ -25,6 +25,10 @@ public class ValoresNutricionalesService {
         return valoresNutricionalesRepository.save(valoresNutricionales);
     }
 
+    public List<ValoresNutricionales> findByReceta(String receta){
+        return valoresNutricionalesRepository.findByReceta_NombreStartsWithIgnoreCase(receta);
+    }
+
     public Optional<ValoresNutricionales> buscarId(Long id) {
         return valoresNutricionalesRepository.findById(id);
     }
