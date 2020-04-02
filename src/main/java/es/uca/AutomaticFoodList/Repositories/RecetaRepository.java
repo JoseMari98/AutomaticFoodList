@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface RecetaRepository extends JpaRepository<Receta, Long> {
     List<Receta> findByValoresNutricionales(ValoresNutricionales valoresNutricionales);
     Optional<Receta> findById(Long id);
+    Optional<Receta> findByNombre(String nombre);
 }

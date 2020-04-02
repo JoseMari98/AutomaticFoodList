@@ -31,6 +31,10 @@ public class RecetaIngredienteService {
         return recetaIngredienteRepository.findByReceta(receta);
     }
 
+    public List<RecetaIngrediente> findByIngredienteNombre(String ingrediente){
+        return recetaIngredienteRepository.findByIngrediente_NombreStartsWithIgnoreCase(ingrediente);
+    }
+
     public List<RecetaIngrediente> findByIngrediente(Ingrediente ingrediente){
         return recetaIngredienteRepository.findByIngrediente(ingrediente);
     }

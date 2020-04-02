@@ -62,6 +62,7 @@ public class MainView extends AppLayout {
                 tabs.add(createTab(VaadinIcon.COGS, "Configuracion dietetica", IntoleranciasUsuarioView.class));
                 tabs.add(createTab(VaadinIcon.CALENDAR, "Lista de Comidas", ListaComidasView.class));
                 tabs.add(createTab(VaadinIcon.LIST, "Lista de la compra", ListaCompraView.class));
+                tabs.add(createTab(VaadinIcon.PLUS, "Crear receta", CrearRecetaView.class));
                 tabs.add(createTab(VaadinIcon.COG, "Configuracion de datos", UsuarioDatosView.class));
             }
 

@@ -34,6 +34,10 @@ public class RecetaService {
         return recetaRepository.findByValoresNutricionales(valoresNutricionales);
     }
 
+    public Optional<Receta> findByNombre(String nombre){
+        return recetaRepository.findByNombre(nombre);
+    }
+
     public List<Receta> findAll() {
         return recetaRepository.findAll();
     }

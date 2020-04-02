@@ -12,12 +12,16 @@ public class Receta {
     private Long id;
     @NotEmpty(message = "Este campo es obligatorio")
     @Column(unique = true)
-    private String nombre = "", id_api = "";
+    private String nombre = "";
+    @Column(unique = true)
+    private String id_api = "";
     @OneToOne
     private ValoresNutricionales valoresNutricionales;
     private double precioAproximado;
     @OneToMany(mappedBy = "receta") //esto para decir la cardinalidad y a que variable se asocia
     private Set<RecetaIngrediente> recetaIngredientes = new HashSet<>();
+    @OneToOne
+    private Usuario usuario;
 
     public Long getId() {
         return id;
@@ -39,12 +43,20 @@ public class Receta {
         return precioAproximado;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
     public ValoresNutricionales getValoresNutricionales() {
         return valoresNutricionales;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public void setNombre(String nombre) {
