@@ -58,6 +58,7 @@ public class MainView extends AppLayout {
             //appLayoutMenu.addMenuItem(registro, "Registrarse", "UsuarioView");
         } else {
             tabs.add(createTab(VaadinIcon.HANDSHAKE, "Ejemplo", EjemploView.class));
+            tabs.add(createTab(VaadinIcon.RECORDS, "Recetas", RecetasView.class));
             if(SecurityUtils.hasRole("User")){
                 tabs.add(createTab(VaadinIcon.COGS, "Configuracion dietetica", IntoleranciasUsuarioView.class));
                 tabs.add(createTab(VaadinIcon.CALENDAR, "Lista de Comidas", ListaComidasView.class));

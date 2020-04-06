@@ -14,7 +14,7 @@ public class Receta {
     @Column(unique = true)
     private String nombre = "";
     @Column(unique = true)
-    private String id_api = "";
+    private String idApi = "";
     @OneToOne
     private ValoresNutricionales valoresNutricionales;
     private double precioAproximado;
@@ -31,8 +31,8 @@ public class Receta {
         return nombre;
     }
 
-    public String getId_api() {
-        return id_api;
+    public String getIdApi() {
+        return idApi;
     }
 
     public Set<RecetaIngrediente> getRecetaIngredientes() {
@@ -67,8 +67,8 @@ public class Receta {
         this.recetaIngredientes = recetaIngredientes;
     }
 
-    public void setId_api(String id_api) {
-        this.id_api = id_api;
+    public void setIdApi(String id_api) {
+        this.idApi = id_api;
     }
 
     public void setPrecioAproximado(double precioAproximado) {

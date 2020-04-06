@@ -6,24 +6,18 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
 import es.uca.AutomaticFoodList.Entities.*;
-import es.uca.AutomaticFoodList.Services.PreferenciaIngredienteService;
 import es.uca.AutomaticFoodList.Services.RecetaIngredienteService;
 import es.uca.AutomaticFoodList.Services.RecetaService;
 import es.uca.AutomaticFoodList.Services.ValoresNutricionalesService;
 import es.uca.AutomaticFoodList.Views.CrearRecetaView;
-import es.uca.AutomaticFoodList.Views.IngredientesUsuarioView;
 
 import java.util.List;
-import java.util.Set;
 
 public class CrearRecetaForm extends FormLayout {
     private TextField nombre = new TextField("Nombre receta");
@@ -61,7 +55,7 @@ public class CrearRecetaForm extends FormLayout {
         HorizontalLayout caloriasGrasa = new HorizontalLayout(caloriasPlato, grasaPlato);
         HorizontalLayout hidratosProteina = new HorizontalLayout(hidratosPlato, proteinaPlato);
         VerticalLayout mainContent = new VerticalLayout(titulo, nombrePrecio, caloriasGrasa, hidratosProteina, save);
-        add(titulo, nombrePrecio, caloriasGrasa, hidratosProteina, save);
+        add(mainContent, save);
 
         save.addClickListener(event -> {
             if(!recetaService.findByNombre(nombre.getValue()).isPresent()){
@@ -92,7 +86,7 @@ public class CrearRecetaForm extends FormLayout {
 
             receta.setPrecioAproximado(precioAproximado.getValue());
             receta.setNombre(nombre.getValue());
-            receta.setId_api(null);
+            receta.setIdApi(null);
             receta.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
             receta.setValoresNutricionales(valoresNutricionales);
             receta = recetaService.create(receta);

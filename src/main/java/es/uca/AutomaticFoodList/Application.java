@@ -102,7 +102,7 @@ public class Application extends SpringBootServletInitializer {
             ingredienteService.create(ingrediente2);
 
             Receta receta = new Receta();
-            receta.setId_api("1");
+            receta.setIdApi("1");
             receta.setNombre("Lechuguita");
             receta.setPrecioAproximado(2);
             recetaService.create(receta);
@@ -122,7 +122,7 @@ public class Application extends SpringBootServletInitializer {
             recetaIngredienteService.create(recetaIngrediente2);
 
             Receta receta1 = new Receta();
-            receta1.setId_api("2");
+            receta1.setIdApi("2");
             receta1.setNombre("Carnecita");
             receta1.setPrecioAproximado(1);
             recetaService.create(receta1);

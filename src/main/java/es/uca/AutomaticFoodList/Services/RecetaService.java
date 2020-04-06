@@ -1,6 +1,7 @@
 package es.uca.AutomaticFoodList.Services;
 
 import es.uca.AutomaticFoodList.Entities.Receta;
+import es.uca.AutomaticFoodList.Entities.Usuario;
 import es.uca.AutomaticFoodList.Entities.ValoresNutricionales;
 import es.uca.AutomaticFoodList.Repositories.RecetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,18 @@ public class RecetaService {
 
     public List<Receta> findByValores(ValoresNutricionales valoresNutricionales){
         return recetaRepository.findByValoresNutricionales(valoresNutricionales);
+    }
+
+    public List<Receta> findByNombreList(String nombre){
+        return recetaRepository.findByNombreStartsWithIgnoreCase(nombre);
+    }
+
+    public List<Receta> findByNombreAndUsuario(String nombre, Usuario usuario){
+        return recetaRepository.findByNombreStartsWithIgnoreCaseAndUsuario(nombre, usuario);
+    }
+
+    public List<Receta> findByUsuario(Usuario usuario){
+        return recetaRepository.findByUsuario(usuario);
     }
 
     public Optional<Receta> findByNombre(String nombre){
