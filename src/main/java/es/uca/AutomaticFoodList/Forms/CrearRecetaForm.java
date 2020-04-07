@@ -28,7 +28,6 @@ public class CrearRecetaForm extends FormLayout {
     private NumberField proteinaPlato = new NumberField("Proteina");
     private Button save = new Button("Guardar receta");
     private CrearRecetaView crearRecetaView;
-    //private BeanValidationBinder<PreferenciaIngrediente> binder = new BeanValidationBinder<>(PreferenciaIngrediente.class);
     private RecetaService recetaService;
     private ValoresNutricionalesService valoresNutricionalesService;
     private RecetaIngredienteService recetaIngredienteService;

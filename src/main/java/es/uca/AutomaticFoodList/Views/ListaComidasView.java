@@ -29,7 +29,6 @@ public class ListaComidasView extends AbstractView{
     private ListaComidaService listaComidaService;
     private ListaComidasForm listaComidasForm;
     private SeleccionPlatoForm seleccionPlatoForm;
-    private RecetaService recetaService;
 
     @Autowired
     public ListaComidasView(ListaComidaService listaComidaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService) {
