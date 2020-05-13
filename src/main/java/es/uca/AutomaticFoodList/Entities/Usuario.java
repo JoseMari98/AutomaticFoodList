@@ -1,6 +1,8 @@
 package es.uca.AutomaticFoodList.Entities;
 
 
+import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,8 +11,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
+@PlanningEntity
 @Entity
 public class Usuario implements UserDetails {
+    @PlanningId
     @Id //esto sirve para decir cual es el id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
     private Long id;

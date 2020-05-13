@@ -1,11 +1,23 @@
 package es.uca.AutomaticFoodList.Entities;
 
+import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
+import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
+import org.optaplanner.core.api.domain.solution.PlanningEntityProperty;
+import org.optaplanner.core.api.domain.solution.PlanningScore;
+import org.optaplanner.core.api.domain.solution.PlanningSolution;
+import org.optaplanner.core.api.domain.variable.PlanningVariable;
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
+import org.optaplanner.core.api.solver.SolverStatus;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
+@PlanningEntity
 @Entity
 public class ListaComida {
+    @PlanningId
     @Id //esto sirve para decir cual es el id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
     private Long id;
@@ -13,8 +25,10 @@ public class ListaComida {
     private Comida comida;
     @Enumerated(EnumType.STRING)
     private Plato plato;
+    @PlanningVariable
     @ManyToOne
     private Receta receta;
+    @PlanningVariable
     @ManyToOne
     private Usuario usuario;
     @Column(nullable = false)

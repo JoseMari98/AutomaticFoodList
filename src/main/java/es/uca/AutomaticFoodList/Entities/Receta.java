@@ -1,5 +1,8 @@
 package es.uca.AutomaticFoodList.Entities;
 
+import org.optaplanner.core.api.domain.entity.PlanningEntity;
+import org.optaplanner.core.api.domain.lookup.PlanningId;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
@@ -7,6 +10,7 @@ import java.util.Set;
 
 @Entity
 public class Receta {
+    @PlanningId
     @Id //esto sirve para decir cual es el id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
     private Long id;
@@ -22,9 +26,28 @@ public class Receta {
     private Set<RecetaIngrediente> recetaIngredientes = new HashSet<>();
     @OneToOne
     private Usuario usuario;
+    @OneToMany(mappedBy = "receta")
+    private Set<IntoleranciaReceta> intoleranciaRecetaSet;
+
+    //tomara valores verdadero o falso separado por |, ejemplo t|f|t
+    private String comidaAdecuada = "";
+
+    private String platoAdecuado = "";
 
     public Long getId() {
         return id;
+    }
+
+    public String getComidaAdecuada() {
+        return comidaAdecuada;
+    }
+
+    public String getPlatoAdecuado() {
+        return platoAdecuado;
+    }
+
+    public Set<IntoleranciaReceta> getIntoleranciaRecetaSet() {
+        return intoleranciaRecetaSet;
     }
 
     public String getNombre() {
@@ -65,6 +88,18 @@ public class Receta {
 
     public void setRecetaIngredientes(Set<RecetaIngrediente> recetaIngredientes) {
         this.recetaIngredientes = recetaIngredientes;
+    }
+
+    public void setComidaAdecuada(String comidaAdecuada) {
+        this.comidaAdecuada = comidaAdecuada;
+    }
+
+    public void setIntoleranciaRecetaSet(Set<IntoleranciaReceta> intoleranciaRecetaSet) {
+        this.intoleranciaRecetaSet = intoleranciaRecetaSet;
+    }
+
+    public void setPlatoAdecuado(String platoAdecuado) {
+        this.platoAdecuado = platoAdecuado;
     }
 
     public void setIdApi(String id_api) {

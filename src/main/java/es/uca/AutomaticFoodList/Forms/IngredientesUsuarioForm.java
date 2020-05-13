@@ -43,7 +43,8 @@ public class IngredientesUsuarioForm extends FormLayout {
 
         save.addClickListener(event -> {
             if(gusto.getValue() != null)
-                save();});
+                save();
+        });
         delete.addClickListener(event -> {
             if(preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente) != null)
                 delete();});

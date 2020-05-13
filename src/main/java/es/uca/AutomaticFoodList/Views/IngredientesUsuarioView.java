@@ -30,7 +30,7 @@ public class IngredientesUsuarioView extends AbstractView{
     private IngredienteService ingredienteService;
     private PreferenciaIngredienteService preferenciaIngredienteService;
     private IngredientesUsuarioForm ingredientesUsuarioForm;
-    private Button continuar = new Button("Continuar");
+    private Button continuar = new Button("Siguiente");
 
     @Autowired
     public IngredientesUsuarioView(IngredienteService ingredienteService, PreferenciaIngredienteService preferenciaIngredienteService) {
@@ -62,7 +62,7 @@ public class IngredientesUsuarioView extends AbstractView{
         mainContent.setSizeFull();
         grid.setSizeFull();
         continuar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        continuar.addClickListener(e -> UI.getCurrent().navigate(""));
+        continuar.addClickListener(e -> UI.getCurrent().navigate("PresupuestoPlatoView"));
         add(texto, toolbar, mainContent, continuar);
 
         setSizeFull();

@@ -8,6 +8,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import es.uca.AutomaticFoodList.Entities.Ingrediente;
 import es.uca.AutomaticFoodList.Entities.RecetaIngrediente;
@@ -44,8 +45,9 @@ public class AnadirIngredienteForm extends FormLayout {
 
         guardar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         cancelar.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        HorizontalLayout buttons = new HorizontalLayout(guardar, cancelar);
-        add(titulo, ingrediente, unidadMedida, cantidad, buttons);
+        HorizontalLayout buttons = new HorizontalLayout(guardar, cancelar), forms = new HorizontalLayout(ingrediente, cantidad, unidadMedida);
+        VerticalLayout mainContent = new VerticalLayout(titulo, forms, buttons);
+        add(mainContent);
 
         cancelar.addClickListener(event -> {
             this.setVisible(false);

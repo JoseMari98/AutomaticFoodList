@@ -69,17 +69,19 @@ public class Application extends SpringBootServletInitializer {
                 usuarioService.create(u);
             }
             Vector<Intolerancia> intoleranciaVector = new Vector<>(9);
-            for(int i = 0 ; i < 9 ; i++)
+            for(int i = 0 ; i < 4 ; i++)
                 intoleranciaVector.add(new Intolerancia());
             intoleranciaVector.elementAt(0).setIntolerancia("Leche");
-            intoleranciaVector.elementAt(1).setIntolerancia("Huevo");
-            intoleranciaVector.elementAt(2).setIntolerancia("Gluten");
-            intoleranciaVector.elementAt(3).setIntolerancia("Grano");
-            intoleranciaVector.elementAt(4).setIntolerancia("Cacahuete");
-            intoleranciaVector.elementAt(5).setIntolerancia("Mariscos");
-            intoleranciaVector.elementAt(6).setIntolerancia("Sesamo");
-            intoleranciaVector.elementAt(7).setIntolerancia("Soja");
-            intoleranciaVector.elementAt(8).setIntolerancia("Trigo");
+            //intoleranciaVector.elementAt(1).setIntolerancia("Huevo");
+            intoleranciaVector.elementAt(1).setIntolerancia("Gluten");
+            //intoleranciaVector.elementAt(3).setIntolerancia("Grano");
+            //intoleranciaVector.elementAt(4).setIntolerancia("Cacahuete");
+            //intoleranciaVector.elementAt(5).setIntolerancia("Mariscos");
+            //intoleranciaVector.elementAt(6).setIntolerancia("Sesamo");
+            //intoleranciaVector.elementAt(7).setIntolerancia("Soja");
+            //intoleranciaVector.elementAt(8).setIntolerancia("Trigo");
+            intoleranciaVector.elementAt(2).setIntolerancia("Vegetariano");
+            intoleranciaVector.elementAt(3).setIntolerancia("Vegano");
             for(Intolerancia intolerancia : intoleranciaVector){
                 intoleranciaService.create(intolerancia);
             }

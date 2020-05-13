@@ -57,13 +57,12 @@ public class MainView extends AppLayout {
             tabs.add(createTab(VaadinIcon.USER_CARD, "Registrate", UsuarioDatosView.class));
             //appLayoutMenu.addMenuItem(registro, "Registrarse", "UsuarioView");
         } else {
-            tabs.add(createTab(VaadinIcon.HANDSHAKE, "Ejemplo", EjemploView.class));
             tabs.add(createTab(VaadinIcon.RECORDS, "Recetas", RecetasView.class));
+            tabs.add(createTab(VaadinIcon.PLUS, "Crear receta", CrearRecetaView.class));
             if(SecurityUtils.hasRole("User")){
                 tabs.add(createTab(VaadinIcon.COGS, "Configuracion dietetica", IntoleranciasUsuarioView.class));
                 tabs.add(createTab(VaadinIcon.CALENDAR, "Lista de Comidas", ListaComidasView.class));
                 tabs.add(createTab(VaadinIcon.LIST, "Lista de la compra", ListaCompraView.class));
-                tabs.add(createTab(VaadinIcon.PLUS, "Crear receta", CrearRecetaView.class));
                 tabs.add(createTab(VaadinIcon.COG, "Configuracion de datos", UsuarioDatosView.class));
             }
 
@@ -79,6 +78,7 @@ public class MainView extends AppLayout {
         addToDrawer(menuLayout, tabs); //anadirlo al desplegable
         addToNavbar(touchOptimized, drawerToggle, img); //anadirlo a la barra vertical
         if(SecurityUtils.isUserLoggedIn())
+            logout.getStyle().set("center", "auto");
             addToDrawer(logout);
     }
 

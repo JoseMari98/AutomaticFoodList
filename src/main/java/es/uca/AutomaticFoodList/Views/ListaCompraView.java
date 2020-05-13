@@ -61,7 +61,7 @@ public class ListaCompraView extends AbstractView{
                     dialog.close();
                     UI.getCurrent().navigate("Inicio");
                 });
-                dialog.add(label, confirmButton, cancelButton);
+                dialog.add(label, cancelButton, confirmButton);
                 dialog.open();
             } else {
                 UI.getCurrent().navigate("ListaComidasView");
