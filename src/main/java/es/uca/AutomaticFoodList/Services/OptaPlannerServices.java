@@ -1,26 +1,22 @@
-package es.uca.AutomaticFoodList.solver;
+package es.uca.AutomaticFoodList.Services;
 
-import es.uca.AutomaticFoodList.Entities.ListaComida;
-import es.uca.AutomaticFoodList.Entities.Usuario;
 import org.optaplanner.core.api.score.stream.Constraint;
 import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
-import org.optaplanner.core.api.score.stream.Joiners;
 
-import java.util.List;
+public class OptaPlannerServices {
+    public class ListaComidaConstraintProvider implements ConstraintProvider {
+        @Override
+        public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
+            return new Constraint[]{
+                    //Hard
+                    //Soft
+            };
+        }
 
-public class ListaComidaConstraintProvider implements ConstraintProvider {
-    @Override
-    public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
-        return new Constraint[]{
-                //Hard
-                //Soft
-        };
-    }
+        //poner casos de que no se pisen en fechas etc
 
-    //poner casos de que no se pisen en fechas etc
-
-    private Constraint conflictoIntolerancia(ConstraintFactory constraintFactory){
+    /*private Constraint conflictoIntolerancia(ConstraintFactory constraintFactory){
         return constraintFactory.fromUniquePair(ListaComida.class, Joiners.equal(ListaComida));
     }
 
@@ -50,5 +46,6 @@ public class ListaComidaConstraintProvider implements ConstraintProvider {
 
     private Constraint conflictoPlatoNoAdecuado(ConstraintFactory constraintFactory){
 
+    }*/
     }
 }

@@ -26,8 +26,8 @@ public class Application extends SpringBootServletInitializer {
 
     @Bean
     public CommandLineRunner loadData(UsuarioService usuarioService, IntoleranciaService intoleranciaService, IngredienteService ingredienteService,
-                                      RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ListaComidaService listaComidaService,
-                                      ProductoService productoService, ListaCompraService listaCompraService) {
+                                      RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, UsuarioRecetaService usuarioRecetaService,
+                                      ProductoService productoService, UsuarioProductoService usuarioProductoService) {
         return (args) -> {
             try {
                 boolean valido = usuarioService.loadUserByUsername("admin").getRole().equals("Admin");
@@ -143,29 +143,29 @@ public class Application extends SpringBootServletInitializer {
             recetaIngrediente3.setReceta(receta1);
             recetaIngredienteService.create(recetaIngrediente3);
 
-            ListaComida listaComida = new ListaComida();
-            listaComida.setComida(Comida.Almuerzo);
-            listaComida.setPlato(Plato.Postre);
-            listaComida.setReceta(receta);
-            listaComida.setUsuario(usuarioService.loadUserByUsername("user"));
-            listaComida.setFecha(LocalDate.now().plusDays(1));
-            listaComidaService.create(listaComida);
+            UsuarioReceta usuarioReceta = new UsuarioReceta();
+            usuarioReceta.setComida(Comida.Almuerzo);
+            usuarioReceta.setPlato(Plato.Postre);
+            usuarioReceta.setReceta(receta);
+            usuarioReceta.setUsuario(usuarioService.loadUserByUsername("user"));
+            usuarioReceta.setFecha(FechaSemana.Lunes);
+            usuarioRecetaService.create(usuarioReceta);
 
-            ListaComida listaComida1 = new ListaComida();
-            listaComida1.setComida(Comida.Cena);
-            listaComida1.setPlato(Plato.Primero);
-            listaComida1.setReceta(receta1);
-            listaComida1.setUsuario(usuarioService.loadUserByUsername("user"));
-            listaComida1.setFecha(LocalDate.now().plusDays(1));
-            listaComidaService.create(listaComida1);
+            UsuarioReceta usuarioReceta1 = new UsuarioReceta();
+            usuarioReceta1.setComida(Comida.Cena);
+            usuarioReceta1.setPlato(Plato.Primero);
+            usuarioReceta1.setReceta(receta1);
+            usuarioReceta1.setUsuario(usuarioService.loadUserByUsername("user"));
+            usuarioReceta1.setFecha(FechaSemana.Lunes);
+            usuarioRecetaService.create(usuarioReceta1);
 
-            ListaComida listaComida2 = new ListaComida();
-            listaComida2.setComida(Comida.Desayuno);
-            listaComida2.setPlato(Plato.Primero);
-            listaComida2.setReceta(receta1);
-            listaComida2.setUsuario(usuarioService.loadUserByUsername("user"));
-            listaComida2.setFecha(LocalDate.now().plusDays(1));
-            listaComidaService.create(listaComida2);
+            UsuarioReceta usuarioReceta2 = new UsuarioReceta();
+            usuarioReceta2.setComida(Comida.Desayuno);
+            usuarioReceta2.setPlato(Plato.Primero);
+            usuarioReceta2.setReceta(receta1);
+            usuarioReceta2.setUsuario(usuarioService.loadUserByUsername("user"));
+            usuarioReceta2.setFecha(FechaSemana.Lunes);
+            usuarioRecetaService.create(usuarioReceta2);
 
             Producto producto = new Producto();
             producto.setNombre("Lechuga iceberg");

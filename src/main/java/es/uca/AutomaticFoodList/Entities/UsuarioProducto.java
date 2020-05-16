@@ -3,7 +3,7 @@ package es.uca.AutomaticFoodList.Entities;
 import javax.persistence.*;
 
 @Entity
-public class ListaCompra {
+public class UsuarioProducto {
     @Id //esto sirve para decir cual es el id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
     private Long id;

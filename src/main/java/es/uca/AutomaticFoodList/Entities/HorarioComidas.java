@@ -12,13 +12,10 @@ import java.util.List;
 @PlanningSolution
 public class HorarioComidas {
     @ProblemFactCollectionProperty
-    private List<Usuario> usuarioList;
-
-    @ProblemFactCollectionProperty
     private List<Receta> recetaList;
 
     @PlanningEntityCollectionProperty
-    private List<ListaComida> listaComidas;
+    private List<UsuarioReceta> usuarioRecetas;
 
     @PlanningScore
     private HardSoftScore score;
@@ -30,24 +27,20 @@ public class HorarioComidas {
     }
 
     public HorarioComidas(List<Usuario> usuarioList, List<Receta> recetaList,
-                     List<ListaComida> listaComidas) {
-        this.listaComidas = listaComidas;
+                     List<UsuarioReceta> usuarioRecetas) {
+        this.usuarioRecetas = usuarioRecetas;
         this.recetaList = recetaList;
-        this.usuarioList = usuarioList;
     }
 
 
-    public List<ListaComida> getListaComidas() {
-        return listaComidas;
+    public List<UsuarioReceta> getUsuarioRecetas() {
+        return usuarioRecetas;
     }
 
     public List<Receta> getRecetaList() {
         return recetaList;
     }
 
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
 
     public HardSoftScore getScore() {
         return score;

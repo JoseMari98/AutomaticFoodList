@@ -4,18 +4,15 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import es.uca.AutomaticFoodList.Entities.ListaComida;
+import es.uca.AutomaticFoodList.Entities.UsuarioReceta;
 import es.uca.AutomaticFoodList.Entities.Usuario;
 import es.uca.AutomaticFoodList.Forms.ListaComidasForm;
 import es.uca.AutomaticFoodList.Forms.SeleccionPlatoForm;
-import es.uca.AutomaticFoodList.GenerarListaComida;
-import es.uca.AutomaticFoodList.Services.ListaComidaService;
+import es.uca.AutomaticFoodList.Services.UsuarioRecetaService;
 import es.uca.AutomaticFoodList.Services.RecetaIngredienteService;
 import es.uca.AutomaticFoodList.Services.RecetaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,23 +22,23 @@ import org.vaadin.klaudeta.PaginatedGrid;
 @Route(value = "ListaComidasView", layout = MainView.class)
 @Secured({"User", "Admin", "Gerente"})
 public class ListaComidasView extends AbstractView{
-    private PaginatedGrid<ListaComida> grid = new PaginatedGrid<>();
-    private ListaComidaService listaComidaService;
+    private PaginatedGrid<UsuarioReceta> grid = new PaginatedGrid<>();
+    private UsuarioRecetaService usuarioRecetaService;
     private ListaComidasForm listaComidasForm;
     private SeleccionPlatoForm seleccionPlatoForm;
 
     @Autowired
-    public ListaComidasView(ListaComidaService listaComidaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService) {
-        this.listaComidaService = listaComidaService;
-        this.listaComidasForm = new ListaComidasForm(this, listaComidaService, recetaService, recetaIngredienteService);
-        this.seleccionPlatoForm = new SeleccionPlatoForm(this, listaComidaService, recetaService);
+    public ListaComidasView(UsuarioRecetaService usuarioRecetaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService) {
+        this.usuarioRecetaService = usuarioRecetaService;
+        this.listaComidasForm = new ListaComidasForm(this, usuarioRecetaService, recetaService, recetaIngredienteService);
+        this.seleccionPlatoForm = new SeleccionPlatoForm(this, usuarioRecetaService, recetaService);
 
-        if(listaComidaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()){
+        if(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()){
             Dialog dialog = new Dialog();
 
             Label label = new Label("Oh, parece que no tienes ninguna lista de comidas, quieres generar una?");
             Button confirmButton = new Button("Confirmar", event -> {
-                GenerarListaComida.generarListaComida();
+                usuarioRecetaService.generarListaCompra();
                 UI.getCurrent().navigate("ListaComidasView");
                 dialog.close();
             });
@@ -64,9 +61,9 @@ public class ListaComidasView extends AbstractView{
         HorizontalLayout toolbar = new HorizontalLayout(addPlatoButton);
         //grid.addColumn(ListaComida::getReceta).setHeader("Receta").setSortable(true);
         grid.addColumn(ListaComida -> ListaComida.getReceta().getNombre()).setHeader("Receta").setSortable(true);
-        grid.addColumn(ListaComida::getComida).setHeader("Comida").setSortable(true);
-        grid.addColumn(ListaComida::getPlato).setHeader("Plato").setSortable(true);
-        grid.addColumn(ListaComida -> ListaComida.getFecha().getDayOfMonth() + "/" + ListaComida.getFecha().getMonthValue()).setHeader("Fecha").setSortable(true);
+        grid.addColumn(UsuarioReceta::getComida).setHeader("Comida").setSortable(true);
+        grid.addColumn(UsuarioReceta::getPlato).setHeader("Plato").setSortable(true);
+        grid.addColumn(ListaComida -> ListaComida.getFecha() + "/" + ListaComida.getFecha()).setHeader("Fecha").setSortable(true);
         //grid.setColumns("receta.nombre", "comida", "plato", "fecha");
         //grid.setItems(listaComidaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
 
@@ -97,6 +94,6 @@ public class ListaComidasView extends AbstractView{
     }
 
     public void updateList(){
-        grid.setItems(listaComidaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
+        grid.setItems(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
     }
 }

@@ -21,7 +21,7 @@ public class RecetasForm extends FormLayout {
     private ValoresNutricionalesService valoresNutricionalesService;
     private RecetaIngredienteService recetaIngredienteService;
     private Receta receta;
-    private ListaComidaService listaComidaService;
+    private UsuarioRecetaService usuarioRecetaService;
     private H1 titulo = new H1("Informacion de receta");
     private H2 titulo2 = new H2("Ingredientes");
     private Label datos = new Label();
@@ -30,12 +30,12 @@ public class RecetasForm extends FormLayout {
     private VerticalLayout contenido = new VerticalLayout();
 
     public RecetasForm(RecetasView recetasView, RecetaService recetaService, ValoresNutricionalesService valoresNutricionalesService,
-                       RecetaIngredienteService recetaIngredienteService, ListaComidaService listaComidaService) {
+                       RecetaIngredienteService recetaIngredienteService, UsuarioRecetaService usuarioRecetaService) {
         this.recetaService = recetaService;
         this.valoresNutricionalesService = valoresNutricionalesService;
         this.recetaIngredienteService = recetaIngredienteService;
         this.recetasView = recetasView;
-        this.listaComidaService = listaComidaService;
+        this.usuarioRecetaService = usuarioRecetaService;
 
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
@@ -86,9 +86,9 @@ public class RecetasForm extends FormLayout {
         if(!recetaIngredienteService.findByReceta(receta).isEmpty())
             for(RecetaIngrediente recetaIngrediente : recetaIngredienteService.findByReceta(receta))
                 recetaIngredienteService.delete(recetaIngrediente);
-        if(!listaComidaService.findByReceta(receta).isEmpty()){
-            for(ListaComida listaComida : listaComidaService.findByReceta(receta))
-                listaComidaService.delete(listaComida);
+        if(!usuarioRecetaService.findByReceta(receta).isEmpty()){
+            for(UsuarioReceta usuarioReceta : usuarioRecetaService.findByReceta(receta))
+                usuarioRecetaService.delete(usuarioReceta);
         }
     }
 }

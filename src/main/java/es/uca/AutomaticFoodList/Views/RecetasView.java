@@ -1,18 +1,14 @@
 package es.uca.AutomaticFoodList.Views;
 
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
-import es.uca.AutomaticFoodList.Entities.Ingrediente;
 import es.uca.AutomaticFoodList.Entities.Receta;
 import es.uca.AutomaticFoodList.Entities.Usuario;
-import es.uca.AutomaticFoodList.Forms.IngredienteForm;
 import es.uca.AutomaticFoodList.Forms.RecetasForm;
 import es.uca.AutomaticFoodList.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +25,10 @@ public class RecetasView extends AbstractView {
     private RecetasForm recetasForm;
 
     @Autowired
-    public RecetasView(RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService, ListaComidaService listaComidaService) {
+    public RecetasView(RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService, UsuarioRecetaService usuarioRecetaService) {
         if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null){
             this.recetaService = recetaService;
-            this.recetasForm = new RecetasForm(this, recetaService, valoresNutricionalesService, recetaIngredienteService, listaComidaService);
+            this.recetasForm = new RecetasForm(this, recetaService, valoresNutricionalesService, recetaIngredienteService, usuarioRecetaService);
 
             filterText.setPlaceholder("Filtrar por nombre"); //poner el campo
             filterText.setClearButtonVisible(true); //poner la cruz para borrar

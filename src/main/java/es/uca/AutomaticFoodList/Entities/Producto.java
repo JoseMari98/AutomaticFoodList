@@ -17,7 +17,7 @@ public class Producto {
     private UnidadMedida unidad;
     private double peso;
     @OneToMany(mappedBy = "producto")
-    private Set<ListaCompra> listaCompras = new HashSet<>();
+    private Set<UsuarioProducto> usuarioProductos = new HashSet<>();
     @ManyToOne
     private Ingrediente ingrediente;
     @Enumerated(EnumType.STRING)
@@ -51,8 +51,8 @@ public class Producto {
         return ingrediente;
     }
 
-    public Set<ListaCompra> getListaCompras() {
-        return listaCompras;
+    public Set<UsuarioProducto> getUsuarioProductos() {
+        return usuarioProductos;
     }
 
     public void setCategoria(Categoria categoria) {
@@ -63,8 +63,8 @@ public class Producto {
         this.ingrediente = ingrediente;
     }
 
-    public void setListaCompras(Set<ListaCompra> listaCompras) {
-        this.listaCompras = listaCompras;
+    public void setUsuarioProductos(Set<UsuarioProducto> usuarioProductos) {
+        this.usuarioProductos = usuarioProductos;
     }
 
     public void setId(Long id) {

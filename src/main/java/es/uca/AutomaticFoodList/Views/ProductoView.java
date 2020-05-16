@@ -22,9 +22,9 @@ public class ProductoView extends AbstractView {
     private ProductoForm productoForm;
 
     @Autowired
-    public ProductoView(ProductoService productoService, IngredienteService ingredienteService, ListaCompraService listaCompraService) {
+    public ProductoView(ProductoService productoService, IngredienteService ingredienteService, UsuarioProductoService usuarioProductoService) {
         this.productoService = productoService;
-        this.productoForm = new ProductoForm(this, productoService, ingredienteService, listaCompraService);
+        this.productoForm = new ProductoForm(this, productoService, ingredienteService, usuarioProductoService);
 
         filterText.setPlaceholder("Filtrar por nombre"); //poner el campo
         filterText.setClearButtonVisible(true); //poner la cruz para borrar

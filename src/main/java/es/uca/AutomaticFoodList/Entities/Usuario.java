@@ -1,8 +1,6 @@
 package es.uca.AutomaticFoodList.Entities;
 
 
-import org.optaplanner.core.api.domain.entity.PlanningEntity;
-import org.optaplanner.core.api.domain.lookup.PlanningId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,10 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.*;
 
-@PlanningEntity
 @Entity
 public class Usuario implements UserDetails {
-    @PlanningId
     @Id //esto sirve para decir cual es el id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
     private Long id;
@@ -33,7 +29,7 @@ public class Usuario implements UserDetails {
     @OneToOne
     private ValoresNutricionales valoresNutricionales;
     @OneToMany(mappedBy = "usuario")
-    private Set<ListaCompra> listaCompras = new HashSet<>();
+    private Set<UsuarioProducto> usuarioProductos = new HashSet<>();
     @OneToMany(mappedBy = "usuario")
     private Set<IntoleranciaUsuario> intoleranciaUsuarioSet;
     private String SignosValoresNutrcionales;
@@ -46,8 +42,8 @@ public class Usuario implements UserDetails {
         return id;
     }
 
-    public Set<ListaCompra> getListaCompras() {
-        return listaCompras;
+    public Set<UsuarioProducto> getUsuarioProductos() {
+        return usuarioProductos;
     }
 
     public ValoresNutricionales getValoresNutricionales() {
@@ -62,8 +58,8 @@ public class Usuario implements UserDetails {
         this.valoresNutricionales = valoresNutricionales;
     }
 
-    public void setListaCompras(Set<ListaCompra> listaCompras) {
-        this.listaCompras = listaCompras;
+    public void setUsuarioProductos(Set<UsuarioProducto> usuarioProductos) {
+        this.usuarioProductos = usuarioProductos;
     }
 
     public void setIntoleranciaUsuarioSet(Set<IntoleranciaUsuario> intoleranciaUsuarioSet) {
@@ -149,7 +145,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> list = new ArrayList<>();
         list.add(new SimpleGrantedAuthority(role));
         return list;
     }

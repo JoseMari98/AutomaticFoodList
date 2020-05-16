@@ -18,7 +18,6 @@ import es.uca.AutomaticFoodList.Entities.RecetaIngrediente;
 import es.uca.AutomaticFoodList.Entities.Usuario;
 import es.uca.AutomaticFoodList.Forms.AnadirIngredienteForm;
 import es.uca.AutomaticFoodList.Forms.CrearRecetaForm;
-import es.uca.AutomaticFoodList.Forms.IngredientesUsuarioForm;
 import es.uca.AutomaticFoodList.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -31,7 +30,6 @@ import java.util.List;
 @Secured("User")
 public class CrearRecetaView extends AbstractView {
     public PaginatedGrid<RecetaIngrediente> grid = new PaginatedGrid<>();
-    //private TextField filterText = new TextField();
     private IngredienteService ingredienteService;
     private RecetaIngredienteService recetaIngredienteService;
     private RecetaService recetaService;

@@ -18,10 +18,11 @@ import es.uca.AutomaticFoodList.Services.RecetaIngredienteService;
 import es.uca.AutomaticFoodList.Views.CrearRecetaView;
 
 public class AnadirIngredienteForm extends FormLayout {
-    private ComboBox<Ingrediente> ingrediente = new ComboBox<>("Ingrediente");
-    private ComboBox<UnidadMedida> unidadMedida = new ComboBox<>("Unidad medida");
-    private NumberField cantidad = new NumberField("Cantidad");
-    private Button guardar = new Button("Guardar ingrediente");
+    ComboBox<Ingrediente> ingrediente = new ComboBox<>("Ingrediente");
+    ComboBox<UnidadMedida> unidadMedida = new ComboBox<>("Unidad medida");
+    NumberField cantidad = new NumberField("Cantidad");
+
+    Button guardar = new Button("Guardar ingrediente");
     private Button cancelar = new Button("Cancelar");
     private CrearRecetaView crearRecetaView;
     private RecetaIngredienteService recetaIngredienteService;
@@ -55,6 +56,12 @@ public class AnadirIngredienteForm extends FormLayout {
             crearRecetaView.fullGrid.setVisible(true);
         });
         guardar.addClickListener(event -> save());
+    }
+
+    public void setRecetaIngrediente(RecetaIngrediente recetaIngrediente){
+        ingrediente.setValue(recetaIngrediente.getIngrediente());
+        unidadMedida.setValue(recetaIngrediente.getUnidadMedida());
+        cantidad.setValue(recetaIngrediente.getCantidad());
     }
 
     public void save() {

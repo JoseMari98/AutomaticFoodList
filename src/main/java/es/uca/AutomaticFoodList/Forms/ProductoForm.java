@@ -13,7 +13,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import es.uca.AutomaticFoodList.Entities.*;
 import es.uca.AutomaticFoodList.Services.*;
-import es.uca.AutomaticFoodList.Views.IngredienteView;
 import es.uca.AutomaticFoodList.Views.ProductoView;
 
 public class ProductoForm extends FormLayout {
@@ -29,12 +28,12 @@ public class ProductoForm extends FormLayout {
     private BeanValidationBinder<Producto> binder = new BeanValidationBinder<>(Producto.class);
     private IngredienteService ingredienteService;
     private ProductoService productoService;
-    private ListaCompraService listaCompraService;
+    private UsuarioProductoService usuarioProductoService;
 
-    public ProductoForm(ProductoView productoView, ProductoService productoService, IngredienteService ingredienteService, ListaCompraService listaCompraService) {
+    public ProductoForm(ProductoView productoView, ProductoService productoService, IngredienteService ingredienteService, UsuarioProductoService usuarioProductoService) {
         this.ingredienteService = ingredienteService;
         this.productoService = productoService;
-        this.listaCompraService = listaCompraService;
+        this.usuarioProductoService = usuarioProductoService;
         this.productoView = productoView;
 
         precio.setSuffixComponent(new Span("€"));
@@ -110,8 +109,8 @@ public class ProductoForm extends FormLayout {
     }
 
     public void borrarPadres(Producto producto){
-        if(!listaCompraService.findByProducto(producto.getNombre()).isEmpty())
-            for(ListaCompra listaCompra : listaCompraService.findByProducto(producto.getNombre()))
-                listaCompraService.delete(listaCompra);
+        if(!usuarioProductoService.findByProducto(producto.getNombre()).isEmpty())
+            for(UsuarioProducto usuarioProducto : usuarioProductoService.findByProducto(producto.getNombre()))
+                usuarioProductoService.delete(usuarioProducto);
     }
 }

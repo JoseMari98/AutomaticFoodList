@@ -3,7 +3,7 @@ package es.uca.AutomaticFoodList.Forms;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
@@ -12,7 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import es.uca.AutomaticFoodList.Entities.*;
-import es.uca.AutomaticFoodList.Services.ListaComidaService;
+import es.uca.AutomaticFoodList.Services.UsuarioRecetaService;
 import es.uca.AutomaticFoodList.Services.RecetaService;
 import es.uca.AutomaticFoodList.Views.ListaComidasView;
 
@@ -21,30 +21,26 @@ import java.util.List;
 import java.util.Random;
 
 public class SeleccionPlatoForm extends FormLayout {
-    private DatePicker fecha = new DatePicker();
+    ComboBox<FechaSemana> fecha = new ComboBox<>("Fecha");
     private Select<Comida> comidaSelect = new Select<>(Comida.Desayuno, Comida.Almuerzo, Comida.Cena);
     private Select<Plato> platoSelect = new Select<>(Plato.Primero, Plato.Segundo, Plato.Postre);
     private Button generar = new Button("Generar");
     private Button cancelar = new Button("Cancelar");
-    private ListaComida listaComida;
-    BeanValidationBinder<ListaComida> binder = new BeanValidationBinder<>(ListaComida.class);
+    private UsuarioReceta usuarioReceta;
+    BeanValidationBinder<UsuarioReceta> binder = new BeanValidationBinder<>(UsuarioReceta.class);
     private RecetaService recetaService;
-    private ListaComidaService listaComidaService;
+    private UsuarioRecetaService usuarioRecetaService;
     private ListaComidasView listaComidasView;
 
-    public SeleccionPlatoForm(ListaComidasView listaComidasView, ListaComidaService listaComidaService, RecetaService recetaService){
+    public SeleccionPlatoForm(ListaComidasView listaComidasView, UsuarioRecetaService usuarioRecetaService, RecetaService recetaService){
         this.recetaService = recetaService;
-        this.listaComidaService = listaComidaService;
+        this.usuarioRecetaService = usuarioRecetaService;
         this.listaComidasView = listaComidasView;
-        listaComida = new ListaComida();
+        usuarioReceta = new UsuarioReceta();
         H1 titulo = new H1("Introduce lo siguiente:");
-        fecha.setValue(LocalDate.now());
         comidaSelect.setValue(Comida.Desayuno);
         platoSelect.setValue(Plato.Primero);
-        fecha.setLabel("Fecha");
-        fecha.setValue(LocalDate.now());
-        fecha.setMin(LocalDate.now());
-        fecha.setMax(LocalDate.now().plusDays(7));
+        fecha.setItems(FechaSemana.values());
         fecha.setRequired(true);
         fecha.setRequiredIndicatorVisible(true);
         platoSelect.setRequiredIndicatorVisible(true);
@@ -59,18 +55,16 @@ public class SeleccionPlatoForm extends FormLayout {
 
     public void generarAleatoria() {
         if(fecha.getValue() != null && platoSelect.getValue() != null && comidaSelect.getValue() != null) {
-            listaComida.setFecha(fecha.getValue());
-            listaComida.setPlato(platoSelect.getValue());
-            listaComida.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
-            listaComida.setComida(comidaSelect.getValue());
-            if(!listaComidaService.findByUsuarioAndComidaAndPlatoAndFecha(listaComida.getUsuario(), listaComida.getComida(), listaComida.getPlato(), listaComida.getFecha().plusDays(1)).isPresent()){ //buscar si existe esta tupla
+            usuarioReceta.setFecha(fecha.getValue());
+            usuarioReceta.setPlato(platoSelect.getValue());
+            usuarioReceta.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
+            usuarioReceta.setComida(comidaSelect.getValue());
+            if(!usuarioRecetaService.findByUsuarioAndComidaAndPlatoAndFecha(usuarioReceta.getUsuario(), usuarioReceta.getComida(), usuarioReceta.getPlato(), usuarioReceta.getFecha()).isPresent()){ //buscar si existe esta tupla
                 Random random = new Random();
-                LocalDate fecha = listaComida.getFecha();
                 List<Receta> recetaList = recetaService.findAll();
                 int numero = random.nextInt(recetaList.size());
-                listaComida.setReceta(recetaList.get(numero)); //genero una comida random sin tener en cuenta los requisitos del usuario
-                listaComida.setFecha(fecha.plusDays(1));
-                listaComidaService.update(listaComida);
+                usuarioReceta.setReceta(recetaList.get(numero)); //genero una comida random sin tener en cuenta los requisitos del usuario
+                usuarioRecetaService.update(usuarioReceta);
                 this.listaComidasView.updateList();
                 this.setVisible(false);
             } else

@@ -17,13 +17,16 @@ import es.uca.AutomaticFoodList.Services.IngredienteService;
 import es.uca.AutomaticFoodList.Services.PreferenciaIngredienteService;
 import es.uca.AutomaticFoodList.Services.RecetaIngredienteService;
 import es.uca.AutomaticFoodList.Views.IngredienteView;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 public class IngredienteForm extends FormLayout {
-    private TextField nombre = new TextField("Nombre");
-    private TextField idApi = new TextField("Id api");
-    private ComboBox<Categoria> categoria = new ComboBox<>("Categoria");
-    private Button save = new Button("Añadir");
-    private Button delete = new Button("Borrar");
+    TextField nombre = new TextField("Nombre");
+    TextField idApi = new TextField("Id api");
+    ComboBox<Categoria> categoria = new ComboBox<>("Categoria");
+    Button save = new Button("Añadir");
+    Button delete = new Button("Borrar");
+
     private IngredienteView ingredienteView;
     private BeanValidationBinder<Ingrediente> binder = new BeanValidationBinder<>(Ingrediente.class);
     private IngredienteService ingredienteService;

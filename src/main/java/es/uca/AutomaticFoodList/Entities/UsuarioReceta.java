@@ -16,23 +16,25 @@ import java.util.Date;
 
 @PlanningEntity
 @Entity
-public class ListaComida {
+public class UsuarioReceta {
     @PlanningId
     @Id //esto sirve para decir cual es el id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
     private Long id;
+    @PlanningVariable
     @Enumerated(EnumType.STRING)
     private Comida comida;
+    @PlanningVariable
     @Enumerated(EnumType.STRING)
     private Plato plato;
     @PlanningVariable
     @ManyToOne
     private Receta receta;
-    @PlanningVariable
     @ManyToOne
     private Usuario usuario;
+    @PlanningVariable
     @Column(nullable = false)
-    private LocalDate fecha;
+    private FechaSemana fechaSemana;
 
     public Long getId() {
         return id;
@@ -42,8 +44,8 @@ public class ListaComida {
         return comida;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public FechaSemana getFecha() {
+        return fechaSemana;
     }
 
     public Plato getPlato() {
@@ -66,8 +68,8 @@ public class ListaComida {
         this.comida = comida;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public void setFecha(FechaSemana fechaSemana) {
+        this.fechaSemana = fechaSemana;
     }
 
     public void setPlato(Plato plato) {
