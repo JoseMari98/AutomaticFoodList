@@ -39,7 +39,7 @@ public class ListaComidasForm extends FormLayout {
     private VerticalLayout informacion = new VerticalLayout();
     private HorizontalLayout buttons = new HorizontalLayout();
     private VerticalLayout contenido = new VerticalLayout();
-
+    private Random random = new Random();
 
     public ListaComidasForm(ListaComidasView listaComidasView, UsuarioRecetaService usuarioRecetaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService) {
         this.usuarioRecetaService = usuarioRecetaService;
@@ -54,11 +54,13 @@ public class ListaComidasForm extends FormLayout {
         buttons.add(generarAleatoria, delete);
 
         generarAleatoria.addClickListener(event -> {
-            if(binder.getBean() != null)
-                generarAleatoria();});
+            if (binder.getBean() != null)
+                generarAleatoria();
+        });
         delete.addClickListener(event -> {
-            if(binder.getBean() != null)
-                delete();});
+            if (binder.getBean() != null)
+                delete();
+        });
     }
 
     public void setListaComida(UsuarioReceta usuarioReceta) {
@@ -67,34 +69,35 @@ public class ListaComidasForm extends FormLayout {
         setVisible(usuarioReceta != null);
     }
 
-    public void datosReceta(UsuarioReceta usuarioReceta){
+    public void datosReceta(UsuarioReceta usuarioReceta) {
         datos.removeAll();
         informacion.removeAll();
         ingredientes.removeAll();
         contenido.removeAll();
         this.removeAll();
-        if(usuarioReceta != null) {
+        if (usuarioReceta != null) {
             Optional<Receta> receta = recetaService.findById(usuarioReceta.getReceta());
-            String s = receta.get().getNombre() + "\n" + receta.get().getPrecioAproximado();
-            datos = new Label(s);
-            List<RecetaIngrediente> recetaIngredienteList = recetaIngredienteService.findByReceta(receta.get());
-            for (RecetaIngrediente recetaIngrediente : recetaIngredienteList) {
-                ingredientes.add(recetaIngrediente.getIngrediente().getNombre() + '\n');
+            if (receta.isPresent()) {
+                String s = receta.get().getNombre() + "\n" + receta.get().getPrecioAproximado();
+                datos = new Label(s);
+                List<RecetaIngrediente> recetaIngredienteList = recetaIngredienteService.findByReceta(receta.get());
+                for (RecetaIngrediente recetaIngrediente : recetaIngredienteList) {
+                    ingredientes.add(recetaIngrediente.getIngrediente().getNombre() + '\n');
+                }
+                informacion.add(titulo, datos, titulo2, ingredientes);
+                contenido.add(informacion, buttons);
+                add(contenido);
             }
-            informacion.add(titulo, datos, titulo2, ingredientes);
-            contenido.add(informacion, buttons);
-            add(contenido);
         }
     }
 
     public void generarAleatoria() {
         UsuarioReceta usuarioReceta = binder.getBean();
-        Random random = new Random();
         FechaSemana fecha = usuarioReceta.getFecha();
-        if(binder.validate().isOk()) {
+        if (binder.validate().isOk()) {
             List<Receta> recetaList = recetaService.findAll();
             int numero = random.nextInt(recetaList.size());
-            while(recetaList.get(numero).getId().equals(usuarioReceta.getReceta().getId()))
+            while (recetaList.get(numero).getId().equals(usuarioReceta.getReceta().getId()))
                 numero = random.nextInt(recetaList.size());
             usuarioReceta.setReceta(recetaList.get(numero)); //genero una comida random sin tener en cuenta los requisitos del usuario
             usuarioReceta.setFecha(fecha);

@@ -30,6 +30,7 @@ public class SeleccionPlatoForm extends FormLayout {
     private RecetaService recetaService;
     private UsuarioRecetaService usuarioRecetaService;
     private ListaComidasView listaComidasView;
+    private Random random = new Random();
 
     public SeleccionPlatoForm(ListaComidasView listaComidasView, UsuarioRecetaService usuarioRecetaService, RecetaService recetaService) {
         this.recetaService = recetaService;
@@ -59,7 +60,6 @@ public class SeleccionPlatoForm extends FormLayout {
             usuarioReceta.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
             usuarioReceta.setComida(comidaSelect.getValue());
             if (!usuarioRecetaService.findByUsuarioAndComidaAndPlatoAndFecha(usuarioReceta.getUsuario(), usuarioReceta.getComida(), usuarioReceta.getPlato(), usuarioReceta.getFecha()).isPresent()) { //buscar si existe esta tupla
-                Random random = new Random();
                 List<Receta> recetaList = recetaService.findAll();
                 int numero = random.nextInt(recetaList.size());
                 usuarioReceta.setReceta(recetaList.get(numero)); //genero una comida random sin tener en cuenta los requisitos del usuario

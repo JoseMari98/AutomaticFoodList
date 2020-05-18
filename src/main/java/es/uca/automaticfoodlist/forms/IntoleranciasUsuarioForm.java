@@ -38,7 +38,10 @@ public class IntoleranciasUsuarioForm extends FormLayout {
         if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
             intoleranciaUsuarioList = intoleranciaUsuarioService.buscarPorUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)); //Tuplas entre las asociaciones
             for(IntoleranciaUsuario intoleranciaUsuario : intoleranciaUsuarioList){
-                checkboxVector.elementAt(Long.valueOf(intoleranciaUsuario.getIntolerancia().getId() - 1).intValue()).setValue(true); //Los elementos que esten en la lista es que ya tienen la intolerancia
+                long id = intoleranciaUsuario.getIntolerancia().getId() - 1;
+                int indice = (int) id;
+                checkboxVector.elementAt(indice).setValue(true); //Los elementos que esten en la lista es que ya tienen la intolerancia
+                //checkboxVector.elementAt(Long.valueOf(intoleranciaUsuario.getIntolerancia().getId() - 1).intValue()).setValue(true); //Los elementos que esten en la lista es que ya tienen la intolerancia
             }
 
         } else {
@@ -46,8 +49,11 @@ public class IntoleranciasUsuarioForm extends FormLayout {
         }
 
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        for(Intolerancia intolerancia : intoleranciaService.findAllOrderById())
-            checkboxes.add(checkboxVector.elementAt(Long.valueOf(intolerancia.getId() - 1).intValue()));
+        for (Intolerancia intolerancia : intoleranciaService.findAllOrderById()) {
+            long id = intolerancia.getId() - 1;
+            int indice = (int) id;
+            checkboxes.add(checkboxVector.elementAt(indice));
+        }
         checkboxes.add(save);
         add(checkboxes);
         save.addClickShortcut(Key.ENTER);
@@ -57,15 +63,17 @@ public class IntoleranciasUsuarioForm extends FormLayout {
 
     public void save() {
         int cont = 0;
-        for(Intolerancia intolerancia : intoleranciaService.findAllOrderById()){
+        for(Intolerancia intolerancia : intoleranciaService.findAllOrderById()) {
             IntoleranciaUsuario intoleranciaUsuario = intoleranciaUsuarioService.buscarPorUsuarioEIntolerancia(UI.getCurrent().getSession().getAttribute(Usuario.class), intolerancia);
-            if(checkboxVector.elementAt(Long.valueOf(intolerancia.getId() - 1).intValue()).getValue() && intoleranciaUsuario == null){ //Para el caso de que se haya marcado y no exista
+            long id = intolerancia.getId() - 1;
+            int indice = (int) id;
+            if (checkboxVector.elementAt(indice).getValue() && intoleranciaUsuario == null) { //Para el caso de que se haya marcado y no exista
                 IntoleranciaUsuario intoleranciaUsuario1 = new IntoleranciaUsuario();
                 intoleranciaUsuario1.setIntolerancia(intolerancia); //Introducimos la intolerancia
                 intoleranciaUsuario1.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)); //Introducimos el usuario
                 intoleranciaUsuarioService.create(intoleranciaUsuario1);
-            } else{
-                if(!checkboxVector.elementAt(Long.valueOf(intolerancia.getId() - 1).intValue()).getValue() && intoleranciaUsuario != null){
+            } else {
+                if (!checkboxVector.elementAt(indice).getValue() && intoleranciaUsuario != null) {
                     intoleranciaUsuarioService.delete(intoleranciaUsuario);
                 }
             }
