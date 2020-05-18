@@ -5,7 +5,6 @@ import es.uca.AutomaticFoodList.Repositories.UsuarioRecetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,23 +29,23 @@ public class UsuarioRecetaService {
         return usuarioRecetaRepository.findById(id);
     }
 
-    public Optional<UsuarioReceta> findByUsuarioAndComidaAndPlatoAndFecha(Usuario usuario, Comida comida, Plato plato, FechaSemana fecha){
-        return usuarioRecetaRepository.findByUsuarioAndComidaAndFechaAndPlato(usuario, comida, fecha, plato);
+    public Optional<UsuarioReceta> findByUsuarioAndComidaAndPlatoAndFecha(Usuario usuario, Comida comida, Plato plato, FechaSemana fechaSemana) {
+        return usuarioRecetaRepository.findByUsuarioAndComidaAndFechaSemanaAndPlato(usuario, comida, fechaSemana, plato);
     }
 
-    public List<UsuarioReceta> findByUsuarioAndComidaAndPlato(Usuario usuario, Comida comida, Plato plato){
+    public List<UsuarioReceta> findByUsuarioAndComidaAndPlato(Usuario usuario, Comida comida, Plato plato) {
         return usuarioRecetaRepository.findByUsuarioAndComidaAndPlato(usuario, comida, plato);
     }
 
-    public List<UsuarioReceta> findByReceta(Receta receta){
+    public List<UsuarioReceta> findByReceta(Receta receta) {
         return usuarioRecetaRepository.findByReceta(receta);
     }
 
-    public List<UsuarioReceta> findByUsuarioAndComida(Usuario usuario, Comida comida){
+    public List<UsuarioReceta> findByUsuarioAndComida(Usuario usuario, Comida comida) {
         return usuarioRecetaRepository.findByUsuarioAndComida(usuario, comida);
     }
 
-    public List<UsuarioReceta> findByUsuario(Usuario usuario){
+    public List<UsuarioReceta> findByUsuario(Usuario usuario) {
         return usuarioRecetaRepository.findByUsuario(usuario);
     }
 
@@ -58,7 +57,7 @@ public class UsuarioRecetaService {
         usuarioRecetaRepository.delete(usuarioReceta);
     }
 
-    public void generarListaCompra(){
+    public void generarListaCompra() {
 
     }
 }

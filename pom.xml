@@ -17,6 +17,11 @@
 
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
         <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
+
+        <sonar.projectKey>JoseMari98_AutomaticFoodList</sonar.projectKey>
+        <sonar.organization>josemari98</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.login>5f1da46946f7a19bb92fd7b4f7e5b6bf3ebaae56</sonar.login>
     </properties>
 
     <parent>

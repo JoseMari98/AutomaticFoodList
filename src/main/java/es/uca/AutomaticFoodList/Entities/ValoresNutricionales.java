@@ -4,13 +4,13 @@ import javax.persistence.*;
 
 @Entity
 public class ValoresNutricionales {
-    @Id //esto sirve para decir cual es el id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double caloriasPlato, grasaPlato, hidratosPlato, proteinaPlato;
-    @OneToOne(mappedBy = "valoresNutricionales", cascade=CascadeType.ALL)
+    @OneToOne(mappedBy = "valoresNutricionales", cascade = CascadeType.ALL)
     private Usuario usuario;
-    @OneToOne(mappedBy = "valoresNutricionales", cascade=CascadeType.ALL)
+    @OneToOne(mappedBy = "valoresNutricionales", cascade = CascadeType.ALL)
     private Receta receta;
 
     public Long getId() {

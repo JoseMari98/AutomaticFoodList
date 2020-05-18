@@ -1,12 +1,11 @@
 package es.uca.AutomaticFoodList.Entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class PreferenciaIngrediente {
-    @Id //esto sirve para decir cual es el id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Usuario usuario;

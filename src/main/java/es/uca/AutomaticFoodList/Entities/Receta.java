@@ -1,6 +1,5 @@
 package es.uca.AutomaticFoodList.Entities;
 
-import org.optaplanner.core.api.domain.entity.PlanningEntity;
 import org.optaplanner.core.api.domain.lookup.PlanningId;
 
 import javax.persistence.*;
@@ -11,8 +10,8 @@ import java.util.Set;
 @Entity
 public class Receta {
     @PlanningId
-    @Id //esto sirve para decir cual es el id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Este campo es obligatorio")
     @Column(unique = true)
@@ -22,7 +21,7 @@ public class Receta {
     @OneToOne
     private ValoresNutricionales valoresNutricionales;
     private double precioAproximado;
-    @OneToMany(mappedBy = "receta") //esto para decir la cardinalidad y a que variable se asocia
+    @OneToMany(mappedBy = "receta")
     private Set<RecetaIngrediente> recetaIngredientes = new HashSet<>();
     @OneToOne
     private Usuario usuario;

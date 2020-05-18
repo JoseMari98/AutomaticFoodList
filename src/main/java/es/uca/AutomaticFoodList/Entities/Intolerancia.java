@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity
 public class Intolerancia {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Este campo es obligatorio")
     @Column(unique = true)

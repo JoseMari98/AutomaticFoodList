@@ -27,7 +27,7 @@ public class HorarioComidas {
     }
 
     public HorarioComidas(List<Usuario> usuarioList, List<Receta> recetaList,
-                     List<UsuarioReceta> usuarioRecetas) {
+                          List<UsuarioReceta> usuarioRecetas) {
         this.usuarioRecetas = usuarioRecetas;
         this.recetaList = recetaList;
     }

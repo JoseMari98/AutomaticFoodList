@@ -16,7 +16,6 @@ import es.uca.AutomaticFoodList.Services.UsuarioRecetaService;
 import es.uca.AutomaticFoodList.Services.RecetaService;
 import es.uca.AutomaticFoodList.Views.ListaComidasView;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
@@ -32,7 +31,7 @@ public class SeleccionPlatoForm extends FormLayout {
     private UsuarioRecetaService usuarioRecetaService;
     private ListaComidasView listaComidasView;
 
-    public SeleccionPlatoForm(ListaComidasView listaComidasView, UsuarioRecetaService usuarioRecetaService, RecetaService recetaService){
+    public SeleccionPlatoForm(ListaComidasView listaComidasView, UsuarioRecetaService usuarioRecetaService, RecetaService recetaService) {
         this.recetaService = recetaService;
         this.usuarioRecetaService = usuarioRecetaService;
         this.listaComidasView = listaComidasView;
@@ -54,12 +53,12 @@ public class SeleccionPlatoForm extends FormLayout {
     }
 
     public void generarAleatoria() {
-        if(fecha.getValue() != null && platoSelect.getValue() != null && comidaSelect.getValue() != null) {
+        if (fecha.getValue() != null && platoSelect.getValue() != null && comidaSelect.getValue() != null) {
             usuarioReceta.setFecha(fecha.getValue());
             usuarioReceta.setPlato(platoSelect.getValue());
             usuarioReceta.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
             usuarioReceta.setComida(comidaSelect.getValue());
-            if(!usuarioRecetaService.findByUsuarioAndComidaAndPlatoAndFecha(usuarioReceta.getUsuario(), usuarioReceta.getComida(), usuarioReceta.getPlato(), usuarioReceta.getFecha()).isPresent()){ //buscar si existe esta tupla
+            if (!usuarioRecetaService.findByUsuarioAndComidaAndPlatoAndFecha(usuarioReceta.getUsuario(), usuarioReceta.getComida(), usuarioReceta.getPlato(), usuarioReceta.getFecha()).isPresent()) { //buscar si existe esta tupla
                 Random random = new Random();
                 List<Receta> recetaList = recetaService.findAll();
                 int numero = random.nextInt(recetaList.size());

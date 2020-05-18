@@ -8,19 +8,19 @@ import java.util.Set;
 
 @Entity
 public class Ingrediente {
-    @Id //esto sirve para decir cual es el id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Este campo es obligatorio")
     @Column(unique = true)
     private String nombre = "";
     @Column(unique = true)
     private String idApi = "";
-    @OneToMany(mappedBy = "ingrediente") //esto para decir la cardinalidad y a que variable se asocia
+    @OneToMany(mappedBy = "ingrediente")
     private Set<PreferenciaIngrediente> preferenciaIngredienteSet = new HashSet<>();
     @OneToMany(mappedBy = "ingrediente")
     private Set<RecetaIngrediente> recetaIngredientes = new HashSet<>();
-    @OneToMany(mappedBy = "ingrediente", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL)
     private Set<Producto> productos;
     @Enumerated(EnumType.STRING)
     private Categoria categoria;

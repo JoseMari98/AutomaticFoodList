@@ -17,8 +17,6 @@ import es.uca.AutomaticFoodList.Services.IngredienteService;
 import es.uca.AutomaticFoodList.Services.PreferenciaIngredienteService;
 import es.uca.AutomaticFoodList.Services.RecetaIngredienteService;
 import es.uca.AutomaticFoodList.Views.IngredienteView;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 public class IngredienteForm extends FormLayout {
     TextField nombre = new TextField("Nombre");
@@ -55,20 +53,21 @@ public class IngredienteForm extends FormLayout {
         binder.bindInstanceFields(this);
 
         save.addClickListener(event -> {
-            if(binder.getBean() != null)
-                save();});
+            if (binder.getBean() != null)
+                save();
+        });
         delete.addClickListener(event -> {
-            if(binder.getBean() != null)
-                delete();});
+            if (binder.getBean() != null)
+                delete();
+        });
     }
 
     public void setIngrediente(Ingrediente ingrediente) {
         binder.setBean(ingrediente);
 
-        if(ingrediente == null) {
+        if (ingrediente == null) {
             setVisible(false);
-        }
-        else {
+        } else {
             setVisible(true);
             nombre.focus();
         }
@@ -76,19 +75,18 @@ public class IngredienteForm extends FormLayout {
 
     public void save() {
         Ingrediente ingrediente = binder.getBean();
-        if(binder.validate().isOk()) {
+        if (binder.validate().isOk()) {
             ingredienteService.create(ingrediente);
             this.ingredienteView.updateList();
             setIngrediente(null);
-        }
-        else {
+        } else {
             Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);
         }
     }
 
     public void delete() {
         Ingrediente ingrediente = binder.getBean();
-        if(binder.validate().isOk()) {
+        if (binder.validate().isOk()) {
             //borrar las recetas que haya que borrar y productos y demas
             borrarPadres(ingrediente);
             ingredienteService.delete(ingrediente);
@@ -98,12 +96,12 @@ public class IngredienteForm extends FormLayout {
             Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);
     }
 
-    public void borrarPadres(Ingrediente ingrediente){
-        if(!preferenciaIngredienteService.findByIngrediente(ingrediente).isEmpty())
-            for(PreferenciaIngrediente preferenciaIngrediente : preferenciaIngredienteService.findByIngrediente(ingrediente))
+    public void borrarPadres(Ingrediente ingrediente) {
+        if (!preferenciaIngredienteService.findByIngrediente(ingrediente).isEmpty())
+            for (PreferenciaIngrediente preferenciaIngrediente : preferenciaIngredienteService.findByIngrediente(ingrediente))
                 preferenciaIngredienteService.delete(preferenciaIngrediente);
-        if(!recetaIngredienteService.findByIngrediente(ingrediente).isEmpty())
-            for(RecetaIngrediente recetaIngrediente : recetaIngredienteService.findByIngrediente(ingrediente))
+        if (!recetaIngredienteService.findByIngrediente(ingrediente).isEmpty())
+            for (RecetaIngrediente recetaIngrediente : recetaIngredienteService.findByIngrediente(ingrediente))
                 recetaIngredienteService.delete(recetaIngrediente);
     }
 }

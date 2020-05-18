@@ -12,7 +12,7 @@ import java.util.*;
 @Entity
 public class Usuario implements UserDetails {
     @Id //esto sirve para decir cual es el id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Este campo es obligatorio")
     private String nombre = "", apellido1 = "", password = "";
@@ -24,7 +24,7 @@ public class Usuario implements UserDetails {
     private String email = "";
     private String role = "";
     private double presupuestoPlato;
-    @OneToMany(mappedBy = "usuario") //esto para decir la cardinalidad y a que variable se asocia
+    @OneToMany(mappedBy = "usuario")
     private Set<PreferenciaIngrediente> preferenciaIngredienteSet = new HashSet<>();
     @OneToOne
     private ValoresNutricionales valoresNutricionales;
@@ -33,7 +33,7 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario")
     private Set<IntoleranciaUsuario> intoleranciaUsuarioSet;
     private String SignosValoresNutrcionales;
-    @OneToOne(mappedBy = "usuario", cascade=CascadeType.ALL)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Receta receta;
 
 

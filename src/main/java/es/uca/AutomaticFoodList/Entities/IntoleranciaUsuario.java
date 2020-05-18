@@ -1,13 +1,11 @@
 package es.uca.AutomaticFoodList.Entities;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class IntoleranciaUsuario {
-     //esto sirve para decir cual es el id
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Usuario usuario;

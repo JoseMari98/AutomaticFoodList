@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class IntoleranciaReceta {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Receta receta;

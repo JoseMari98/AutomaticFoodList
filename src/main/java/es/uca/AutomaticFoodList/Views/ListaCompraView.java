@@ -25,7 +25,7 @@ import java.util.Set;
 
 @Route(value = "ListaCompraView", layout = MainView.class)
 @Secured({"User", "Admin", "Gerente"})
-public class ListaCompraView extends AbstractView{
+public class ListaCompraView extends AbstractView {
     private PaginatedGrid<UsuarioProducto> grid = new PaginatedGrid<>();
     private UsuarioRecetaService usuarioRecetaService;
     private RecetaService recetaService;
@@ -40,15 +40,15 @@ public class ListaCompraView extends AbstractView{
                            UsuarioProductoService usuarioProductoService, ProductoService productoService, IngredienteService ingredienteService) {
         this.usuarioRecetaService = usuarioRecetaService;
         this.usuarioProductoService = usuarioProductoService;
-        if(usuarioProductoService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()){
-            if(!usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()){
+        if (usuarioProductoService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()) {
+            if (!usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()) {
                 Dialog dialog = new Dialog();
 
                 Label label = new Label("Oh, parece que no tienes lista de compra, quieres generar una?");
                 Button confirmButton = new Button("Confirmar", event -> {
                     usuarioProductoService.generarListaCompra(UI.getCurrent().getSession().getAttribute(Usuario.class), usuarioRecetaService, recetaIngredienteService, productoService, usuarioProductoService, ingredienteService);
                     List<UsuarioProducto> compraList = usuarioProductoService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
-                    for(UsuarioProducto listaCompra : compraList)
+                    for (UsuarioProducto listaCompra : compraList)
                         precioTotal += listaCompra.getProducto().getPrecio() * listaCompra.getCantidad();
                     precio.removeAll();
                     precio.add("Precio total de: " + precioTotal + "€");
@@ -65,9 +65,9 @@ public class ListaCompraView extends AbstractView{
             } else {
                 UI.getCurrent().navigate("ListaComidasView");
             }
-        } else{
+        } else {
             List<UsuarioProducto> compraList = usuarioProductoService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
-            for(UsuarioProducto usuarioProducto : compraList)
+            for (UsuarioProducto usuarioProducto : compraList)
                 precioTotal += usuarioProducto.getProducto().getPrecio() * usuarioProducto.getCantidad();
             precio.removeAll();
             precio.add("Precio total de: " + precioTotal + "€");
@@ -77,7 +77,7 @@ public class ListaCompraView extends AbstractView{
         filterText.setClearButtonVisible(true); //poner la cruz para borrar
         filterText.setValueChangeMode(ValueChangeMode.EAGER); //que se hagan los cambios cuando se escriba
         filterText.addValueChangeListener(event -> {
-            if(usuarioProductoService.findByProducto(filterText.getValue()) != null)
+            if (usuarioProductoService.findByProducto(filterText.getValue()) != null)
                 updateList();
             else {
                 filterText.clear();
@@ -97,11 +97,11 @@ public class ListaCompraView extends AbstractView{
 
         delete.addClickListener(e -> {
             Set<UsuarioProducto> usuarioProductos = grid.asMultiSelect().getSelectedItems();
-            for(UsuarioProducto usuarioProducto : usuarioProductos)
+            for (UsuarioProducto usuarioProducto : usuarioProductos)
                 precioTotal -= usuarioProducto.getProducto().getPrecio() * usuarioProducto.getCantidad();
             precio.removeAll();
             precio.add("Precio total de: " + precioTotal + "€");
-            if(!usuarioProductos.isEmpty())
+            if (!usuarioProductos.isEmpty())
                 delete(usuarioProductos);
         });
 
@@ -117,17 +117,17 @@ public class ListaCompraView extends AbstractView{
         updateList();
     }
 
-    public void delete(Set<UsuarioProducto> usuarioProductos){
-        for(UsuarioProducto usuarioProducto : usuarioProductos)
+    public void delete(Set<UsuarioProducto> usuarioProductos) {
+        for (UsuarioProducto usuarioProducto : usuarioProductos)
             usuarioProductoService.delete(usuarioProducto);
         updateList();
         Notification.show("Borrado con exito", 2000, Notification.Position.MIDDLE);
     }
 
-    public void updateList(){
-        if(filterText.isEmpty())
+    public void updateList() {
+        if (filterText.isEmpty())
             grid.setItems(usuarioProductoService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
-        else{
+        else {
             grid.setItems(usuarioProductoService.findByProducto(filterText.getValue()));
         }
     }

@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.time.LocalDate;
 import java.util.Vector;
 
 @SpringBootApplication
@@ -43,19 +42,6 @@ public class Application extends SpringBootServletInitializer {
                 usuarioService.create(u);
             }
             try {
-                boolean valido = usuarioService.loadUserByUsername("gerente").getRole().equals("Gerente");
-            } catch (UsernameNotFoundException e) {
-                Usuario u = new Usuario();
-                u.setNombre("gerente");
-                u.setPassword("gerente");
-                u.setApellido1("gerente");
-                u.setEmail("gerente@gerente.es");
-                u.setUsername("gerente");
-                u.setRole("Gerente");
-                u.setPresupuestoPlato(-1);
-                usuarioService.create(u);
-            }
-            try {
                 boolean valido = usuarioService.loadUserByUsername("usuario").getRole().equals("User");
             } catch (UsernameNotFoundException e) {
                 Usuario u = new Usuario();
@@ -69,20 +55,13 @@ public class Application extends SpringBootServletInitializer {
                 usuarioService.create(u);
             }
             Vector<Intolerancia> intoleranciaVector = new Vector<>(9);
-            for(int i = 0 ; i < 4 ; i++)
+            for (int i = 0; i < 4; i++)
                 intoleranciaVector.add(new Intolerancia());
             intoleranciaVector.elementAt(0).setIntolerancia("Leche");
-            //intoleranciaVector.elementAt(1).setIntolerancia("Huevo");
             intoleranciaVector.elementAt(1).setIntolerancia("Gluten");
-            //intoleranciaVector.elementAt(3).setIntolerancia("Grano");
-            //intoleranciaVector.elementAt(4).setIntolerancia("Cacahuete");
-            //intoleranciaVector.elementAt(5).setIntolerancia("Mariscos");
-            //intoleranciaVector.elementAt(6).setIntolerancia("Sesamo");
-            //intoleranciaVector.elementAt(7).setIntolerancia("Soja");
-            //intoleranciaVector.elementAt(8).setIntolerancia("Trigo");
             intoleranciaVector.elementAt(2).setIntolerancia("Vegetariano");
             intoleranciaVector.elementAt(3).setIntolerancia("Vegano");
-            for(Intolerancia intolerancia : intoleranciaVector){
+            for (Intolerancia intolerancia : intoleranciaVector) {
                 intoleranciaService.create(intolerancia);
             }
             Ingrediente ingrediente = new Ingrediente();

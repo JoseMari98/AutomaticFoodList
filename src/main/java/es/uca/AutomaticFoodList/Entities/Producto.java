@@ -7,8 +7,8 @@ import java.util.Set;
 
 @Entity
 public class Producto {
-    @Id //esto sirve para decir cual es el id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //esto para que se genere aleatorio
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Este campo es obligatorio")
     private String nombre = "";
