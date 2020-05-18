@@ -11,7 +11,7 @@ public class Ingrediente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "Este campo es obligatorio")
+    @NotEmpty(message = "Este campo es obligatorioo")
     @Column(unique = true)
     private String nombre = "";
     @Column(unique = true)
