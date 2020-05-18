@@ -21,7 +21,7 @@
         <sonar.projectKey>JoseMari98_AutomaticFoodList</sonar.projectKey>
         <sonar.organization>josemari98</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.login>5f1da46946f7a19bb92fd7b4f7e5b6bf3ebaae56</sonar.login>
+        <sonar.login>7ec54e89acb5825cd940882cdb37b396c2f5f1b1</sonar.login>
     </properties>
 
     <parent>
