@@ -35,7 +35,7 @@ public class CrearRecetaView extends AbstractView {
     @Autowired
     public CrearRecetaView(IngredienteService ingredienteService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService) {
         this.crearRecetaForm = new CrearRecetaForm(this, recetaService, recetaIngredienteService, valoresNutricionalesService);
-        this.anadirIngredienteForm = new AnadirIngredienteForm(this, ingredienteService, recetaIngredienteService);
+        this.anadirIngredienteForm = new AnadirIngredienteForm(this, ingredienteService);
 
         H1 titulo = new H1("Ingredientes");
 

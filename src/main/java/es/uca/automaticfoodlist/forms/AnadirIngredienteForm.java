@@ -14,7 +14,6 @@ import es.uca.automaticfoodlist.entities.Ingrediente;
 import es.uca.automaticfoodlist.entities.RecetaIngrediente;
 import es.uca.automaticfoodlist.entities.UnidadMedida;
 import es.uca.automaticfoodlist.services.IngredienteService;
-import es.uca.automaticfoodlist.services.RecetaIngredienteService;
 import es.uca.automaticfoodlist.views.CrearRecetaView;
 
 public class AnadirIngredienteForm extends FormLayout {
@@ -26,7 +25,7 @@ public class AnadirIngredienteForm extends FormLayout {
     private Button cancelar = new Button("Cancelar");
     private CrearRecetaView crearRecetaView;
 
-    public AnadirIngredienteForm(CrearRecetaView crearRecetaView, IngredienteService ingredienteService, RecetaIngredienteService recetaIngredienteService) {
+    public AnadirIngredienteForm(CrearRecetaView crearRecetaView, IngredienteService ingredienteService) {
         this.crearRecetaView = crearRecetaView;
         H1 titulo = new H1("Introducir ingrediente");
 

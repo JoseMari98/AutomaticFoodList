@@ -89,9 +89,7 @@ public class UsuarioDatosForm extends FormLayout {
             dialog.close();
         });
         confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-        Button cancelButton = new Button("Cancelar", event -> {
-            dialog.close();
-        });
+        Button cancelButton = new Button("Cancelar", event -> dialog.close());
         dialog.add(confirmButton, cancelButton);
         cancelButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         save.addClickListener(event -> dialog.open());

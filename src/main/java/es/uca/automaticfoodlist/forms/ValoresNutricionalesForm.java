@@ -69,12 +69,7 @@ public class ValoresNutricionalesForm extends FormLayout {
     public void setValoresNutricionales(ValoresNutricionales valoresNutricionales) {
         binder.setBean(valoresNutricionales);
 
-        if(valoresNutricionales == null) {
-            setVisible(false);
-        }
-        else {
-            setVisible(true);;
-        }
+        setVisible(valoresNutricionales != null);
     }
 
     public void save() {

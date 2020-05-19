@@ -70,7 +70,6 @@ public class IngredientesUsuarioForm extends FormLayout {
         preferenciaIngrediente.setGusto(gusto.getValue());
         if(binder.validate().isOk()) {
             preferenciaIngredienteService.create(preferenciaIngrediente);
-            //this.ingredientesUsuarioView.updateList();
             setPreferenciaIngrediente(null, null);
         }
         else {
@@ -79,11 +78,10 @@ public class IngredientesUsuarioForm extends FormLayout {
     }
 
     public void delete() {
-        PreferenciaIngrediente preferenciaIngrediente = new PreferenciaIngrediente();
+        PreferenciaIngrediente preferenciaIngrediente;
         if(binder.validate().isOk() && preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente) != null) {
             preferenciaIngrediente = preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente);
             preferenciaIngredienteService.delete(preferenciaIngrediente);
-            //this.ingredientesUsuarioView.updateList();
             setPreferenciaIngrediente(null, null);
         } else
             Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);

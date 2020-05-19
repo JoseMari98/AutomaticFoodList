@@ -35,9 +35,7 @@ public class PresupuestoPlatoForm extends FormLayout {
         save.addClickShortcut(Key.ENTER);
         binder.bindInstanceFields(this);
 
-        save.addClickListener(event -> {
-            save();
-        });
+        save.addClickListener(event -> save());
     }
 
     public void save() {

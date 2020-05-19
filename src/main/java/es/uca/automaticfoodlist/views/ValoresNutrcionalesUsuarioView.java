@@ -16,7 +16,7 @@ public class ValoresNutrcionalesUsuarioView extends AbstractView{
 
     @Autowired
     ValoresNutrcionalesUsuarioView(UsuarioService usuarioService, ValoresNutricionalesService valoresNutricionalesService){
-        this.valoresNutricionalesUsuarioForm = new ValoresNutricionalesUsuarioForm( this, valoresNutricionalesService, usuarioService);
+        this.valoresNutricionalesUsuarioForm = new ValoresNutricionalesUsuarioForm(valoresNutricionalesService, usuarioService);
         H1 titulo = new H1("Valores nutricionales");
         VerticalLayout contenido = new VerticalLayout(titulo, valoresNutricionalesUsuarioForm);
         contenido.setSizeFull();

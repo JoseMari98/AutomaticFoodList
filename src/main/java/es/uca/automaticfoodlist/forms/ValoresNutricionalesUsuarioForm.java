@@ -15,12 +15,10 @@ import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.entities.ValoresNutricionales;
 import es.uca.automaticfoodlist.services.UsuarioService;
 import es.uca.automaticfoodlist.services.ValoresNutricionalesService;
-import es.uca.automaticfoodlist.views.ValoresNutrcionalesUsuarioView;
 
 import java.util.Vector;
 
 public class ValoresNutricionalesUsuarioForm extends FormLayout {
-    private ValoresNutrcionalesUsuarioView valoresNutrcionalesUsuarioView;
     private UsuarioService usuarioService;
     private ValoresNutricionalesService valoresNutricionalesService;
     private Button save = new Button("Siguiente");
@@ -32,16 +30,15 @@ public class ValoresNutricionalesUsuarioForm extends FormLayout {
     private BeanValidationBinder<ValoresNutricionales> binder = new BeanValidationBinder<>(ValoresNutricionales.class);
     private ValoresNutricionales valoresNutricionales = new ValoresNutricionales();
 
-    public ValoresNutricionalesUsuarioForm(ValoresNutrcionalesUsuarioView valoresNutrcionalesUsuarioView, ValoresNutricionalesService valoresNutricionalesService, UsuarioService usuarioService) {
+    public ValoresNutricionalesUsuarioForm(ValoresNutricionalesService valoresNutricionalesService, UsuarioService usuarioService) {
         this.valoresNutricionalesService = valoresNutricionalesService;
         this.usuarioService = usuarioService;
-        this.valoresNutrcionalesUsuarioView = valoresNutrcionalesUsuarioView;
 
-        if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null)
-            if(usuarioService.loadUserByUsername(UI.getCurrent().getSession().getAttribute(Usuario.class).getUsername()).getValoresNutricionales() != null)
+        if (UI.getCurrent().getSession().getAttribute(Usuario.class) != null)
+            if (usuarioService.loadUserByUsername(UI.getCurrent().getSession().getAttribute(Usuario.class).getUsername()).getValoresNutricionales() != null)
                 binder.setBean(usuarioService.loadUserByUsername(UI.getCurrent().getSession().getAttribute(Usuario.class).getUsername()).getValoresNutricionales());
 
-        for(int i = 0 ; i < 4 ; i++){
+        for (int i = 0; i < 4; i++) {
             selectVector.add(new Select<>(Signo.Mayor, Signo.Menor));
             selectVector.elementAt(i).setLabel("Mayor o menor que: ");
             selectVector.elementAt(i).setEnabled(false);
@@ -112,18 +109,12 @@ public class ValoresNutricionalesUsuarioForm extends FormLayout {
         add(calorias, grasa, hidratos, proteina);
 
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        /*for(int i = 0 ; i < selectVector.size() ; i++){
-            add(selectVector.elementAt(i));
-        }*/
 
         add(save);
         save.addClickShortcut(Key.ENTER);
         binder.bindInstanceFields(this);
 
-        save.addClickListener(event -> {
-            //if(binder.getBean() != null)
-            save();
-        });
+        save.addClickListener(event -> save());
     }
 
     public void save() {
