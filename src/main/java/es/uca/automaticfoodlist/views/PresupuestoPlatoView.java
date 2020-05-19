@@ -12,12 +12,10 @@ import org.springframework.security.access.annotation.Secured;
 @Secured({"User", "Admin", "Gerente"})
 public class PresupuestoPlatoView extends AbstractView{
     private PresupuestoPlatoForm presupuestoPlatoForm;
-    private UsuarioService usuarioService;
 
     @Autowired
     PresupuestoPlatoView(UsuarioService usuarioService){
-        this.usuarioService = usuarioService;
-        this.presupuestoPlatoForm = new PresupuestoPlatoForm( this, usuarioService);
+        this.presupuestoPlatoForm = new PresupuestoPlatoForm(usuarioService);
         H1 titulo = new H1("Presupuesto plato");
         VerticalLayout contenido = new VerticalLayout(titulo, presupuestoPlatoForm);
         contenido.setSizeFull();

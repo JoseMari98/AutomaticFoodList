@@ -13,13 +13,9 @@ import org.springframework.security.access.annotation.Secured;
 @Secured({"User", "Admin", "Gerente"})
 public class ValoresNutrcionalesUsuarioView extends AbstractView{
     private ValoresNutricionalesUsuarioForm valoresNutricionalesUsuarioForm;
-    private ValoresNutricionalesService valoresNutricionalesService;
-    private UsuarioService usuarioService;
 
     @Autowired
     ValoresNutrcionalesUsuarioView(UsuarioService usuarioService, ValoresNutricionalesService valoresNutricionalesService){
-        this.valoresNutricionalesService = valoresNutricionalesService;
-        this.usuarioService = usuarioService;
         this.valoresNutricionalesUsuarioForm = new ValoresNutricionalesUsuarioForm( this, valoresNutricionalesService, usuarioService);
         H1 titulo = new H1("Valores nutricionales");
         VerticalLayout contenido = new VerticalLayout(titulo, valoresNutricionalesUsuarioForm);

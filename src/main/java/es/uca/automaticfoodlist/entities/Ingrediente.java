@@ -33,10 +33,6 @@ public class Ingrediente {
         return nombre;
     }
 
-    public Set<Producto> getProducto() {
-        return productos;
-    }
-
     public Set<PreferenciaIngrediente> getPreferenciaIngredienteSet() {
         return preferenciaIngredienteSet;
     }

@@ -27,8 +27,6 @@ import java.util.Set;
 @Secured({"User", "Admin", "Gerente"})
 public class ListaCompraView extends AbstractView {
     private PaginatedGrid<UsuarioProducto> grid = new PaginatedGrid<>();
-    private UsuarioRecetaService usuarioRecetaService;
-    private RecetaService recetaService;
     private UsuarioProductoService usuarioProductoService;
     private TextField filterText = new TextField();
     private Button delete = new Button("Borrar seleccion");
@@ -38,7 +36,6 @@ public class ListaCompraView extends AbstractView {
     @Autowired
     public ListaCompraView(UsuarioRecetaService usuarioRecetaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService,
                            UsuarioProductoService usuarioProductoService, ProductoService productoService, IngredienteService ingredienteService) {
-        this.usuarioRecetaService = usuarioRecetaService;
         this.usuarioProductoService = usuarioProductoService;
         if (usuarioProductoService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()) {
             if (!usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()) {

@@ -16,7 +16,6 @@ import com.vaadin.flow.data.validator.EmailValidator;
 import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.services.MailNotificationService;
 import es.uca.automaticfoodlist.services.UsuarioService;
-import es.uca.automaticfoodlist.views.UsuarioDatosView;
 
 import javax.mail.MessagingException;
 
@@ -29,22 +28,20 @@ public class UsuarioDatosForm extends FormLayout {
     private PasswordField password = new PasswordField("Contraseña");
     private PasswordField confirmPassword = new PasswordField("Confirmar contraseña");
     private BeanValidationBinder<Usuario> binder = new BeanValidationBinder<>(Usuario.class);
-    private UsuarioDatosView usuarioDatosView;
     private UsuarioService usuarioService;
     private Button save = new Button("Continuar");
     private Usuario usuario;
 
-    public UsuarioDatosForm(UsuarioDatosView usuarioDatosView, UsuarioService usuarioService) {
-        if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
+    public UsuarioDatosForm(UsuarioService usuarioService) {
+        if (UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
             usuario = usuarioService.listarPorUsername(UI.getCurrent().getSession().getAttribute(Usuario.class).getUsername());
             usuario.setPassword("");
             confirmPassword.setValue("");
             binder.setBean(usuario);
-            if(usuario.getPresupuestoPlato() != -1)
+            if (usuario.getPresupuestoPlato() != -1)
                 prespuestoPlato.setValue(usuario.getPresupuestoPlato());
         } else
             usuario = new Usuario();
-        this.usuarioDatosView = usuarioDatosView;
         this.usuarioService = usuarioService;
 
         nombre.setRequired(true);
@@ -112,7 +109,7 @@ public class UsuarioDatosForm extends FormLayout {
                 usuario.setRole("User");
                 usuario.setUsername(username.getValue());
                 usuario.setNombre(nombre.getValue());
-                usuario.setApellido1(apellido1.getValue());
+                usuario.setApellido(apellido1.getValue());
                 if(!prespuestoPlato.isEmpty())
                     usuario.setPresupuestoPlato(prespuestoPlato.getValue());
                 else

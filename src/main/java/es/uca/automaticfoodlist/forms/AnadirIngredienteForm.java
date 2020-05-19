@@ -25,12 +25,9 @@ public class AnadirIngredienteForm extends FormLayout {
     Button guardar = new Button("Guardar ingrediente");
     private Button cancelar = new Button("Cancelar");
     private CrearRecetaView crearRecetaView;
-    private RecetaIngredienteService recetaIngredienteService;
-    private IngredienteService ingredienteService;
+
     public AnadirIngredienteForm(CrearRecetaView crearRecetaView, IngredienteService ingredienteService, RecetaIngredienteService recetaIngredienteService) {
         this.crearRecetaView = crearRecetaView;
-        this.recetaIngredienteService = recetaIngredienteService;
-        this.ingredienteService = ingredienteService;
         H1 titulo = new H1("Introducir ingrediente");
 
         ingrediente.setRequired(true);

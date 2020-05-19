@@ -11,21 +11,18 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.services.UsuarioService;
-import es.uca.automaticfoodlist.views.PresupuestoPlatoView;
 
 public class PresupuestoPlatoForm extends FormLayout {
-    private PresupuestoPlatoView presupuestoPlatoView;
     private UsuarioService usuarioService;
     private NumberField presupuestoPlato = new NumberField("Presupuesto");
     private Button save = new Button("Finalizar");
     private BeanValidationBinder<Usuario> binder = new BeanValidationBinder<>(Usuario.class);
 
-    public PresupuestoPlatoForm(PresupuestoPlatoView presupuestoPlatoView, UsuarioService usuarioService) {
+    public PresupuestoPlatoForm(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
-        this.presupuestoPlatoView = presupuestoPlatoView;
 
-        if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null)
-            if(usuarioService.loadUserByUsername(UI.getCurrent().getSession().getAttribute(Usuario.class).getUsername()).getPresupuestoPlato() > 0)
+        if (UI.getCurrent().getSession().getAttribute(Usuario.class) != null)
+            if (usuarioService.loadUserByUsername(UI.getCurrent().getSession().getAttribute(Usuario.class).getUsername()).getPresupuestoPlato() > 0)
                 binder.setBean(usuarioService.loadUserByUsername(UI.getCurrent().getSession().getAttribute(Usuario.class).getUsername()));
 
         presupuestoPlato.setMin(0);

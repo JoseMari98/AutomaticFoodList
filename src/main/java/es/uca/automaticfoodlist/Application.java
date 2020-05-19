@@ -34,7 +34,7 @@ public class Application extends SpringBootServletInitializer {
                 Usuario u = new Usuario();
                 u.setNombre("admin");
                 u.setPassword("admin");
-                u.setApellido1("admin");
+                u.setApellido("admin");
                 u.setEmail("admin@admin.es");
                 u.setUsername("admin");
                 u.setRole("Admin");
@@ -47,7 +47,7 @@ public class Application extends SpringBootServletInitializer {
                 Usuario u = new Usuario();
                 u.setNombre("usuario");
                 u.setPassword("user1234");
-                u.setApellido1("usuario");
+                u.setApellido("usuario");
                 u.setEmail("usuario@usuario.es");
                 u.setUsername("user");
                 u.setRole("User");

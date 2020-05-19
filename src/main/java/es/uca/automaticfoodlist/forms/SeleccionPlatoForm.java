@@ -10,7 +10,6 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
 import es.uca.automaticfoodlist.entities.*;
 import es.uca.automaticfoodlist.services.RecetaService;
 import es.uca.automaticfoodlist.services.UsuarioRecetaService;
@@ -26,7 +25,6 @@ public class SeleccionPlatoForm extends FormLayout {
     private Button generar = new Button("Generar");
     private Button cancelar = new Button("Cancelar");
     private UsuarioReceta usuarioReceta;
-    BeanValidationBinder<UsuarioReceta> binder = new BeanValidationBinder<>(UsuarioReceta.class);
     private RecetaService recetaService;
     private UsuarioRecetaService usuarioRecetaService;
     private ListaComidasView listaComidasView;

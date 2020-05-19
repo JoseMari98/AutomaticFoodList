@@ -25,9 +25,6 @@ import java.util.List;
 @Secured("User")
 public class CrearRecetaView extends AbstractView {
     public PaginatedGrid<RecetaIngrediente> grid = new PaginatedGrid<>();
-    private IngredienteService ingredienteService;
-    private RecetaIngredienteService recetaIngredienteService;
-    private RecetaService recetaService;
     public Receta receta = new Receta();
     public CrearRecetaForm crearRecetaForm;
     private Button anadir = new Button("Anadir ingrediente");
@@ -37,24 +34,10 @@ public class CrearRecetaView extends AbstractView {
 
     @Autowired
     public CrearRecetaView(IngredienteService ingredienteService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService) {
-        //agregar el filtro por categoria y la paginacion
-        this.ingredienteService = ingredienteService;
-        this.recetaService = recetaService;
         this.crearRecetaForm = new CrearRecetaForm(this, recetaService, recetaIngredienteService, valoresNutricionalesService);
         this.anadirIngredienteForm = new AnadirIngredienteForm(this, ingredienteService, recetaIngredienteService);
 
         H1 titulo = new H1("Ingredientes");
-        /*filterText.setPlaceholder("Filtrar por ingrediente"); //poner el campo
-        filterText.setClearButtonVisible(true); //poner la cruz para borrar
-        filterText.setValueChangeMode(ValueChangeMode.EAGER); //que se hagan los cambios cuando se escriba
-        filterText.addValueChangeListener(event -> {
-            if (recetaIngredienteService.findByIngredienteNombre(filterText.getValue()) != null)
-                updateList();
-            else {
-                filterText.clear();
-                Notification.show("No hay ningun ingrediente con ese nombre", 2000, Notification.Position.MIDDLE);
-            }
-        });*/
 
         HorizontalLayout toolbar = new HorizontalLayout(anadir); //meter lo de la categoria
         fullGrid.add(titulo, toolbar, grid);

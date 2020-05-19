@@ -13,14 +13,10 @@ import org.springframework.security.access.annotation.Secured;
 @Secured({"User", "Admin", "Gerente"})
 public class IntoleranciasUsuarioView extends AbstractView {
     private IntoleranciasUsuarioForm intoleranciasUsuarioForm;
-    private IntoleranciaUsuarioService intoleranciasService;
-    private IntoleranciaService intoleranciaService;
 
     @Autowired
     IntoleranciasUsuarioView(IntoleranciaUsuarioService intoleranciaUsuarioService, IntoleranciaService intoleranciaService){
-        this.intoleranciasService = intoleranciaUsuarioService;
-        this.intoleranciaService = intoleranciaService;
-        this.intoleranciasUsuarioForm = new IntoleranciasUsuarioForm( this, intoleranciaUsuarioService, intoleranciaService);
+        this.intoleranciasUsuarioForm = new IntoleranciasUsuarioForm(intoleranciaUsuarioService, intoleranciaService);
         H1 titulo = new H1("Intolerancias, alergias o dieta");
         VerticalLayout contenido = new VerticalLayout(titulo, intoleranciasUsuarioForm);
         contenido.setSizeFull();

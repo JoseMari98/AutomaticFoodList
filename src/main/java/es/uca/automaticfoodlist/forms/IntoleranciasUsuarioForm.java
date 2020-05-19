@@ -12,7 +12,6 @@ import es.uca.automaticfoodlist.entities.IntoleranciaUsuario;
 import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.services.IntoleranciaService;
 import es.uca.automaticfoodlist.services.IntoleranciaUsuarioService;
-import es.uca.automaticfoodlist.views.IntoleranciasUsuarioView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,24 +19,22 @@ import java.util.Vector;
 
 public class IntoleranciasUsuarioForm extends FormLayout {
     private Vector<Checkbox> checkboxVector = new Vector<>(9);
-    private IntoleranciasUsuarioView intoleranciasUsuarioView;
     private IntoleranciaUsuarioService intoleranciaUsuarioService;
     private IntoleranciaService intoleranciaService;
     private Button save = new Button("Siguiente");
     private List<IntoleranciaUsuario> intoleranciaUsuarioList;
 
-    public IntoleranciasUsuarioForm(IntoleranciasUsuarioView intoleranciasUsuarioView, IntoleranciaUsuarioService intoleranciaUsuarioService, IntoleranciaService intoleranciaService) {
+    public IntoleranciasUsuarioForm(IntoleranciaUsuarioService intoleranciaUsuarioService, IntoleranciaService intoleranciaService) {
         this.intoleranciaService = intoleranciaService;
-        this.intoleranciasUsuarioView = intoleranciasUsuarioView;
         this.intoleranciaUsuarioService = intoleranciaUsuarioService;
         VerticalLayout checkboxes = new VerticalLayout();
 
-        for(Intolerancia intolerancia : intoleranciaService.findAllOrderById()){
+        for (Intolerancia intolerancia : intoleranciaService.findAllOrderById()) {
             checkboxVector.add(new Checkbox(intolerancia.getIntolerancia()));
         }
-        if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
+        if (UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
             intoleranciaUsuarioList = intoleranciaUsuarioService.buscarPorUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)); //Tuplas entre las asociaciones
-            for(IntoleranciaUsuario intoleranciaUsuario : intoleranciaUsuarioList){
+            for (IntoleranciaUsuario intoleranciaUsuario : intoleranciaUsuarioList) {
                 long id = intoleranciaUsuario.getIntolerancia().getId() - 1;
                 int indice = (int) id;
                 checkboxVector.elementAt(indice).setValue(true); //Los elementos que esten en la lista es que ya tienen la intolerancia
@@ -62,7 +59,6 @@ public class IntoleranciasUsuarioForm extends FormLayout {
     }
 
     public void save() {
-        int cont = 0;
         for(Intolerancia intolerancia : intoleranciaService.findAllOrderById()) {
             IntoleranciaUsuario intoleranciaUsuario = intoleranciaUsuarioService.buscarPorUsuarioEIntolerancia(UI.getCurrent().getSession().getAttribute(Usuario.class), intolerancia);
             long id = intolerancia.getId() - 1;

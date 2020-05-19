@@ -22,7 +22,6 @@ import org.vaadin.klaudeta.PaginatedGrid;
 @Secured({"Admin", "Gerente", "User"})
 public class RecetasView extends AbstractView {
     private PaginatedGrid<Receta> grid = new PaginatedGrid<>();
-    //private Grid<Receta> grid = new Grid<>(Receta.class);
     private TextField filterText = new TextField();
     private RecetaService recetaService;
     private RecetasForm recetasForm;

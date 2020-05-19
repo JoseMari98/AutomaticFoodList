@@ -10,7 +10,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
-import es.uca.automaticfoodlist.entities.IntoleranciaUsuario;
 import es.uca.automaticfoodlist.entities.Signo;
 import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.entities.ValoresNutricionales;
@@ -18,7 +17,6 @@ import es.uca.automaticfoodlist.services.UsuarioService;
 import es.uca.automaticfoodlist.services.ValoresNutricionalesService;
 import es.uca.automaticfoodlist.views.ValoresNutrcionalesUsuarioView;
 
-import java.util.List;
 import java.util.Vector;
 
 public class ValoresNutricionalesUsuarioForm extends FormLayout {
@@ -26,7 +24,6 @@ public class ValoresNutricionalesUsuarioForm extends FormLayout {
     private UsuarioService usuarioService;
     private ValoresNutricionalesService valoresNutricionalesService;
     private Button save = new Button("Siguiente");
-    private List<IntoleranciaUsuario> intoleranciaUsuarioList;
     private NumberField caloriasPlato = new NumberField("Kcal");
     private NumberField grasaPlato = new NumberField("Gramos de grasa");
     private NumberField hidratosPlato = new NumberField("Gramos de carbohidratos");

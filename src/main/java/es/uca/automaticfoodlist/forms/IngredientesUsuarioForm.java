@@ -14,20 +14,17 @@ import es.uca.automaticfoodlist.entities.Ingrediente;
 import es.uca.automaticfoodlist.entities.PreferenciaIngrediente;
 import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.services.PreferenciaIngredienteService;
-import es.uca.automaticfoodlist.views.IngredientesUsuarioView;
 
 public class IngredientesUsuarioForm extends FormLayout {
     private Select<Gusto> gusto = new Select<>(Gusto.Mucho, Gusto.Poco, Gusto.Nada);
     private Button save = new Button("Añadir");
     private Button delete = new Button("Borrar");
-    private IngredientesUsuarioView ingredientesUsuarioView;
     private BeanValidationBinder<PreferenciaIngrediente> binder = new BeanValidationBinder<>(PreferenciaIngrediente.class);
     private PreferenciaIngredienteService preferenciaIngredienteService;
     private Ingrediente ingrediente;
 
-    public IngredientesUsuarioForm(IngredientesUsuarioView ingredientesUsuarioView, PreferenciaIngredienteService preferenciaIngredienteService) {
+    public IngredientesUsuarioForm(PreferenciaIngredienteService preferenciaIngredienteService) {
         this.preferenciaIngredienteService = preferenciaIngredienteService;
-        this.ingredientesUsuarioView = ingredientesUsuarioView;
 
         gusto.setRequiredIndicatorVisible(true);
         gusto.setLabel("Nivel de agrado");

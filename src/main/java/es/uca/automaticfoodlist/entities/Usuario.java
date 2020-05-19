@@ -15,7 +15,7 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Este campo es obligatorio")
-    private String nombre = "", apellido1 = "", password = "";
+    private String nombre = "", apellido = "", password = "";
     @NotEmpty(message = "Este campo es obligatorio")
     @Column(unique = true)
     private String username = "";
@@ -70,8 +70,8 @@ public class Usuario implements UserDetails {
         return preferenciaIngredienteSet;
     }
 
-    public String getApellido1() {
-        return apellido1;
+    public String getApellido() {
+        return apellido;
     }
 
     public String getNombre() {
@@ -111,8 +111,8 @@ public class Usuario implements UserDetails {
         this.receta = receta;
     }
 
-    public void setApellido1(String Apellido1) {
-        this.apellido1 = Apellido1;
+    public void setApellido(String Apellido1) {
+        this.apellido = Apellido1;
     }
 
     public void setSignosValoresNutrcionales(String signosValoresNutrcionales) {

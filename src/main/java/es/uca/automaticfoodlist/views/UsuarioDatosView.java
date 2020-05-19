@@ -12,13 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route(value = "UsuarioView", layout = MainView.class)
 public class UsuarioDatosView extends VerticalLayout{
     private UsuarioDatosForm usuarioDatosForm;
-    private UsuarioService usuarioService;
     private H1 titulo = new H1();
 
     @Autowired
     UsuarioDatosView(UsuarioService usuarioService){
-        this.usuarioService = usuarioService;
-        this.usuarioDatosForm = new UsuarioDatosForm( this , usuarioService);
+        this.usuarioDatosForm = new UsuarioDatosForm(usuarioService);
         if(UI.getCurrent().getSession().getAttribute(Usuario.class) == null)
             titulo.add("Registrate");
         else

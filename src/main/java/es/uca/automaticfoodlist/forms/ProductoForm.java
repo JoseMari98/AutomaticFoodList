@@ -28,12 +28,10 @@ public class ProductoForm extends FormLayout {
     private Button delete = new Button("Borrar");
     private ProductoView productoView;
     private BeanValidationBinder<Producto> binder = new BeanValidationBinder<>(Producto.class);
-    private IngredienteService ingredienteService;
     private ProductoService productoService;
     private UsuarioProductoService usuarioProductoService;
 
     public ProductoForm(ProductoView productoView, ProductoService productoService, IngredienteService ingredienteService, UsuarioProductoService usuarioProductoService) {
-        this.ingredienteService = ingredienteService;
         this.productoService = productoService;
         this.usuarioProductoService = usuarioProductoService;
         this.productoView = productoView;

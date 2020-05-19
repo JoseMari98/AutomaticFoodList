@@ -26,7 +26,6 @@ public class IngredientesUsuarioView extends AbstractView{
     private Grid<Ingrediente> grid = new Grid<>(Ingrediente.class);
     private TextField filterText = new TextField();
     private IngredienteService ingredienteService;
-    private PreferenciaIngredienteService preferenciaIngredienteService;
     private IngredientesUsuarioForm ingredientesUsuarioForm;
     private Button continuar = new Button("Siguiente");
 
@@ -34,8 +33,7 @@ public class IngredientesUsuarioView extends AbstractView{
     public IngredientesUsuarioView(IngredienteService ingredienteService, PreferenciaIngredienteService preferenciaIngredienteService) {
         //agregar el filtro por categoria y la paginacion
         this.ingredienteService = ingredienteService;
-        this.preferenciaIngredienteService = preferenciaIngredienteService;
-        this.ingredientesUsuarioForm = new IngredientesUsuarioForm(this, preferenciaIngredienteService);
+        this.ingredientesUsuarioForm = new IngredientesUsuarioForm(preferenciaIngredienteService);
 
         H1 titulo = new H1("Lista de ingredientes");
         Paragraph descripcion = new Paragraph("Aqui podras introducir tu nivel de agrado para los ingredientes, si no introduces nada se presupone que te gusta.");
