@@ -57,7 +57,7 @@ public class Application extends SpringBootServletInitializer {
             Vector<Intolerancia> intoleranciaVector = new Vector<>(9);
             for (int i = 0; i < 4; i++)
                 intoleranciaVector.add(new Intolerancia());
-            intoleranciaVector.elementAt(0).setIntolerancia("Leche");
+            intoleranciaVector.elementAt(0).setIntolerancia("Lactosa");
             intoleranciaVector.elementAt(1).setIntolerancia("Gluten");
             intoleranciaVector.elementAt(2).setIntolerancia("Vegetariano");
             intoleranciaVector.elementAt(3).setIntolerancia("Vegano");

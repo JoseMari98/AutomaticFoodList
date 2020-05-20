@@ -38,7 +38,6 @@ public class IntoleranciasUsuarioForm extends FormLayout {
                 long id = intoleranciaUsuario.getIntolerancia().getId() - 1;
                 int indice = (int) id;
                 checkboxVector.elementAt(indice).setValue(true); //Los elementos que esten en la lista es que ya tienen la intolerancia
-                //checkboxVector.elementAt(Long.valueOf(intoleranciaUsuario.getIntolerancia().getId() - 1).intValue()).setValue(true); //Los elementos que esten en la lista es que ya tienen la intolerancia
             }
 
         } else {

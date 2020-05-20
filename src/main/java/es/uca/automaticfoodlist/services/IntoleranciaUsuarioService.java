@@ -27,15 +27,19 @@ public class IntoleranciaUsuarioService {
         return intoleranciaUsuarioRepository.save(intolerancia);
     }
 
+    public List<IntoleranciaUsuario> buscarIntolerancia(Intolerancia intolerancia) {
+        return intoleranciaUsuarioRepository.findByIntolerancia(intolerancia);
+    }
+
     public Optional<IntoleranciaUsuario> buscarId(Long id) {
         return intoleranciaUsuarioRepository.findById(id);
     }
 
-    public List<IntoleranciaUsuario> buscarPorUsuario(Usuario usuario){
+    public List<IntoleranciaUsuario> buscarPorUsuario(Usuario usuario) {
         return intoleranciaUsuarioRepository.findByUsuario(usuario);
     }
 
-    public List<IntoleranciaUsuario> findAllOrderById(){
+    public List<IntoleranciaUsuario> findAllOrderById() {
         return intoleranciaUsuarioRepository.findByOrderByIdAsc();
     }
 

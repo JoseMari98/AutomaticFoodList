@@ -14,6 +14,24 @@ public class Intolerancia {
     private String intolerancia = "";
     @OneToMany(mappedBy = "intolerancia")
     private Set<IntoleranciaUsuario> intoleranciaUsuarioSet;
+    @OneToMany(mappedBy = "intolerancia")
+    private Set<IntoleranciaReceta> intoleranciaRecetaSet;
+
+    public void setIntoleranciaRecetaSet(Set<IntoleranciaReceta> intoleranciaRecetaSet) {
+        this.intoleranciaRecetaSet = intoleranciaRecetaSet;
+    }
+
+    public Set<IntoleranciaReceta> getIntoleranciaRecetaSet() {
+        return intoleranciaRecetaSet;
+    }
+
+    public Set<IntoleranciaUsuario> getIntoleranciaUsuarioSet() {
+        return intoleranciaUsuarioSet;
+    }
+
+    public void setIntoleranciaUsuarioSet(Set<IntoleranciaUsuario> intoleranciaUsuarioSet) {
+        this.intoleranciaUsuarioSet = intoleranciaUsuarioSet;
+    }
 
     public void setIntolerancia(String intolerancia) {
         this.intolerancia = intolerancia;

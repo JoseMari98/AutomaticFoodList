@@ -65,7 +65,8 @@ public class MainView extends AppLayout {
             }
 
             if (SecurityUtils.hasRole("Admin") || SecurityUtils.hasRole("Gerente")) {
-                tabs.add(createTab(VaadinIcon.RECORDS, "Recetas", RecetasView.class));
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion recetas", RecetasView.class));
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion intolerancias", IntoleranciasView.class));
                 tabs.add(createTab(VaadinIcon.RECORDS, "Gestion ingrediente", IngredienteView.class));
                 tabs.add(createTab(VaadinIcon.RECORDS, "Gestion producto", ProductoView.class));
                 tabs.add(createTab(VaadinIcon.RECORDS, "Gestion valores nutricionales", ValoresNutrcionalesView.class));

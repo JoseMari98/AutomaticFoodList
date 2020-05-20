@@ -11,4 +11,6 @@ public interface IntoleranciaUsuarioRepository extends JpaRepository<Intoleranci
     List<IntoleranciaUsuario> findByUsuario(Usuario usuario);
     IntoleranciaUsuario findByUsuarioAndIntolerancia(Usuario usuario, Intolerancia intolerancia);
     List<IntoleranciaUsuario> findByOrderByIdAsc();
+
+    List<IntoleranciaUsuario> findByIntolerancia(Intolerancia intolerancia);
 }
