@@ -131,16 +131,22 @@ public class ValoresNutricionalesUsuarioForm extends FormLayout {
         String signos = "";
         if(binder.validate().isOk()) {
             valoresNutricionalesService.create(valoresNutricionales);
-            for(int i = 0 ; i < selectVector.size() - 1 ; i++){
-                if(selectVector.elementAt(i).isEmpty())
-                    signos += "NULL, ";
-                else
-                    signos += selectVector.elementAt(i).getValue().toString() + ", ";
-            }
-            if(selectVector.elementAt(3).isEmpty())
+            if (selectVector.elementAt(0).isEmpty() || caloriasPlato.getValue() <= 0)
+                signos += "NULL,";
+            else
+                signos += selectVector.elementAt(0).getValue().toString() + ",";
+            if (selectVector.elementAt(1).isEmpty() || grasaPlato.getValue() <= 0)
+                signos += "NULL,";
+            else
+                signos += selectVector.elementAt(1).getValue().toString() + ",";
+            if (selectVector.elementAt(2).isEmpty() || hidratosPlato.getValue() <= 0)
+                signos += "NULL,";
+            else
+                signos += selectVector.elementAt(2).getValue().toString() + ",";
+            if (selectVector.elementAt(3).isEmpty() || proteinaPlato.getValue() <= 0)
                 signos += "NULL";
             else
-                signos+= selectVector.elementAt(3).getValue().toString() + ", ";
+                signos += selectVector.elementAt(3).getValue().toString();
             usuario.setSignosValoresNutrcionales(signos);
             usuario.setValoresNutricionales(valoresNutricionales);
             usuarioService.update(usuario);

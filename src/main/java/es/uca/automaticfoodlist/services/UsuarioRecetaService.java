@@ -29,12 +29,8 @@ public class UsuarioRecetaService {
         return usuarioRecetaRepository.findById(id);
     }
 
-    public Optional<UsuarioReceta> findByUsuarioAndComidaAndPlatoAndFecha(Usuario usuario, Comida comida, Plato plato, FechaSemana fechaSemana) {
-        return usuarioRecetaRepository.findByUsuarioAndComidaAndFechaSemanaAndPlato(usuario, comida, fechaSemana, plato);
-    }
-
-    public List<UsuarioReceta> findByUsuarioAndComidaAndPlato(Usuario usuario, Comida comida, Plato plato) {
-        return usuarioRecetaRepository.findByUsuarioAndComidaAndPlato(usuario, comida, plato);
+    public Optional<UsuarioReceta> findByUsuarioAndComidaAndFecha(Usuario usuario, Comida comida, FechaSemana fechaSemana) {
+        return usuarioRecetaRepository.findByUsuarioAndComidaAndFechaSemana(usuario, comida, fechaSemana);
     }
 
     public List<UsuarioReceta> findByReceta(Receta receta) {

@@ -21,7 +21,6 @@ import java.util.Random;
 public class SeleccionPlatoForm extends FormLayout {
     ComboBox<FechaSemana> fecha = new ComboBox<>("Fecha");
     private Select<Comida> comidaSelect = new Select<>(Comida.Desayuno, Comida.Almuerzo, Comida.Cena);
-    private Select<Plato> platoSelect = new Select<>(Plato.Primero, Plato.Segundo, Plato.Postre);
     private Button generar = new Button("Generar");
     private Button cancelar = new Button("Cancelar");
     private UsuarioReceta usuarioReceta;
@@ -37,14 +36,12 @@ public class SeleccionPlatoForm extends FormLayout {
         usuarioReceta = new UsuarioReceta();
         H1 titulo = new H1("Introduce lo siguiente:");
         comidaSelect.setValue(Comida.Desayuno);
-        platoSelect.setValue(Plato.Primero);
         fecha.setItems(FechaSemana.values());
         fecha.setRequired(true);
         fecha.setRequiredIndicatorVisible(true);
-        platoSelect.setRequiredIndicatorVisible(true);
         comidaSelect.setRequiredIndicatorVisible(true);
         HorizontalLayout botones = new HorizontalLayout(cancelar, generar);
-        VerticalLayout contenido = new VerticalLayout(titulo, fecha, comidaSelect, platoSelect, botones);
+        VerticalLayout contenido = new VerticalLayout(titulo, fecha, comidaSelect, botones);
         generar.addClickListener(e -> generarAleatoria());
         cancelar.addClickListener(e -> this.setVisible(false));
         cancelar.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -52,12 +49,11 @@ public class SeleccionPlatoForm extends FormLayout {
     }
 
     public void generarAleatoria() {
-        if (fecha.getValue() != null && platoSelect.getValue() != null && comidaSelect.getValue() != null) {
+        if (fecha.getValue() != null && comidaSelect.getValue() != null) {
             usuarioReceta.setFecha(fecha.getValue());
-            usuarioReceta.setPlato(platoSelect.getValue());
             usuarioReceta.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
             usuarioReceta.setComida(comidaSelect.getValue());
-            if (!usuarioRecetaService.findByUsuarioAndComidaAndPlatoAndFecha(usuarioReceta.getUsuario(), usuarioReceta.getComida(), usuarioReceta.getPlato(), usuarioReceta.getFecha()).isPresent()) { //buscar si existe esta tupla
+            if (!usuarioRecetaService.findByUsuarioAndComidaAndFecha(usuarioReceta.getUsuario(), usuarioReceta.getComida(), usuarioReceta.getFecha()).isPresent()) { //buscar si existe esta tupla
                 List<Receta> recetaList = recetaService.findAll();
                 int numero = random.nextInt(recetaList.size());
                 usuarioReceta.setReceta(recetaList.get(numero)); //genero una comida random sin tener en cuenta los requisitos del usuario

@@ -124,7 +124,6 @@ public class Application extends SpringBootServletInitializer {
 
             UsuarioReceta usuarioReceta = new UsuarioReceta();
             usuarioReceta.setComida(Comida.Almuerzo);
-            usuarioReceta.setPlato(Plato.Postre);
             usuarioReceta.setReceta(receta);
             usuarioReceta.setUsuario(usuarioService.loadUserByUsername("user"));
             usuarioReceta.setFecha(FechaSemana.Lunes);
@@ -132,7 +131,6 @@ public class Application extends SpringBootServletInitializer {
 
             UsuarioReceta usuarioReceta1 = new UsuarioReceta();
             usuarioReceta1.setComida(Comida.Cena);
-            usuarioReceta1.setPlato(Plato.Primero);
             usuarioReceta1.setReceta(receta1);
             usuarioReceta1.setUsuario(usuarioService.loadUserByUsername("user"));
             usuarioReceta1.setFecha(FechaSemana.Lunes);
@@ -140,7 +138,6 @@ public class Application extends SpringBootServletInitializer {
 
             UsuarioReceta usuarioReceta2 = new UsuarioReceta();
             usuarioReceta2.setComida(Comida.Desayuno);
-            usuarioReceta2.setPlato(Plato.Primero);
             usuarioReceta2.setReceta(receta1);
             usuarioReceta2.setUsuario(usuarioService.loadUserByUsername("user"));
             usuarioReceta2.setFecha(FechaSemana.Lunes);

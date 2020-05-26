@@ -61,7 +61,6 @@ public class ListaComidasView extends AbstractView{
         HorizontalLayout toolbar = new HorizontalLayout(addPlatoButton);
         grid.addColumn(ListaComida -> ListaComida.getReceta().getNombre()).setHeader("Receta").setSortable(true);
         grid.addColumn(UsuarioReceta::getComida).setHeader("Comida").setSortable(true);
-        grid.addColumn(UsuarioReceta::getPlato).setHeader("Plato").setSortable(true);
         grid.addColumn(ListaComida -> ListaComida.getFecha() + "/" + ListaComida.getFecha()).setHeader("Fecha").setSortable(true);
 
         // Sets the max number of items to be rendered on the grid for each page

@@ -31,18 +31,12 @@ public class Receta {
     //tomara valores verdadero o falso separado por |, ejemplo t|f|t
     private String comidaAdecuada = "";
 
-    private String platoAdecuado = "";
-
     public Long getId() {
         return id;
     }
 
     public String getComidaAdecuada() {
         return comidaAdecuada;
-    }
-
-    public String getPlatoAdecuado() {
-        return platoAdecuado;
     }
 
     public Set<IntoleranciaReceta> getIntoleranciaRecetaSet() {
@@ -95,10 +89,6 @@ public class Receta {
 
     public void setIntoleranciaRecetaSet(Set<IntoleranciaReceta> intoleranciaRecetaSet) {
         this.intoleranciaRecetaSet = intoleranciaRecetaSet;
-    }
-
-    public void setPlatoAdecuado(String platoAdecuado) {
-        this.platoAdecuado = platoAdecuado;
     }
 
     public void setIdApi(String id_api) {

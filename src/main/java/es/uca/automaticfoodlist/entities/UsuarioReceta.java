@@ -17,9 +17,6 @@ public class UsuarioReceta {
     @Enumerated(EnumType.STRING)
     private Comida comida;
     @PlanningVariable
-    @Enumerated(EnumType.STRING)
-    private Plato plato;
-    @PlanningVariable
     @ManyToOne
     private Receta receta;
     @ManyToOne
@@ -40,10 +37,6 @@ public class UsuarioReceta {
         return fechaSemana;
     }
 
-    public Plato getPlato() {
-        return plato;
-    }
-
     public Receta getReceta() {
         return receta;
     }
@@ -62,10 +55,6 @@ public class UsuarioReceta {
 
     public void setFecha(FechaSemana fechaSemana) {
         this.fechaSemana = fechaSemana;
-    }
-
-    public void setPlato(Plato plato) {
-        this.plato = plato;
     }
 
     public void setReceta(Receta receta) {

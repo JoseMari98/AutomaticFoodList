@@ -14,6 +14,12 @@ public class HorarioComidas {
     @ProblemFactCollectionProperty
     private List<Receta> recetaList;
 
+    @ProblemFactCollectionProperty
+    private List<FechaSemana> fechaSemanaList;
+
+    @ProblemFactCollectionProperty
+    private List<Comida> comidaList;
+
     @PlanningEntityCollectionProperty
     private List<UsuarioReceta> usuarioRecetas;
 
@@ -27,7 +33,9 @@ public class HorarioComidas {
     }
 
     public HorarioComidas(List<Receta> recetaList,
-                          List<UsuarioReceta> usuarioRecetas) {
+                          List<UsuarioReceta> usuarioRecetas, List<FechaSemana> fechaSemanaList, List<Comida> comidaList) {
+        this.fechaSemanaList = fechaSemanaList;
+        this.comidaList = comidaList;
         this.usuarioRecetas = usuarioRecetas;
         this.recetaList = recetaList;
     }
@@ -41,6 +49,13 @@ public class HorarioComidas {
         return recetaList;
     }
 
+    public List<Comida> getComidaList() {
+        return comidaList;
+    }
+
+    public List<FechaSemana> getFechaSemanaList() {
+        return fechaSemanaList;
+    }
 
     public HardSoftScore getScore() {
         return score;
