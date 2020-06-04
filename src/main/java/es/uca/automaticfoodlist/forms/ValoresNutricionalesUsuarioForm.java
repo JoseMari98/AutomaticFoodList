@@ -119,13 +119,13 @@ public class ValoresNutricionalesUsuarioForm extends FormLayout {
 
     public void save() {
         if(!caloriasPlato.isEmpty())
-            valoresNutricionales.setCaloriasPlato(caloriasPlato.getValue());
+            valoresNutricionales.setCaloriasPlato(caloriasPlato.getValue().intValue());
         if(!grasaPlato.isEmpty())
-            valoresNutricionales.setGrasaPlato(grasaPlato.getValue());
+            valoresNutricionales.setGrasaPlato(grasaPlato.getValue().intValue());
         if(!hidratosPlato.isEmpty())
-            valoresNutricionales.setHidratosPlato(hidratosPlato.getValue());
+            valoresNutricionales.setHidratosPlato(hidratosPlato.getValue().intValue());
         if(!proteinaPlato.isEmpty())
-            valoresNutricionales.setProteinaPlato(proteinaPlato.getValue());
+            valoresNutricionales.setProteinaPlato(proteinaPlato.getValue().intValue());
         binder.setBean(valoresNutricionales);
         Usuario usuario = UI.getCurrent().getSession().getAttribute(Usuario.class);
         String signos = "";

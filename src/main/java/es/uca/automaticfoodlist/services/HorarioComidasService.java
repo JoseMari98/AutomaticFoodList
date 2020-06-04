@@ -15,7 +15,7 @@ public class HorarioComidasService {
     public Usuario usuario;
 
     public HorarioComidas findByUsuario(Usuario usuario) {
-        if (usuarioRecetaService.findByUsuario(usuario).isEmpty()) {
+        if (!usuarioRecetaService.findByUsuario(usuario).isEmpty()) {
             throw new IllegalStateException("No hay una lista de comida para este usuario.");
         }
         // Occurs in a single transaction, so each initialized lesson references the same timeslot/room instance

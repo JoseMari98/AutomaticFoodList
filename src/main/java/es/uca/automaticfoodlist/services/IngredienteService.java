@@ -24,15 +24,20 @@ public class IngredienteService {
     public Ingrediente update(Ingrediente ingrediente) {
         return ingredienteRepository.save(ingrediente);
     }
+
     public Optional<Ingrediente> buscarId(Long id) {
         return ingredienteRepository.findById(id);
     }
 
-    public List<Ingrediente> findByIngredient(String ingrediente){
+    public List<Ingrediente> findByIngredient(String ingrediente) {
         return ingredienteRepository.findByNombreStartsWithIgnoreCase(ingrediente);
     }
 
-    public Ingrediente findByNombre(String ingrediente){
+    public Ingrediente findByIdApi(String idApi) {
+        return ingredienteRepository.findByIdApi(idApi);
+    }
+
+    public Ingrediente findByNombre(String ingrediente) {
         return ingredienteRepository.findByNombre(ingrediente);
     }
 

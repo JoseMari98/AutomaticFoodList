@@ -2,6 +2,7 @@ package es.uca.automaticfoodlist.services;
 
 import es.uca.automaticfoodlist.entities.*;
 import es.uca.automaticfoodlist.repositories.UsuarioRecetaRepository;
+import org.optaplanner.core.api.solver.SolverStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,10 @@ import java.util.Optional;
 @Service
 public class UsuarioRecetaService {
     private UsuarioRecetaRepository usuarioRecetaRepository;
+    @Autowired
+    private OptaPlannerService optaPlannerService;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Autowired
     public UsuarioRecetaService(UsuarioRecetaRepository usuarioRecetaRepository) {
@@ -53,7 +58,14 @@ public class UsuarioRecetaService {
         usuarioRecetaRepository.delete(usuarioReceta);
     }
 
-    public void generarListaCompra() {
-
+    public void generarListaCompra(Usuario usuario) throws InterruptedException {
+        optaPlannerService.solve(usuario);
+        HorarioComidas horarioComidas = optaPlannerService.getTimeTable(usuario);
+        while (horarioComidas.getSolverStatus() != SolverStatus.NOT_SOLVING) {
+            // Quick polling (not a Test Thread Sleep anti-pattern)
+            // Test is still fast on fast machines and doesn't randomly fail on slow machines.
+            Thread.sleep(20L);
+            horarioComidas = optaPlannerService.getTimeTable(usuario);
+        }
     }
 }

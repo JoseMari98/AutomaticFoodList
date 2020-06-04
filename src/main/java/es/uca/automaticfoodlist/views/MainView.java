@@ -77,6 +77,7 @@ public class MainView extends AppLayout {
         if (SecurityUtils.isUserLoggedIn())
             logout.getStyle().set("center", "auto");
         addToDrawer(logout);
+        UI.getCurrent().navigate("Inicio");
     }
 
     public static Tab createTab(Component content) {

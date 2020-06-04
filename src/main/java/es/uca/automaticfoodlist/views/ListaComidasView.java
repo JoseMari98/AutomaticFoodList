@@ -38,7 +38,11 @@ public class ListaComidasView extends AbstractView{
 
             Label label = new Label("Oh, parece que no tienes ninguna lista de comidas, quieres generar una?");
             Button confirmButton = new Button("Confirmar", event -> {
-                usuarioRecetaService.generarListaCompra();
+                try {
+                    usuarioRecetaService.generarListaCompra(UI.getCurrent().getSession().getAttribute(Usuario.class));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 UI.getCurrent().navigate("ListaComidasView");
                 dialog.close();
             });
@@ -61,7 +65,7 @@ public class ListaComidasView extends AbstractView{
         HorizontalLayout toolbar = new HorizontalLayout(addPlatoButton);
         grid.addColumn(ListaComida -> ListaComida.getReceta().getNombre()).setHeader("Receta").setSortable(true);
         grid.addColumn(UsuarioReceta::getComida).setHeader("Comida").setSortable(true);
-        grid.addColumn(ListaComida -> ListaComida.getFecha() + "/" + ListaComida.getFecha()).setHeader("Fecha").setSortable(true);
+        grid.addColumn(ListaComida -> ListaComida.getFecha()).setHeader("Fecha").setSortable(true);
 
         // Sets the max number of items to be rendered on the grid for each page
         grid.setPageSize(9);

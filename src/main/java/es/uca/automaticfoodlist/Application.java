@@ -2,6 +2,14 @@ package es.uca.automaticfoodlist;
 
 import es.uca.automaticfoodlist.entities.*;
 import es.uca.automaticfoodlist.services.*;
+import net.ricecode.similarity.JaroWinklerStrategy;
+import net.ricecode.similarity.SimilarityStrategy;
+import net.ricecode.similarity.StringSimilarityService;
+import net.ricecode.similarity.StringSimilarityServiceImpl;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +18,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
 import java.util.Vector;
 
 @SpringBootApplication
@@ -21,12 +33,14 @@ public class Application extends SpringBootServletInitializer {
 
     @EnableJpaRepositories
     public class Config {
+
     }
 
     @Bean
     public CommandLineRunner loadData(UsuarioService usuarioService, IntoleranciaService intoleranciaService, IngredienteService ingredienteService,
                                       RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, UsuarioRecetaService usuarioRecetaService,
-                                      ProductoService productoService, UsuarioProductoService usuarioProductoService) {
+                                      ProductoService productoService, UsuarioProductoService usuarioProductoService, ValoresNutricionalesService valoresNutricionalesService,
+                                      IntoleranciaRecetaService intoleranciaRecetaService) {
         return (args) -> {
             try {
                 boolean valido = usuarioService.loadUserByUsername("admin").getRole().equals("Admin");
@@ -181,6 +195,169 @@ public class Application extends SpringBootServletInitializer {
             listaCompra1.setProducto(producto1);
             listaCompra1.setUsuario(usuarioService.loadUserByUsername("user"));
             listaCompraService.create(listaCompra1);*/
+
+            /*JSONObject obj = new JSONObject("/home/jose/Descargas/untitled/ingredients_recetas.json");
+            String pageName = obj.getJSONObject("pageInfo").getString("pageName");*/
+            JSONParser jsonParser = new JSONParser();
+            try {
+                //Parsing the contents of the JSON file
+                JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("/home/jose/Documentos/TFG/automatic-food-list/ingredients_recetas.json"));
+                //JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("../../../../../../../ingredients_recetas.json"));
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    if (jsonObject.get("id") != null) {
+                        Ingrediente ingrediente3 = new Ingrediente();
+                        ingrediente3.setIdApi(jsonObject.get("id").toString());
+                        String str = jsonObject.get("name").toString();
+                        if (str != null && !str.isEmpty()) {
+                            ingrediente3.setNombre(str.substring(0, 1).toUpperCase() + str.substring(1));
+                        }
+                        if (ingredienteService.findByNombre(jsonObject.get("name").toString()) == null)
+                            ingredienteService.create(ingrediente3);
+                    }
+                }
+                jsonArray = (JSONArray) jsonParser.parse(new FileReader("/home/jose/Documentos/TFG/automatic-food-list/recipies_recetas.json"));
+                //jsonArray = (JSONArray) jsonParser.parse(new FileReader("/../../../../../../../recipies_recetas.json"));
+                for (Object o : jsonArray) {
+                    JSONObject jsonObject = (JSONObject) o;
+                    if (jsonObject.get("id") != null) {
+                        Random random = new Random();
+                        Receta receta2 = new Receta();
+                        receta2.setIdApi(jsonObject.get("id").toString());
+                        receta2.setNombre(jsonObject.get("title").toString());
+                        Object precio = jsonObject.get("pricePerServing");
+                        if (precio instanceof Long) {
+                            Long l = new Long((Long) precio);
+                            double d = l.doubleValue();
+                            receta2.setPrecioAproximado(Math.round(d * 0.01));
+                        } else
+                            receta2.setPrecioAproximado(Math.round((Double) precio * 0.01));
+
+                        ValoresNutricionales valoresNutricionales = new ValoresNutricionales();
+                        valoresNutricionales.setCaloriasPlato(random.nextInt(1000) + 1);
+                        valoresNutricionales.setGrasaPlato(random.nextInt(50) + 1);
+                        valoresNutricionales.setHidratosPlato(random.nextInt(50) + 1);
+                        valoresNutricionales.setProteinaPlato(random.nextInt(50) + 1);
+                        receta2.setValoresNutricionales(valoresNutricionalesService.create(valoresNutricionales));
+                        receta2.setComidaAdecuada(Comida.values()[random.nextInt(2) + 1].toString());
+
+                        if (jsonObject.get("title") != null) {
+                            //meter los ingredientes
+                            if (!recetaService.findByNombre(jsonObject.get("title").toString()).isPresent()) {
+                                recetaService.create(receta2);
+
+                                IntoleranciaReceta intoleranciaReceta = new IntoleranciaReceta();
+                                if (jsonObject.get("dairyFree").toString().equals("true")) {
+                                    intoleranciaReceta.setIntolerancia(intoleranciaVector.elementAt(0));
+                                    intoleranciaReceta.setReceta(receta2);
+                                    intoleranciaRecetaService.create(intoleranciaReceta);
+                                }
+
+                                intoleranciaReceta = new IntoleranciaReceta();
+                                if (jsonObject.get("glutenFree").toString().equals("true")) {
+                                    intoleranciaReceta.setIntolerancia(intoleranciaVector.elementAt(1));
+                                    intoleranciaReceta.setReceta(receta2);
+                                    intoleranciaRecetaService.create(intoleranciaReceta);
+                                }
+
+                                intoleranciaReceta = new IntoleranciaReceta();
+                                if (jsonObject.get("vegetarian").toString().equals("true")) {
+                                    intoleranciaReceta.setIntolerancia(intoleranciaVector.elementAt(2));
+                                    intoleranciaReceta.setReceta(receta2);
+                                    intoleranciaRecetaService.create(intoleranciaReceta);
+                                }
+
+                                intoleranciaReceta = new IntoleranciaReceta();
+                                if (jsonObject.get("vegan").toString().equals("true")) {
+                                    intoleranciaReceta.setIntolerancia(intoleranciaVector.elementAt(3));
+                                    intoleranciaReceta.setReceta(receta2);
+                                    intoleranciaRecetaService.create(intoleranciaReceta);
+                                }
+
+                                JSONArray jsonArray1 = (JSONArray) jsonObject.get("ingredients");
+                                for (int i = 0; i < jsonArray1.size(); i++) {
+                                    JSONObject ingredientes = (JSONObject) jsonArray1.get(i);
+                                    if (ingredienteService.findByIdApi(ingredientes.get("id").toString()) != null) {
+                                        RecetaIngrediente recetaIngrediente4 = new RecetaIngrediente();
+                                        recetaIngrediente4.setReceta(receta2);
+                                        recetaIngrediente4.setIngrediente(ingredienteService.findByIdApi(ingredientes.get("id").toString()));
+                                        recetaIngredienteService.create(recetaIngrediente4);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                jsonArray = (JSONArray) jsonParser.parse(new FileReader("/home/jose/Documentos/TFG/automatic-food-list/productos.json"));
+                //JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("../../../../../../../ingredients_recetas.json"));
+                for (int i = 0; i < jsonArray.size(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    if (productoService.findByNombre(jsonObject.get("nombre").toString()) == null) {
+                        Producto productoMercadona = new Producto();
+                        productoMercadona.setNombre(jsonObject.get("nombre").toString());
+                        Object cantidad = jsonObject.get("cantidad");
+                        if (cantidad instanceof Long) {
+                            Long l = new Long((Long) cantidad);
+                            double d = l.doubleValue();
+                            productoMercadona.setPeso(d);
+                        } else
+                            productoMercadona.setPeso((Double) cantidad);
+                        Object precio = jsonObject.get("precio");
+                        if (precio instanceof Long) {
+                            Long l = new Long((Long) precio);
+                            double d = l.doubleValue();
+                            productoMercadona.setPrecio(d);
+                        } else
+                            productoMercadona.setPrecio((Double) precio);
+
+                        switch (jsonObject.get("unidadmedida").toString()) {
+                            case "Gramos":
+                                productoMercadona.setUnidad(UnidadMedida.Gramos);
+                                break;
+                            case "Litros":
+                                productoMercadona.setUnidad(UnidadMedida.Litros);
+                                break;
+                            case "Kilogramos":
+                                productoMercadona.setUnidad(UnidadMedida.Kilogramos);
+                                break;
+                            case "Mililitros":
+                                productoMercadona.setUnidad(UnidadMedida.Mililitros);
+                                break;
+                            case "Unidad":
+                                productoMercadona.setUnidad(UnidadMedida.Unidad);
+                                break;
+                        }
+                        productoService.create(productoMercadona);
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            //producto e ingrediente
+            for (Ingrediente i : ingredienteService.findAll()) {
+                double puntuacion = 0.0;
+                Producto productoLink = new Producto();
+                for (Producto p : productoService.findAll()) {
+                    SimilarityStrategy strategy = new JaroWinklerStrategy();
+                    String target = i.getNombre();
+                    String source = p.getNombre();
+                    StringSimilarityService service = new StringSimilarityServiceImpl(strategy);
+                    double score = service.score(source, target);
+                    if (puntuacion < score) {
+                        puntuacion = score;
+                        productoLink = p;
+                    }
+                }
+                if (productoLink.getIngrediente() == null) {
+                    productoLink.setIngrediente(i);
+                    productoService.create(productoLink);
+                }
+            }
         };
     }
 }

@@ -13,15 +13,15 @@ public class UsuarioReceta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @PlanningVariable
+    @PlanningVariable(valueRangeProviderRefs = "comidaRange")
     @Enumerated(EnumType.STRING)
     private Comida comida;
-    @PlanningVariable
+    @PlanningVariable(valueRangeProviderRefs = "recetaRange")
     @ManyToOne
     private Receta receta;
     @ManyToOne
     private Usuario usuario;
-    @PlanningVariable
+    @PlanningVariable(valueRangeProviderRefs = "fechaSemanaRange")
     @Enumerated(EnumType.STRING)
     private FechaSemana fechaSemana;
 

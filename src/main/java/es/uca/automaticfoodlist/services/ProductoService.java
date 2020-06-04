@@ -29,11 +29,15 @@ public class ProductoService {
         return productoRepository.findById(id);
     }
 
-    public Producto findByIngrediente(Ingrediente ingrediente){
+    public Producto findByIngrediente(Ingrediente ingrediente) {
         return productoRepository.findByIngrediente(ingrediente);
     }
 
-    public List<Producto> findByProducto(String nombre){
+    public Producto findByNombre(String nombre) {
+        return productoRepository.findByNombre(nombre);
+    }
+
+    public List<Producto> findByProducto(String nombre) {
         return productoRepository.findByNombreStartsWithIgnoreCase(nombre);
     }
 

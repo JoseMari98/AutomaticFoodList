@@ -8,7 +8,6 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -22,8 +21,7 @@ import javax.mail.MessagingException;
 public class UsuarioDatosForm extends FormLayout {
     private TextField username = new TextField("Nombre usuario");
     private TextField nombre = new TextField("Nombre");
-    private TextField apellido1 = new TextField("Primer Apellido");
-    private NumberField prespuestoPlato = new NumberField("Prespuesto plato");
+    private TextField apellido = new TextField("Primer Apellido");
     private EmailField email = new EmailField("Email");
     private PasswordField password = new PasswordField("Contraseña");
     private PasswordField confirmPassword = new PasswordField("Confirmar contraseña");
@@ -38,14 +36,12 @@ public class UsuarioDatosForm extends FormLayout {
             usuario.setPassword("");
             confirmPassword.setValue("");
             binder.setBean(usuario);
-            if (usuario.getPresupuestoPlato() != -1)
-                prespuestoPlato.setValue(usuario.getPresupuestoPlato());
         } else
             usuario = new Usuario();
         this.usuarioService = usuarioService;
 
         nombre.setRequired(true);
-        apellido1.setRequired(true);
+        apellido.setRequired(true);
         email.setRequiredIndicatorVisible(true);
         password.setRequired(true);
         confirmPassword.setRequired(true);
@@ -73,7 +69,7 @@ public class UsuarioDatosForm extends FormLayout {
             }
         });
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        add(username, nombre, apellido1, prespuestoPlato, email, password, confirmPassword, save);
+        add(username, nombre, apellido, email, password, confirmPassword, save);
         save.addClickShortcut(Key.ENTER);
 
         binder.bindInstanceFields(this);
@@ -107,11 +103,7 @@ public class UsuarioDatosForm extends FormLayout {
                 usuario.setRole("User");
                 usuario.setUsername(username.getValue());
                 usuario.setNombre(nombre.getValue());
-                usuario.setApellido(apellido1.getValue());
-                if(!prespuestoPlato.isEmpty())
-                    usuario.setPresupuestoPlato(prespuestoPlato.getValue());
-                else
-                    usuario.setPresupuestoPlato(-1);
+                usuario.setApellido(apellido.getValue());
                 usuario.setEmail(email.getValue());
                 usuario.setPassword(password.getValue());
                 usuarioService.create(usuario);

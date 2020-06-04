@@ -79,10 +79,10 @@ public class CrearRecetaForm extends FormLayout {
                 (grasaPlato.getValue() > 0 && grasaPlato.getValue() != null) && (hidratosPlato.getValue() > 0 && hidratosPlato.getValue() != null) &&
                 (proteinaPlato.getValue() > 0 && proteinaPlato.getValue() != null)){
             valoresNutricionales.setUsuario(null);
-            valoresNutricionales.setProteinaPlato(proteinaPlato.getValue());
-            valoresNutricionales.setHidratosPlato(hidratosPlato.getValue());
-            valoresNutricionales.setGrasaPlato(grasaPlato.getValue());
-            valoresNutricionales.setCaloriasPlato(caloriasPlato.getValue());
+            valoresNutricionales.setProteinaPlato(proteinaPlato.getValue().intValue());
+            valoresNutricionales.setHidratosPlato(hidratosPlato.getValue().intValue());
+            valoresNutricionales.setGrasaPlato(grasaPlato.getValue().intValue());
+            valoresNutricionales.setCaloriasPlato(caloriasPlato.getValue().intValue());
             valoresNutricionales.setReceta(null);
             valoresNutricionalesService.create(valoresNutricionales);
 

@@ -7,7 +7,7 @@ public class ValoresNutricionales {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double caloriasPlato, grasaPlato, hidratosPlato, proteinaPlato;
+    private int caloriasPlato, grasaPlato, hidratosPlato, proteinaPlato;
     @OneToOne(mappedBy = "valoresNutricionales", cascade = CascadeType.ALL)
     private Usuario usuario;
     @OneToOne(mappedBy = "valoresNutricionales", cascade = CascadeType.ALL)
@@ -25,19 +25,19 @@ public class ValoresNutricionales {
         return usuario;
     }
 
-    public double getCaloriasPlato() {
+    public int getCaloriasPlato() {
         return caloriasPlato;
     }
 
-    public double getGrasaPlato() {
+    public int getGrasaPlato() {
         return grasaPlato;
     }
 
-    public double getHidratosPlato() {
+    public int getHidratosPlato() {
         return hidratosPlato;
     }
 
-    public double getProteinaPlato() {
+    public int getProteinaPlato() {
         return proteinaPlato;
     }
 
@@ -53,19 +53,19 @@ public class ValoresNutricionales {
         this.usuario = usuario;
     }
 
-    public void setCaloriasPlato(double caloriasPlato) {
+    public void setCaloriasPlato(int caloriasPlato) {
         this.caloriasPlato = caloriasPlato;
     }
 
-    public void setGrasaPlato(double grasaPlato) {
+    public void setGrasaPlato(int grasaPlato) {
         this.grasaPlato = grasaPlato;
     }
 
-    public void setHidratosPlato(double hidratosPlato) {
+    public void setHidratosPlato(int hidratosPlato) {
         this.hidratosPlato = hidratosPlato;
     }
 
-    public void setProteinaPlato(double proteinaPlato) {
+    public void setProteinaPlato(int proteinaPlato) {
         this.proteinaPlato = proteinaPlato;
     }
 }
