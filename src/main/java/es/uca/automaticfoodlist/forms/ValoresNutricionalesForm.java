@@ -9,9 +9,6 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.data.binder.Result;
-import com.vaadin.flow.data.binder.ValueContext;
-import com.vaadin.flow.data.converter.Converter;
 import es.uca.automaticfoodlist.entities.Receta;
 import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.entities.ValoresNutricionales;
@@ -59,11 +56,10 @@ public class ValoresNutricionalesForm extends FormLayout {
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         add(caloriasPlato, hidratosPlato, grasaPlato, proteinaPlato, usuario, receta, buttons);
 
-        //binder.bindInstanceFields(this);
-        binder.forField(caloriasPlato).withConverter(new MyConverter()).bind(ValoresNutricionales::getCaloriasPlato, ValoresNutricionales::setCaloriasPlato);
-        binder.forField(grasaPlato).withConverter(new MyConverter()).bind(ValoresNutricionales::getGrasaPlato, ValoresNutricionales::setGrasaPlato);
-        binder.forField(hidratosPlato).withConverter(new MyConverter()).bind(ValoresNutricionales::getHidratosPlato, ValoresNutricionales::setHidratosPlato);
-        binder.forField(proteinaPlato).withConverter(new MyConverter()).bind(ValoresNutricionales::getProteinaPlato, ValoresNutricionales::setProteinaPlato);
+        binder.forField(caloriasPlato).withConverter(new ValoresNutricionales.MyConverter()).bind(ValoresNutricionales::getCaloriasPlato, ValoresNutricionales::setCaloriasPlato);
+        binder.forField(grasaPlato).withConverter(new ValoresNutricionales.MyConverter()).bind(ValoresNutricionales::getGrasaPlato, ValoresNutricionales::setGrasaPlato);
+        binder.forField(hidratosPlato).withConverter(new ValoresNutricionales.MyConverter()).bind(ValoresNutricionales::getHidratosPlato, ValoresNutricionales::setHidratosPlato);
+        binder.forField(proteinaPlato).withConverter(new ValoresNutricionales.MyConverter()).bind(ValoresNutricionales::getProteinaPlato, ValoresNutricionales::setProteinaPlato);
 
 
         save.addClickListener(event -> {
@@ -130,23 +126,5 @@ public class ValoresNutricionalesForm extends FormLayout {
             setValoresNutricionales(null);
         } else
             Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);
-    }
-
-    public class MyConverter
-            implements Converter<Double, Integer> {
-
-        @Override
-        public Result<Integer> convertToModel(Double aDouble, ValueContext valueContext) {
-            return Result.ok(Integer.valueOf(aDouble.intValue()));
-        }
-
-        @Override
-        public Double convertToPresentation(
-                Integer integer, ValueContext context) {
-            // Converting to the field type should
-            // always succeed, so there is no support for
-            // returning an error Result.
-            return Double.valueOf(integer);
-        }
     }
 }

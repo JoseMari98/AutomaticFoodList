@@ -4,7 +4,9 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -17,12 +19,11 @@ import es.uca.automaticfoodlist.services.RecetaService;
 import es.uca.automaticfoodlist.services.UsuarioRecetaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.vaadin.klaudeta.PaginatedGrid;
 
 @Route(value = "ListaComidasView", layout = MainView.class)
 @Secured({"User", "Admin", "Gerente"})
 public class ListaComidasView extends AbstractView{
-    private PaginatedGrid<UsuarioReceta> grid = new PaginatedGrid<>();
+    private Grid<UsuarioReceta> grid = new Grid<>(UsuarioReceta.class);
     private UsuarioRecetaService usuarioRecetaService;
     private ListaComidasForm listaComidasForm;
     private SeleccionPlatoForm seleccionPlatoForm;
@@ -40,8 +41,10 @@ public class ListaComidasView extends AbstractView{
             Button confirmButton = new Button("Confirmar", event -> {
                 try {
                     usuarioRecetaService.generarListaCompra(UI.getCurrent().getSession().getAttribute(Usuario.class));
+                    grid.setItems(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
                 UI.getCurrent().navigate("ListaComidasView");
                 dialog.close();
@@ -55,23 +58,32 @@ public class ListaComidasView extends AbstractView{
             dialog.open();
         }
 
-        Button addPlatoButton = new Button ("Añade un plato");
+        Button addPlatoButton = new Button("Añade un plato");
         addPlatoButton.addClickListener(e -> {
-            grid.asSingleSelect().clear(); //clear para que borre si habia algo antes
-            listaComidasForm.setVisible(false);
-            seleccionPlatoForm.setVisible(true);
+            if (usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).size() < 21) {
+                grid.asSingleSelect().clear(); //clear para que borre si habia algo antes
+                listaComidasForm.setVisible(false);
+                seleccionPlatoForm.setVisible(true);
+            } else
+                Notification.show("No se pueden añadir mas recetas", 3000, Notification.Position.MIDDLE);
         });
 
-        HorizontalLayout toolbar = new HorizontalLayout(addPlatoButton);
-        grid.addColumn(ListaComida -> ListaComida.getReceta().getNombre()).setHeader("Receta").setSortable(true);
-        grid.addColumn(UsuarioReceta::getComida).setHeader("Comida").setSortable(true);
-        grid.addColumn(ListaComida -> ListaComida.getFecha()).setHeader("Fecha").setSortable(true);
+        Button generarLista = new Button("Generar lista");
+        generarLista.addClickListener(e -> {
+            try {
+                usuarioRecetaService.generarListaCompra(UI.getCurrent().getSession().getAttribute(Usuario.class));
+                grid.setItems(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
+            UI.getCurrent().navigate("ListaComidasView");
+        });
 
-        // Sets the max number of items to be rendered on the grid for each page
-        grid.setPageSize(9);
-
-        // Sets how many pages should be visible on the pagination before and/or after the current selected page
-        grid.setPaginatorSize(3);
+        HorizontalLayout toolbar = new HorizontalLayout(addPlatoButton, generarLista);
+        grid.setColumns("fecha", "comida", "receta.nombre");
+        //grid.addColumn(UsuarioReceta -> UsuarioReceta.getReceta().getNombre()).setHeader("Receta").setSortable(true);
+        //grid.addColumn(UsuarioReceta::getComida).setHeader("Comida").setSortable(true);
+        //grid.addColumn(UsuarioReceta -> UsuarioReceta.getFecha()).setHeader("Fecha").setSortable(true);
 
         VerticalLayout mainContent = new VerticalLayout(grid, listaComidasForm, seleccionPlatoForm); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();

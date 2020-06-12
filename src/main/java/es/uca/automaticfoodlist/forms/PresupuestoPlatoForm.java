@@ -40,7 +40,7 @@ public class PresupuestoPlatoForm extends FormLayout {
 
     public void save() {
         if(presupuestoPlato.isEmpty() || presupuestoPlato.getValue() < 1)
-            UI.getCurrent().getSession().getAttribute(Usuario.class).setPresupuestoPlato(-1);
+            UI.getCurrent().getSession().getAttribute(Usuario.class).setPresupuestoPlato(0);
         else
             UI.getCurrent().getSession().getAttribute(Usuario.class).setPresupuestoPlato(presupuestoPlato.getValue());
         usuarioService.update(UI.getCurrent().getSession().getAttribute(Usuario.class));

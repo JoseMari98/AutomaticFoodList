@@ -11,7 +11,10 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
-import es.uca.automaticfoodlist.entities.*;
+import es.uca.automaticfoodlist.entities.Ingrediente;
+import es.uca.automaticfoodlist.entities.Producto;
+import es.uca.automaticfoodlist.entities.UnidadMedida;
+import es.uca.automaticfoodlist.entities.UsuarioProducto;
 import es.uca.automaticfoodlist.services.IngredienteService;
 import es.uca.automaticfoodlist.services.ProductoService;
 import es.uca.automaticfoodlist.services.UsuarioProductoService;
@@ -23,7 +26,6 @@ public class ProductoForm extends FormLayout {
     private NumberField peso = new NumberField("Peso");
     private ComboBox<UnidadMedida> unidad = new ComboBox<>("Unidad medida");
     private ComboBox<Ingrediente> ingrediente = new ComboBox<>("Ingrediente");
-    private ComboBox<Categoria> categoria = new ComboBox<>("Categoria");
     private Button save = new Button("Añadir");
     private Button delete = new Button("Borrar");
     private ProductoView productoView;
@@ -44,14 +46,11 @@ public class ProductoForm extends FormLayout {
         peso.setStep(0.01);
         precio.setStep(0.01);
         nombre.setRequired(true);
-        categoria.setRequired(true);
         precio.setRequiredIndicatorVisible(true);
         peso.setRequiredIndicatorVisible(true);
         unidad.setRequired(true);
         unidad.setRequiredIndicatorVisible(true);
         nombre.setRequiredIndicatorVisible(true);
-        categoria.setRequiredIndicatorVisible(true);
-        categoria.setItems(Categoria.values());
         unidad.setItems(UnidadMedida.values());
         ingrediente.setItems(ingredienteService.findAll());
         ingrediente.setItemLabelGenerator(Ingrediente::getNombre);
@@ -60,7 +59,7 @@ public class ProductoForm extends FormLayout {
 
         HorizontalLayout buttons = new HorizontalLayout(save, delete);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        add(nombre, categoria, precio, peso, unidad, ingrediente, buttons);
+        add(nombre, precio, peso, unidad, ingrediente, buttons);
 
         binder.bindInstanceFields(this);
 

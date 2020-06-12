@@ -20,8 +20,6 @@ public class Producto {
     private Set<UsuarioProducto> usuarioProductos = new HashSet<>();
     @ManyToOne
     private Ingrediente ingrediente;
-    @Enumerated(EnumType.STRING)
-    private Categoria categoria;
 
     public double getPeso() {
         return peso;
@@ -43,20 +41,12 @@ public class Producto {
         return unidad;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
     public Ingrediente getIngrediente() {
         return ingrediente;
     }
 
     public Set<UsuarioProducto> getUsuarioProductos() {
         return usuarioProductos;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
     }
 
     public void setIngrediente(Ingrediente ingrediente) {

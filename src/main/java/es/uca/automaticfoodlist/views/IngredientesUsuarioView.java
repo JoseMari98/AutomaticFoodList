@@ -36,7 +36,7 @@ public class IngredientesUsuarioView extends AbstractView{
         this.ingredientesUsuarioForm = new IngredientesUsuarioForm(preferenciaIngredienteService);
 
         H1 titulo = new H1("Lista de ingredientes");
-        Paragraph descripcion = new Paragraph("Aqui podras introducir tu nivel de agrado para los ingredientes, si no introduces nada se presupone que te gusta.");
+        Paragraph descripcion = new Paragraph("Aqui podras decir que ingrediente deseas quitar, si no introduces nada se presupone que te gusta.");
         filterText.setPlaceholder("Filtrar por ingrediente"); //poner el campo
         filterText.setClearButtonVisible(true); //poner la cruz para borrar
         filterText.setValueChangeMode(ValueChangeMode.EAGER); //que se hagan los cambios cuando se escriba
@@ -52,7 +52,7 @@ public class IngredientesUsuarioView extends AbstractView{
         VerticalLayout texto = new VerticalLayout(titulo, descripcion);
         HorizontalLayout toolbar = new HorizontalLayout(filterText); //meter lo de la categoria
 
-        grid.setColumns("nombre", "categoria");
+        grid.setColumns("nombre");
 
         HorizontalLayout mainContent = new HorizontalLayout(grid, ingredientesUsuarioForm); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();

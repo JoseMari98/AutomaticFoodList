@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class HorarioComidasService {
@@ -12,15 +14,114 @@ public class HorarioComidasService {
     private UsuarioRecetaService usuarioRecetaService;
     @Autowired
     private RecetaService recetaService;
+    @Autowired
+    private IntoleranciaUsuarioService intoleranciaUsuarioService;
+    @Autowired
+    private IntoleranciaRecetaService intoleranciaRecetaService;
+    @Autowired
+    private PreferenciaIngredienteService preferenciaIngredienteService;
+    @Autowired
+    private RecetaIngredienteService recetaIngredienteService;
     public Usuario usuario;
 
     public HorarioComidas findByUsuario(Usuario usuario) {
-        if (!usuarioRecetaService.findByUsuario(usuario).isEmpty()) {
+        /*if (usuarioRecetaService.findByUsuario(usuario).isEmpty()) {
             throw new IllegalStateException("No hay una lista de comida para este usuario.");
-        }
+        }*/
         // Occurs in a single transaction, so each initialized lesson references the same timeslot/room instance
         // that is contained by the timeTable's timeslotList/roomList.
-        return new HorarioComidas(recetaService.findAll(), usuarioRecetaService.findByUsuario(usuario), Arrays.asList(FechaSemana.values()), Arrays.asList(Comida.values()));
+        List<Receta> recetaList = recetaService.findAll();
+        List<Receta> recetas = recetaService.findAll();
+
+        //filtro de intolerancias
+        if (intoleranciaUsuarioService.buscarPorUsuario(usuario).size() != 0) {
+            int contUsuario = intoleranciaUsuarioService.buscarPorUsuario(usuario).size();
+            for (Receta receta : recetas) {
+                int cont = 0;
+                for (IntoleranciaUsuario intoleranciaUsuario : intoleranciaUsuarioService.buscarPorUsuario(usuario)) {
+                    for (IntoleranciaReceta intoleranciaReceta : intoleranciaRecetaService.buscarPorReceta(receta)) {
+                        if (intoleranciaUsuario.getIntolerancia().getId().equals(intoleranciaReceta.getIntolerancia().getId())) {
+                            cont++;
+                        }
+                    }
+                }
+                if (contUsuario > cont)
+                    recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+            }
+        }
+
+
+        recetas = new LinkedList<>(recetaList);
+
+        if (usuario.getSignosValoresNutrcionales() != null) {
+            String[] signos = usuario.getSignosValoresNutrcionales().split(",");
+            for (Receta receta : recetas) {
+                if (signos[0].equals("Menor"))
+                    if (usuario.getValoresNutricionales().getCaloriasPlato() < receta.getValoresNutricionales().getCaloriasPlato()) {
+                        recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+                        continue;
+                    } else if (signos[0].equals("Mayor"))
+                        if (usuario.getValoresNutricionales().getCaloriasPlato() >= receta.getValoresNutricionales().getCaloriasPlato()) {
+                            recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+                            continue;
+                        }
+
+                if (signos[1].equals("Menor"))
+                    if (usuario.getValoresNutricionales().getGrasaPlato() < receta.getValoresNutricionales().getGrasaPlato()) {
+                        recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+                        continue;
+                    } else if (signos[1].equals("Mayor"))
+                        if (usuario.getValoresNutricionales().getGrasaPlato() >= receta.getValoresNutricionales().getGrasaPlato()) {
+                            recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+                            continue;
+                        }
+
+                if (signos[2].equals("Menor"))
+                    if (usuario.getValoresNutricionales().getHidratosPlato() < receta.getValoresNutricionales().getHidratosPlato()) {
+                        recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+                        continue;
+                    } else if (signos[2].equals("Mayor"))
+                        if (usuario.getValoresNutricionales().getHidratosPlato() >= receta.getValoresNutricionales().getHidratosPlato()) {
+                            recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+                            continue;
+                        }
+
+                if (signos[3].equals("Menor"))
+                    if (usuario.getValoresNutricionales().getProteinaPlato() < receta.getValoresNutricionales().getProteinaPlato()) {
+                        recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+                    } else if (signos[3].equals("Mayor"))
+                        if (usuario.getValoresNutricionales().getProteinaPlato() >= receta.getValoresNutricionales().getProteinaPlato()) {
+                            recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+                        }
+            }
+        }
+
+        recetas = new LinkedList<>(recetaList);
+
+        if (usuario.getPresupuestoPlato() != 0) {
+            for (Receta receta : recetas) {
+                if (usuario.getPresupuestoPlato() < receta.getPrecioAproximado())
+                    recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+            }
+        }
+
+        recetas = new LinkedList<>(recetaList);
+
+        if (preferenciaIngredienteService.findByUsuario(usuario).size() != 0) {
+            for (Receta receta : recetas) {
+                boolean valido = false;
+                for (RecetaIngrediente recetaIngrediente : recetaIngredienteService.findByReceta(receta)) {
+                    if (preferenciaIngredienteService.findByUsuarioAndIngrediente(usuario, recetaIngrediente.getIngrediente()) != null) {
+                        valido = true;
+                        break;
+                    }
+                }
+                if (valido)
+                    recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
+            }
+        }
+
+        return new HorarioComidas(recetaList, usuarioRecetaService.findByUsuario(usuario), Arrays.asList(FechaSemana.values()), Arrays.asList(Comida.values()));
     }
 
     public void save(HorarioComidas horarioComidas) {

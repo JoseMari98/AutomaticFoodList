@@ -106,6 +106,7 @@ public class UsuarioDatosForm extends FormLayout {
                 usuario.setApellido(apellido.getValue());
                 usuario.setEmail(email.getValue());
                 usuario.setPassword(password.getValue());
+                usuario.setPresupuestoPlato(0);
                 usuarioService.create(usuario);
                 if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
                     Notification.show("Modificado con exito", 3000, Notification.Position.MIDDLE);

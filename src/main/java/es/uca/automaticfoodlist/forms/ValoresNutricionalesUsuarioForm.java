@@ -112,8 +112,10 @@ public class ValoresNutricionalesUsuarioForm extends FormLayout {
 
         add(save);
         save.addClickShortcut(Key.ENTER);
-        binder.bindInstanceFields(this);
-
+        binder.forField(caloriasPlato).withConverter(new ValoresNutricionales.MyConverter()).bind(ValoresNutricionales::getCaloriasPlato, ValoresNutricionales::setCaloriasPlato);
+        binder.forField(grasaPlato).withConverter(new ValoresNutricionales.MyConverter()).bind(ValoresNutricionales::getGrasaPlato, ValoresNutricionales::setGrasaPlato);
+        binder.forField(hidratosPlato).withConverter(new ValoresNutricionales.MyConverter()).bind(ValoresNutricionales::getHidratosPlato, ValoresNutricionales::setHidratosPlato);
+        binder.forField(proteinaPlato).withConverter(new ValoresNutricionales.MyConverter()).bind(ValoresNutricionales::getProteinaPlato, ValoresNutricionales::setProteinaPlato);
         save.addClickListener(event -> save());
     }
 

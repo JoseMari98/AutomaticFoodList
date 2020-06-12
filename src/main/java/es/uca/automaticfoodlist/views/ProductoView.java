@@ -50,7 +50,7 @@ public class ProductoView extends AbstractView {
         HorizontalLayout toolbar = new HorizontalLayout(filterText,
                 addProductoBtn);
 
-        grid.setColumns("nombre", "categoria", "peso", "unidad");
+        grid.setColumns("nombre", "peso", "unidad");
         grid.addColumn(Producto -> Producto.getPrecio() + "€").setSortable(true).setHeader("Precio");
         grid.addColumn(Producto -> Producto.getIngrediente() == null ? "Sin ingrediente" : Producto.getIngrediente().getNombre()).setHeader("Ingrediente").setSortable(true);
 

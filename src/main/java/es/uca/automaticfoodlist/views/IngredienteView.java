@@ -50,7 +50,7 @@ public class IngredienteView extends AbstractView{
         HorizontalLayout toolbar = new HorizontalLayout(filterText,
                 addIngredienteBtn);
 
-        grid.setColumns("nombre", "categoria","idApi");
+        grid.setColumns("nombre", "idApi");
 
         HorizontalLayout mainContent = new HorizontalLayout(grid, ingredienteForm); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();

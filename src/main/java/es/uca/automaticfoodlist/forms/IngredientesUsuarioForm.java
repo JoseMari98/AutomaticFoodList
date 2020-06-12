@@ -16,7 +16,7 @@ import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.services.PreferenciaIngredienteService;
 
 public class IngredientesUsuarioForm extends FormLayout {
-    private Select<Gusto> gusto = new Select<>(Gusto.Mucho, Gusto.Poco, Gusto.Nada);
+    private Select<Gusto> gusto = new Select<>(Gusto.Nada);
     private Button save = new Button("Añadir");
     private Button delete = new Button("Borrar");
     private BeanValidationBinder<PreferenciaIngrediente> binder = new BeanValidationBinder<>(PreferenciaIngrediente.class);

@@ -10,4 +10,6 @@ import java.util.List;
 public interface PreferenciaIngredienteRepository extends JpaRepository<PreferenciaIngrediente, Long> {
     PreferenciaIngrediente findByUsuarioAndIngrediente(Usuario usuario, Ingrediente ingrediente);
     List<PreferenciaIngrediente> findByIngrediente(Ingrediente ingrediente);
+
+    List<PreferenciaIngrediente> findByUsuario(Usuario usuario);
 }

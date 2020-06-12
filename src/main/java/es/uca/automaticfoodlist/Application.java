@@ -1,28 +1,12 @@
 package es.uca.automaticfoodlist;
 
-import es.uca.automaticfoodlist.entities.*;
 import es.uca.automaticfoodlist.services.*;
-import net.ricecode.similarity.JaroWinklerStrategy;
-import net.ricecode.similarity.SimilarityStrategy;
-import net.ricecode.similarity.StringSimilarityService;
-import net.ricecode.similarity.StringSimilarityServiceImpl;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Random;
-import java.util.Vector;
 
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {
@@ -42,7 +26,7 @@ public class Application extends SpringBootServletInitializer {
                                       ProductoService productoService, UsuarioProductoService usuarioProductoService, ValoresNutricionalesService valoresNutricionalesService,
                                       IntoleranciaRecetaService intoleranciaRecetaService) {
         return (args) -> {
-            try {
+            /*try {
                 boolean valido = usuarioService.loadUserByUsername("admin").getRole().equals("Admin");
             } catch (UsernameNotFoundException e) {
                 Usuario u = new Usuario();
@@ -52,7 +36,7 @@ public class Application extends SpringBootServletInitializer {
                 u.setEmail("admin@admin.es");
                 u.setUsername("admin");
                 u.setRole("Admin");
-                u.setPresupuestoPlato(-1);
+                u.setPresupuestoPlato(0);
                 usuarioService.create(u);
             }
             try {
@@ -65,7 +49,7 @@ public class Application extends SpringBootServletInitializer {
                 u.setEmail("usuario@usuario.es");
                 u.setUsername("user");
                 u.setRole("User");
-                u.setPresupuestoPlato(-1);
+                u.setPresupuestoPlato(0);
                 usuarioService.create(u);
             }
             Vector<Intolerancia> intoleranciaVector = new Vector<>(9);
@@ -78,21 +62,18 @@ public class Application extends SpringBootServletInitializer {
             for (Intolerancia intolerancia : intoleranciaVector) {
                 intoleranciaService.create(intolerancia);
             }
-            Ingrediente ingrediente = new Ingrediente();
+            /*Ingrediente ingrediente = new Ingrediente();
             ingrediente.setIdApi("1");
-            ingrediente.setCategoria(Categoria.Verduras);
             ingrediente.setNombre("Lechuga");
             ingredienteService.create(ingrediente);
 
             Ingrediente ingrediente1 = new Ingrediente();
             ingrediente1.setIdApi("2");
-            ingrediente1.setCategoria(Categoria.Carnes);
             ingrediente1.setNombre("Ternera");
             ingredienteService.create(ingrediente1);
 
             Ingrediente ingrediente2 = new Ingrediente();
             ingrediente2.setIdApi("3");
-            ingrediente2.setCategoria(Categoria.Condimentos);
             ingrediente2.setNombre("Sal");
             ingredienteService.create(ingrediente2);
 
@@ -136,7 +117,7 @@ public class Application extends SpringBootServletInitializer {
             recetaIngrediente3.setReceta(receta1);
             recetaIngredienteService.create(recetaIngrediente3);
 
-            UsuarioReceta usuarioReceta = new UsuarioReceta();
+            /*UsuarioReceta usuarioReceta = new UsuarioReceta();
             usuarioReceta.setComida(Comida.Almuerzo);
             usuarioReceta.setReceta(receta);
             usuarioReceta.setUsuario(usuarioService.loadUserByUsername("user"));
@@ -155,11 +136,10 @@ public class Application extends SpringBootServletInitializer {
             usuarioReceta2.setReceta(receta1);
             usuarioReceta2.setUsuario(usuarioService.loadUserByUsername("user"));
             usuarioReceta2.setFecha(FechaSemana.Lunes);
-            usuarioRecetaService.create(usuarioReceta2);
+            usuarioRecetaService.create(usuarioReceta2);*/
 
-            Producto producto = new Producto();
+            /*Producto producto = new Producto();
             producto.setNombre("Lechuga iceberg");
-            producto.setCategoria(Categoria.Verduras);
             producto.setIngrediente(ingrediente);
             producto.setUnidad(UnidadMedida.Gramos);
             producto.setPeso(100);
@@ -168,7 +148,6 @@ public class Application extends SpringBootServletInitializer {
 
             Producto producto1 = new Producto();
             producto1.setNombre("Lomo ternera");
-            producto1.setCategoria(Categoria.Carnes);
             producto1.setIngrediente(ingrediente1);
             producto1.setUnidad(UnidadMedida.Gramos);
             producto1.setPeso(500);
@@ -177,12 +156,11 @@ public class Application extends SpringBootServletInitializer {
 
             Producto producto2 = new Producto();
             producto2.setNombre("Sal escamas");
-            producto2.setCategoria(Categoria.Condimentos);
             producto2.setIngrediente(ingrediente2);
             producto2.setUnidad(UnidadMedida.Gramos);
             producto2.setPeso(500);
             producto2.setPrecio(1);
-            productoService.create(producto2);
+            productoService.create(producto2);*/
 
             /*ListaCompra listaCompra = new ListaCompra();
             listaCompra.setCantidad(2);
@@ -196,13 +174,10 @@ public class Application extends SpringBootServletInitializer {
             listaCompra1.setUsuario(usuarioService.loadUserByUsername("user"));
             listaCompraService.create(listaCompra1);*/
 
-            /*JSONObject obj = new JSONObject("/home/jose/Descargas/untitled/ingredients_recetas.json");
-            String pageName = obj.getJSONObject("pageInfo").getString("pageName");*/
-            JSONParser jsonParser = new JSONParser();
+            /*JSONParser jsonParser = new JSONParser();
             try {
                 //Parsing the contents of the JSON file
-                JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("/home/jose/Documentos/TFG/automatic-food-list/ingredients_recetas.json"));
-                //JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("../../../../../../../ingredients_recetas.json"));
+                JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/ingredients_recetas.json"));
                 for (int i = 0; i < jsonArray.size(); i++) {
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     if (jsonObject.get("id") != null) {
@@ -216,8 +191,7 @@ public class Application extends SpringBootServletInitializer {
                             ingredienteService.create(ingrediente3);
                     }
                 }
-                jsonArray = (JSONArray) jsonParser.parse(new FileReader("/home/jose/Documentos/TFG/automatic-food-list/recipies_recetas.json"));
-                //jsonArray = (JSONArray) jsonParser.parse(new FileReader("/../../../../../../../recipies_recetas.json"));
+                jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/recipies_recetas.json"));
                 for (Object o : jsonArray) {
                     JSONObject jsonObject = (JSONObject) o;
                     if (jsonObject.get("id") != null) {
@@ -229,9 +203,17 @@ public class Application extends SpringBootServletInitializer {
                         if (precio instanceof Long) {
                             Long l = new Long((Long) precio);
                             double d = l.doubleValue();
-                            receta2.setPrecioAproximado(Math.round(d * 0.01));
-                        } else
-                            receta2.setPrecioAproximado(Math.round((Double) precio * 0.01));
+                            //receta2.setPrecioAproximado(Math.round(d * 0.01));
+                            BigDecimal redondeado = new BigDecimal(d * 0.01)
+                                    .setScale(2, RoundingMode.HALF_EVEN);
+                            receta2.setPrecioAproximado(redondeado.doubleValue());
+                        } else{
+                            Double precio2 = (Double) precio;
+                            BigDecimal redondeado = new BigDecimal(precio2 * 0.01)
+                                    .setScale(2, RoundingMode.HALF_EVEN);
+                            receta2.setPrecioAproximado(redondeado.doubleValue());
+                        }
+                            //receta2.setPrecioAproximado(Math.round((Double) precio * 0.01));
 
                         ValoresNutricionales valoresNutricionales = new ValoresNutricionales();
                         valoresNutricionales.setCaloriasPlato(random.nextInt(1000) + 1);
@@ -288,8 +270,7 @@ public class Application extends SpringBootServletInitializer {
                         }
                     }
                 }
-                jsonArray = (JSONArray) jsonParser.parse(new FileReader("/home/jose/Documentos/TFG/automatic-food-list/productos.json"));
-                //JSONArray jsonArray = (JSONArray) jsonParser.parse(new FileReader("../../../../../../../ingredients_recetas.json"));
+                jsonArray = (JSONArray) jsonParser.parse(new FileReader("src/main/resources/productos.json"));
                 for (int i = 0; i < jsonArray.size(); i++) {
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     if (productoService.findByNombre(jsonObject.get("nombre").toString()) == null) {
@@ -357,7 +338,7 @@ public class Application extends SpringBootServletInitializer {
                     productoLink.setIngrediente(i);
                     productoService.create(productoLink);
                 }
-            }
+            }*/
         };
     }
 }

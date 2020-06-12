@@ -1,4 +1,4 @@
-package es.uca.automaticfoodlist.services;
+/*package es.uca.automaticfoodlist.services;
 
 import es.uca.automaticfoodlist.entities.HorarioComidas;
 import es.uca.automaticfoodlist.entities.UsuarioReceta;
@@ -41,4 +41,4 @@ public class OptaPlannerServiceTest {
         assertFalse(horarioComidas.getUsuarioRecetas().size() > 21);
 
     }
-}
+}*/

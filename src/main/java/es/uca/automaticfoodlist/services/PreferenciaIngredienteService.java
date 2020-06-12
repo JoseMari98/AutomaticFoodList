@@ -27,12 +27,16 @@ public class PreferenciaIngredienteService {
         return preferenciaIngredienteRepository.save(preferenciaIngrediente);
     }
 
-    public PreferenciaIngrediente findByUsuarioAndIngrediente(Usuario usuario, Ingrediente ingrediente){
+    public PreferenciaIngrediente findByUsuarioAndIngrediente(Usuario usuario, Ingrediente ingrediente) {
         return preferenciaIngredienteRepository.findByUsuarioAndIngrediente(usuario, ingrediente);
     }
 
-    public List<PreferenciaIngrediente> findByIngrediente(Ingrediente ingrediente){
+    public List<PreferenciaIngrediente> findByIngrediente(Ingrediente ingrediente) {
         return preferenciaIngredienteRepository.findByIngrediente(ingrediente);
+    }
+
+    public List<PreferenciaIngrediente> findByUsuario(Usuario usuario) {
+        return preferenciaIngredienteRepository.findByUsuario(usuario);
     }
 
     public Optional<PreferenciaIngrediente> buscarId(Long id) {

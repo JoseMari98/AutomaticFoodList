@@ -28,15 +28,8 @@ public class Receta {
     @OneToMany(mappedBy = "receta")
     private Set<IntoleranciaReceta> intoleranciaRecetaSet;
 
-    //tomara valores verdadero o falso separado por |, ejemplo t|f|t
-    private String comidaAdecuada = "";
-
     public Long getId() {
         return id;
-    }
-
-    public String getComidaAdecuada() {
-        return comidaAdecuada;
     }
 
     public Set<IntoleranciaReceta> getIntoleranciaRecetaSet() {
@@ -81,10 +74,6 @@ public class Receta {
 
     public void setRecetaIngredientes(Set<RecetaIngrediente> recetaIngredientes) {
         this.recetaIngredientes = recetaIngredientes;
-    }
-
-    public void setComidaAdecuada(String comidaAdecuada) {
-        this.comidaAdecuada = comidaAdecuada;
     }
 
     public void setIntoleranciaRecetaSet(Set<IntoleranciaReceta> intoleranciaRecetaSet) {

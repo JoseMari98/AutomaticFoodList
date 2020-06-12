@@ -3,13 +3,11 @@ package es.uca.automaticfoodlist.forms;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
-import es.uca.automaticfoodlist.entities.Categoria;
 import es.uca.automaticfoodlist.entities.Ingrediente;
 import es.uca.automaticfoodlist.entities.PreferenciaIngrediente;
 import es.uca.automaticfoodlist.entities.RecetaIngrediente;
@@ -21,7 +19,6 @@ import es.uca.automaticfoodlist.views.IngredienteView;
 public class IngredienteForm extends FormLayout {
     TextField nombre = new TextField("Nombre");
     TextField idApi = new TextField("Id api");
-    ComboBox<Categoria> categoria = new ComboBox<>("Categoria");
     Button save = new Button("Añadir");
     Button delete = new Button("Borrar");
 
@@ -39,16 +36,13 @@ public class IngredienteForm extends FormLayout {
         this.ingredienteView = ingredienteView;
 
         nombre.setRequired(true);
-        categoria.setRequired(true);
         nombre.setRequiredIndicatorVisible(true);
-        categoria.setRequiredIndicatorVisible(true);
-        categoria.setItems(Categoria.values());
 
         save.addClickShortcut(Key.ENTER);
 
         HorizontalLayout buttons = new HorizontalLayout(save, delete);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        add(nombre, categoria, idApi, buttons);
+        add(nombre, idApi, buttons);
 
         binder.bindInstanceFields(this);
 

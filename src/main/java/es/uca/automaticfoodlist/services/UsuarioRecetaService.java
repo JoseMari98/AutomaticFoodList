@@ -16,6 +16,10 @@ public class UsuarioRecetaService {
     private OptaPlannerService optaPlannerService;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private IntoleranciaRecetaService intoleranciaRecetaService;
+    @Autowired
+    private IntoleranciaUsuarioService intoleranciaUsuarioService;
 
     @Autowired
     public UsuarioRecetaService(UsuarioRecetaRepository usuarioRecetaRepository) {
@@ -59,6 +63,13 @@ public class UsuarioRecetaService {
     }
 
     public void generarListaCompra(Usuario usuario) throws InterruptedException {
+        for (UsuarioReceta usuarioReceta : findByUsuario(usuario))
+            delete(usuarioReceta);
+        for (int i = 0; i < 21; i++) {
+            UsuarioReceta usuarioReceta = new UsuarioReceta();
+            usuarioReceta.setUsuario(usuario);
+            create(usuarioReceta);
+        }
         optaPlannerService.solve(usuario);
         HorarioComidas horarioComidas = optaPlannerService.getTimeTable(usuario);
         while (horarioComidas.getSolverStatus() != SolverStatus.NOT_SOLVING) {

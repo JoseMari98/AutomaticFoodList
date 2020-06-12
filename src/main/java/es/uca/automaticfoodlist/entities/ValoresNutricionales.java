@@ -1,5 +1,9 @@
 package es.uca.automaticfoodlist.entities;
 
+import com.vaadin.flow.data.binder.Result;
+import com.vaadin.flow.data.binder.ValueContext;
+import com.vaadin.flow.data.converter.Converter;
+
 import javax.persistence.*;
 
 @Entity
@@ -67,5 +71,23 @@ public class ValoresNutricionales {
 
     public void setProteinaPlato(int proteinaPlato) {
         this.proteinaPlato = proteinaPlato;
+    }
+
+    public static class MyConverter
+            implements Converter<Double, Integer> {
+
+        @Override
+        public Result<Integer> convertToModel(Double aDouble, ValueContext valueContext) {
+            return Result.ok(Integer.valueOf(aDouble.intValue()));
+        }
+
+        @Override
+        public Double convertToPresentation(
+                Integer integer, ValueContext context) {
+            // Converting to the field type should
+            // always succeed, so there is no support for
+            // returning an error Result.
+            return Double.valueOf(integer);
+        }
     }
 }

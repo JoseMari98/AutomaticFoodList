@@ -74,9 +74,11 @@ public class MainView extends AppLayout {
         }
         addToDrawer(menuLayout, tabs); //anadirlo al desplegable
         addToNavbar(touchOptimized, drawerToggle, img); //anadirlo a la barra vertical
-        if (SecurityUtils.isUserLoggedIn())
+        if (SecurityUtils.isUserLoggedIn()) {
             logout.getStyle().set("center", "auto");
-        addToDrawer(logout);
+            addToDrawer(logout);
+        }
+
         UI.getCurrent().navigate("Inicio");
     }
 

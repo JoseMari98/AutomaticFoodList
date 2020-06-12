@@ -1,31 +1,21 @@
 package es.uca.automaticfoodlist.solver;
 
-import es.uca.automaticfoodlist.entities.Comida;
-import es.uca.automaticfoodlist.entities.IntoleranciaReceta;
-import es.uca.automaticfoodlist.entities.IntoleranciaUsuario;
 import es.uca.automaticfoodlist.entities.UsuarioReceta;
-import es.uca.automaticfoodlist.services.IntoleranciaRecetaService;
-import es.uca.automaticfoodlist.services.IntoleranciaUsuarioService;
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScore;
 import org.optaplanner.core.api.score.stream.Constraint;
 import org.optaplanner.core.api.score.stream.ConstraintFactory;
 import org.optaplanner.core.api.score.stream.ConstraintProvider;
 import org.optaplanner.core.api.score.stream.Joiners;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class HorarioComidasConstraintProvider implements ConstraintProvider {
-    @Autowired
-    private IntoleranciaUsuarioService intoleranciaUsuarioService;
-    @Autowired
-    private IntoleranciaRecetaService intoleranciaRecetaService;
 
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[]{
                 //Hard
                 //conflictoAlmuerzo(constraintFactory),
-                //conflictoComidaRepetida(constraintFactory),
-                //conflictoComidaFecha(constraintFactory),
+                conflictoComidaRepetida(constraintFactory),
+                conflictoComidaFecha(constraintFactory),
                 //conflictoIntolerancia(constraintFactory),
                 //conflictoCalorias(constraintFactory),
                 //conflictoHidratos(constraintFactory),
@@ -35,7 +25,7 @@ public class HorarioComidasConstraintProvider implements ConstraintProvider {
                 //conflictoCena(constraintFactory),
                 //conflictoDesayuno(constraintFactory),
                 //Soft
-                //conflictoComidasRepetidas(constraintFactory)
+                conflictoComidasRepetidas(constraintFactory)
         };
     }
 
@@ -59,28 +49,29 @@ public class HorarioComidasConstraintProvider implements ConstraintProvider {
     private Constraint conflictoComidasRepetidas(ConstraintFactory constraintFactory) {
         return constraintFactory.fromUniquePair(UsuarioReceta.class,
                 Joiners.equal(UsuarioReceta::getReceta))
-                .filter((usuarioReceta1, usuarioReceta2) -> usuarioReceta1.getFecha() == usuarioReceta2.getFecha())
                 .penalize("Receta repetida distinto dia", HardSoftScore.ONE_SOFT);
     }
 
     //Comprobar que no se mete comidas con intolerancias en el usuario
-    private Constraint conflictoIntolerancia(ConstraintFactory constraintFactory) {
-        return constraintFactory.fromUnfiltered(UsuarioReceta.class)
+    /*private Constraint conflictoIntolerancia(ConstraintFactory constraintFactory) {
+        return constraintFactory.from(UsuarioReceta.class)
                 .filter((usuarioReceta -> {
-                    boolean valido = true;
-                    for (IntoleranciaUsuario intoleranciaUsuario : intoleranciaUsuarioService.buscarPorUsuario(usuarioReceta.getUsuario())) {
-                        for (IntoleranciaReceta intoleranciaReceta : intoleranciaRecetaService.buscarPorReceta(usuarioReceta.getReceta())) {
-                            if (intoleranciaUsuario.getIntolerancia() == intoleranciaReceta.getIntolerancia()) {
-                                valido = false;
-                                break;
+                    int contUsuario = 0;
+                    int cont = 0;
+                    if(intoleranciaUsuarioService.buscarPorUsuario(usuarioReceta.getUsuario()).size() != 0){
+                        contUsuario = intoleranciaUsuarioService.buscarPorUsuario(usuarioReceta.getUsuario()).size();
+                        for (IntoleranciaUsuario intoleranciaUsuario : intoleranciaUsuarioService.buscarPorUsuario(usuarioReceta.getUsuario())) {
+                            for (IntoleranciaReceta intoleranciaReceta : intoleranciaRecetaService.buscarPorReceta(usuarioReceta.getReceta())) {
+                                if (intoleranciaUsuario.getIntolerancia() == intoleranciaReceta.getIntolerancia()) {
+                                    cont++;
+                                }
                             }
                         }
                     }
-
-                    return !valido;
+                    return (contUsuario > cont);
                 }))
                 .penalize("No cumple intolerancia", HardSoftScore.ONE_HARD);
-    }
+    }*/
 
     private Constraint conflictoCalorias(ConstraintFactory constraintFactory) {
         return constraintFactory.fromUnfiltered(UsuarioReceta.class)
@@ -153,40 +144,4 @@ public class HorarioComidasConstraintProvider implements ConstraintProvider {
         private Constraint premioIngredienteGustaMucho(ConstraintFactory constraintFactory){
 
         }*/
-
-    private Constraint conflictoDesayuno(ConstraintFactory constraintFactory) {
-        return constraintFactory.fromUnfiltered(UsuarioReceta.class)
-                .filter((usuarioReceta -> {
-                    String[] booleanos = usuarioReceta.getReceta().getComidaAdecuada().split(",");
-                    boolean valido = true;
-                    if (booleanos[0].equals("false") && usuarioReceta.getComida() == Comida.Desayuno)
-                        valido = false;
-                    return !valido;
-                }))
-                .penalize("No adecuada para desayunar", HardSoftScore.ONE_HARD);
-    }
-
-    private Constraint conflictoAlmuerzo(ConstraintFactory constraintFactory) {
-        return constraintFactory.fromUnfiltered(UsuarioReceta.class)
-                .filter((usuarioReceta -> {
-                    String[] booleanos = usuarioReceta.getReceta().getComidaAdecuada().split(",");
-                    boolean valido = true;
-                    if (booleanos[1].equals("false") && usuarioReceta.getComida() == Comida.Almuerzo)
-                        valido = false;
-                    return !valido;
-                }))
-                .penalize("No adecuada para almorzar", HardSoftScore.ONE_HARD);
-    }
-
-    private Constraint conflictoCena(ConstraintFactory constraintFactory) {
-        return constraintFactory.fromUnfiltered(UsuarioReceta.class)
-                .filter((usuarioReceta -> {
-                    String[] booleanos = usuarioReceta.getReceta().getComidaAdecuada().split(",");
-                    boolean valido = true;
-                    if (booleanos[2].equals("false") && usuarioReceta.getComida() == Comida.Cena)
-                        valido = false;
-                    return !valido;
-                }))
-                .penalize("No adecuada para cenar", HardSoftScore.ONE_HARD);
-    }
 }
