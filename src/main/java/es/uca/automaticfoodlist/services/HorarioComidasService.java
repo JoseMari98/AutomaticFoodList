@@ -25,16 +25,11 @@ public class HorarioComidasService {
     public Usuario usuario;
 
     public HorarioComidas findByUsuario(Usuario usuario) {
-        /*if (usuarioRecetaService.findByUsuario(usuario).isEmpty()) {
-            throw new IllegalStateException("No hay una lista de comida para este usuario.");
-        }*/
-        // Occurs in a single transaction, so each initialized lesson references the same timeslot/room instance
-        // that is contained by the timeTable's timeslotList/roomList.
         List<Receta> recetaList = recetaService.findAll();
         List<Receta> recetas = recetaService.findAll();
 
         //filtro de intolerancias
-        if (intoleranciaUsuarioService.buscarPorUsuario(usuario).size() != 0) {
+        if (!intoleranciaUsuarioService.buscarPorUsuario(usuario).isEmpty()) {
             int contUsuario = intoleranciaUsuarioService.buscarPorUsuario(usuario).size();
             for (Receta receta : recetas) {
                 int cont = 0;
@@ -107,7 +102,7 @@ public class HorarioComidasService {
 
         recetas = new LinkedList<>(recetaList);
 
-        if (preferenciaIngredienteService.findByUsuario(usuario).size() != 0) {
+        if (!preferenciaIngredienteService.findByUsuario(usuario).isEmpty()) {
             for (Receta receta : recetas) {
                 boolean valido = false;
                 for (RecetaIngrediente recetaIngrediente : recetaIngredienteService.findByReceta(receta)) {
