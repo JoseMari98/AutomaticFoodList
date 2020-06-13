@@ -1,15 +1,20 @@
-/*package es.uca.automaticfoodlist.services;
+package es.uca.automaticfoodlist.services;
 
 import es.uca.automaticfoodlist.entities.HorarioComidas;
+import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.entities.UsuarioReceta;
 import org.junit.Test;
 import org.junit.jupiter.api.Timeout;
+import org.junit.runner.RunWith;
 import org.optaplanner.core.api.solver.SolverStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest(properties = {
         "optaplanner.solver.termination.spent-limit=1h", // Effectively disable this termination in favor of the best-score-limit
         "optaplanner.solver.termination.best-score-limit=0hard/*soft"})
@@ -18,10 +23,20 @@ public class OptaPlannerServiceTest {
     private OptaPlannerService optaPlannerService;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private UsuarioRecetaService usuarioRecetaService;
 
     @Test
     @Timeout(600_000)
-    public void solveDemoDataUntilFeasible() throws InterruptedException {
+    public void solveAndNotNull() throws InterruptedException {
+        Usuario usuario = usuarioService.loadUserByUsername("user");
+        for (UsuarioReceta usuarioReceta : usuarioRecetaService.findByUsuario(usuario))
+            usuarioRecetaService.delete(usuarioReceta);
+        for (int i = 0; i < 21; i++) {
+            UsuarioReceta usuarioReceta = new UsuarioReceta();
+            usuarioReceta.setUsuario(usuario);
+            usuarioRecetaService.create(usuarioReceta);
+        }
         optaPlannerService.solve(usuarioService.loadUserByUsername("user"));
         HorarioComidas horarioComidas = optaPlannerService.getTimeTable(usuarioService.loadUserByUsername("user"));
         while (horarioComidas.getSolverStatus() != SolverStatus.NOT_SOLVING) {
@@ -37,8 +52,6 @@ public class OptaPlannerServiceTest {
             assertNotNull(usuarioReceta.getUsuario());
             assertNotNull(usuarioReceta.getComida());
         }
-        assertTrue(horarioComidas.getScore().isFeasible());
         assertFalse(horarioComidas.getUsuarioRecetas().size() > 21);
-
     }
-}*/
+}

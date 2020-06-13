@@ -15,7 +15,7 @@ public class UsuarioRecetaService {
     @Autowired
     private OptaPlannerService optaPlannerService;
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioProductoService usuarioProductoService;
     @Autowired
     private IntoleranciaRecetaService intoleranciaRecetaService;
     @Autowired
@@ -65,6 +65,8 @@ public class UsuarioRecetaService {
     public void generarListaCompra(Usuario usuario) throws InterruptedException {
         for (UsuarioReceta usuarioReceta : findByUsuario(usuario))
             delete(usuarioReceta);
+        for (UsuarioProducto usuarioProducto : usuarioProductoService.findByUsuario(usuario))
+            usuarioProductoService.delete(usuarioProducto);
         for (int i = 0; i < 21; i++) {
             UsuarioReceta usuarioReceta = new UsuarioReceta();
             usuarioReceta.setUsuario(usuario);

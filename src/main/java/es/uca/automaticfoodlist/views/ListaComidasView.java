@@ -81,9 +81,6 @@ public class ListaComidasView extends AbstractView{
 
         HorizontalLayout toolbar = new HorizontalLayout(addPlatoButton, generarLista);
         grid.setColumns("fecha", "comida", "receta.nombre");
-        //grid.addColumn(UsuarioReceta -> UsuarioReceta.getReceta().getNombre()).setHeader("Receta").setSortable(true);
-        //grid.addColumn(UsuarioReceta::getComida).setHeader("Comida").setSortable(true);
-        //grid.addColumn(UsuarioReceta -> UsuarioReceta.getFecha()).setHeader("Fecha").setSortable(true);
 
         VerticalLayout mainContent = new VerticalLayout(grid, listaComidasForm, seleccionPlatoForm); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();

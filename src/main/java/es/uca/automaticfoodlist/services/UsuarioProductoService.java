@@ -48,13 +48,13 @@ public class UsuarioProductoService {
     public void generarListaCompra(Usuario usuario, UsuarioRecetaService usuarioRecetaService, RecetaIngredienteService recetaIngredienteService, ProductoService productoService, UsuarioProductoService usuarioProductoService, IngredienteService ingredienteService) {
         List<UsuarioReceta> platosSemanales = usuarioRecetaService.findByUsuario(usuario); //lista de todos las recetas del usuario
         List<Receta> recetaList = new LinkedList<>();
-        Map<Ingrediente, Map<UnidadMedida, Double>> ingredienteMap = new HashMap<>();
+        Map<Ingrediente, Integer> ingredienteMap = new HashMap<>();
 
         for(UsuarioReceta usuarioReceta : platosSemanales){ //meto en una lista todas las recetas de la semana
             recetaList.add(usuarioReceta.getReceta());
         }
 
-        for(Receta receta : recetaList){ //loop para todas las recetas
+        /*for(Receta receta : recetaList){ //loop para todas las recetas
             List<RecetaIngrediente> recetaIngredienteList = recetaIngredienteService.findByReceta(receta); //lista con todos los ingredientes de la receta
             for(RecetaIngrediente recetaIngrediente : recetaIngredienteList){
                 Ingrediente ingrediente = ingredienteService.findByNombre(recetaIngrediente.getIngrediente().getNombre());
@@ -72,13 +72,27 @@ public class UsuarioProductoService {
                     ingredienteMap.put(recetaIngrediente.getIngrediente(), unidadMedidaDoubleMap);
                 }
             }
+        }*/
+
+        for (Receta receta : recetaList) { //loop para todas las recetas
+            List<RecetaIngrediente> recetaIngredienteList = recetaIngredienteService.findByReceta(receta); //lista con todos los ingredientes de la receta
+            for (RecetaIngrediente recetaIngrediente : recetaIngredienteList) {
+                Ingrediente ingrediente = ingredienteService.findByNombre(recetaIngrediente.getIngrediente().getNombre());
+                if (ingredienteMap.containsKey(ingrediente)) { //si esta el ingrediente en el map
+                    /*Integer cantidad = ingredienteMap.get(ingrediente);
+                    cantidad++;
+                    ingredienteMap.put(ingrediente, cantidad);*/
+                } else { //meto un nuevo ingrediente en el map
+                    ingredienteMap.put(ingrediente, 1);
+                }
+            }
         }
 
-        for(Ingrediente ingrediente : ingredienteMap.keySet()){
+        for (Ingrediente ingrediente : ingredienteMap.keySet()) {
             UsuarioProducto usuarioProducto = new UsuarioProducto();
             usuarioProducto.setCantidad(0);
             Producto producto = productoService.findByIngrediente(ingrediente);
-            for(UnidadMedida unidadMedida : ingredienteMap.get(ingrediente).keySet()){
+            /*for(UnidadMedida unidadMedida : ingredienteMap.get(ingrediente).keySet()){
                 double cantidad;
                 switch (unidadMedida){
                     case Gramos:
@@ -98,10 +112,13 @@ public class UsuarioProductoService {
                         usuarioProducto.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
                         break;
                 }
+            }*/
+            if (producto != null) {
+                usuarioProducto.setCantidad(ingredienteMap.get(ingrediente).doubleValue());
+                usuarioProducto.setProducto(producto);
+                usuarioProducto.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
+                usuarioProductoService.create(usuarioProducto);
             }
-            double cantidadComprar = Math.ceil(usuarioProducto.getCantidad() / producto.getPeso());
-            usuarioProducto.setCantidad(cantidadComprar);
-            usuarioProductoService.create(usuarioProducto);
         }
     }
 }
