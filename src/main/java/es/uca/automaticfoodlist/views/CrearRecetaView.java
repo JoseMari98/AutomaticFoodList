@@ -3,6 +3,7 @@ package es.uca.automaticfoodlist.views;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -28,9 +29,11 @@ public class CrearRecetaView extends AbstractView {
     public Receta receta = new Receta();
     public CrearRecetaForm crearRecetaForm;
     private Button anadir = new Button("Anadir ingrediente");
+    private Button borrar = new Button("Borrar ingrediente");
     public AnadirIngredienteForm anadirIngredienteForm;
     public List<RecetaIngrediente> ingredienteList = new LinkedList<>();
     public VerticalLayout fullGrid = new VerticalLayout();
+    RecetaIngrediente recetaIngrediente = new RecetaIngrediente();
 
     @Autowired
     public CrearRecetaView(IngredienteService ingredienteService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService) {
@@ -39,7 +42,7 @@ public class CrearRecetaView extends AbstractView {
 
         H1 titulo = new H1("Ingredientes");
 
-        HorizontalLayout toolbar = new HorizontalLayout(anadir); //meter lo de la categoria
+        HorizontalLayout toolbar = new HorizontalLayout(anadir, borrar); //meter lo de la categoria
         fullGrid.add(titulo, toolbar, grid);
 
         grid.addColumn(RecetaIngrediente -> RecetaIngrediente.getIngrediente().getNombre()).setHeader("Ingrediente").setSortable(true);
@@ -63,6 +66,19 @@ public class CrearRecetaView extends AbstractView {
             crearRecetaForm.setVisible(false);
             fullGrid.setVisible(false);
         });
+        grid.asSingleSelect().addValueChangeListener(event -> {
+            recetaIngrediente = grid.asSingleSelect().getValue();
+
+        });
+        borrar.addClickListener(e -> {
+            if (recetaIngrediente != null) {
+                ingredienteList.removeIf(recetaIngrediente1 -> recetaIngrediente1.getIngrediente().getId().equals(recetaIngrediente.getIngrediente().getId()));
+                updateList();
+
+            } else
+                Notification.show("No hay ningun ingrediente seleccionado", 2000, Notification.Position.MIDDLE);
+
+        });
         add(mainContent);
 
         setSizeFull();
@@ -71,7 +87,6 @@ public class CrearRecetaView extends AbstractView {
     }
 
     public void updateList() {
-        if(!ingredienteList.isEmpty())
-            grid.setItems(ingredienteList);
+        grid.setItems(ingredienteList);
     }
 }

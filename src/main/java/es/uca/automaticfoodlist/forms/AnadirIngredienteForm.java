@@ -22,7 +22,7 @@ public class AnadirIngredienteForm extends FormLayout {
     NumberField cantidad = new NumberField("Cantidad");
 
     Button guardar = new Button("Guardar ingrediente");
-    private Button cancelar = new Button("Cancelar");
+    private Button cancelar = new Button("Volver");
     private CrearRecetaView crearRecetaView;
 
     public AnadirIngredienteForm(CrearRecetaView crearRecetaView, IngredienteService ingredienteService) {
@@ -62,7 +62,7 @@ public class AnadirIngredienteForm extends FormLayout {
 
     public void save() {
         RecetaIngrediente recetaIngrediente = new RecetaIngrediente();
-        if(ingrediente.getValue() != null && (cantidad.getValue() > 0 && cantidad.getValue() != null) && unidadMedida.getValue() != null){
+        if (ingrediente.getValue() != null && (cantidad.getValue() != null && cantidad.getValue() > 0) && unidadMedida.getValue() != null) {
             recetaIngrediente.setUnidadMedida(unidadMedida.getValue());
             recetaIngrediente.setReceta(crearRecetaView.receta);
             recetaIngrediente.setIngrediente(ingrediente.getValue());

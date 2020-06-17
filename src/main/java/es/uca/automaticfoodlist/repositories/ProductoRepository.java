@@ -9,6 +9,8 @@ import java.util.List;
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
     Producto findByIngrediente(Ingrediente ingrediente);
 
+    List<Producto> findAllByOrderByNombreAsc();
+
     List<Producto> findByNombreStartsWithIgnoreCase(String nombre);
 
     Producto findByNombre(String nombre);

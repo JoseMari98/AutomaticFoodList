@@ -13,7 +13,7 @@ public class HorarioComidasConstraintProvider implements ConstraintProvider {
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[]{
                 //Hard
-                conflictoComidaRepetida(constraintFactory),
+                //conflictoComidaRepetida(constraintFactory),
                 conflictoComidaFecha(constraintFactory),
                 conflictoComidasRepetidas(constraintFactory)
         };
@@ -28,12 +28,12 @@ public class HorarioComidasConstraintProvider implements ConstraintProvider {
     }
 
     //Condicion para que no haya una comida dos veces el mismo dia
-    private Constraint conflictoComidaRepetida(ConstraintFactory constraintFactory) {
+    /*private Constraint conflictoComidaRepetida(ConstraintFactory constraintFactory) {
         return constraintFactory.fromUniquePair(UsuarioReceta.class,
                 Joiners.equal(UsuarioReceta::getFecha),
                 Joiners.equal(UsuarioReceta::getReceta))
                 .penalize("Comida repetida mismo dia", HardSoftScore.ONE_HARD);
-    }
+    }*/
 
     //Condicion para que no se repitan mucho las recetas durante la semana
     private Constraint conflictoComidasRepetidas(ConstraintFactory constraintFactory) {

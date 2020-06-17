@@ -42,7 +42,7 @@ public class IngredienteService {
     }
 
     public List<Ingrediente> findAll() {
-        return ingredienteRepository.findAll();
+        return ingredienteRepository.findAllByOrderByNombreAsc();
     }
 
     public void delete(Ingrediente ingrediente) {

@@ -33,8 +33,8 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario")
     private Set<IntoleranciaUsuario> intoleranciaUsuarioSet;
     private String SignosValoresNutrcionales;
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private Receta receta;
+    @OneToMany(mappedBy = "usuario")
+    private Set<Receta> recetas;
 
 
     //Getters
@@ -98,8 +98,8 @@ public class Usuario implements UserDetails {
         return presupuestoPlato;
     }
 
-    public Receta getReceta() {
-        return receta;
+    public Set<Receta> getReceta() {
+        return recetas;
     }
 
     //Setters
@@ -107,8 +107,8 @@ public class Usuario implements UserDetails {
         this.id = Id;
     }
 
-    public void setReceta(Receta receta) {
-        this.receta = receta;
+    public void setReceta(Set<Receta> recetas) {
+        this.recetas = recetas;
     }
 
     public void setApellido(String Apellido1) {

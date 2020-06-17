@@ -78,11 +78,11 @@ public class ListaComidasForm extends FormLayout {
         if (usuarioReceta != null) {
             Optional<Receta> receta = recetaService.findById(usuarioReceta.getReceta());
             if (receta.isPresent()) {
-                String s = receta.get().getNombre() + "\n" + receta.get().getPrecioAproximado();
+                String s = receta.get().getNombre() + " con precio de: " + receta.get().getPrecioAproximado() + "€";
                 datos = new Label(s);
                 List<RecetaIngrediente> recetaIngredienteList = recetaIngredienteService.findByReceta(receta.get());
                 for (RecetaIngrediente recetaIngrediente : recetaIngredienteList) {
-                    ingredientes.add(recetaIngrediente.getIngrediente().getNombre() + '\n');
+                    ingredientes.add(recetaIngrediente.getIngrediente().getNombre() + ", ");
                 }
                 informacion.add(titulo, datos, titulo2, ingredientes);
                 contenido.add(informacion, buttons);

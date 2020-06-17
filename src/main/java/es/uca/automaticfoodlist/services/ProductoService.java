@@ -42,7 +42,7 @@ public class ProductoService {
     }
 
     public List<Producto> findAll() {
-        return productoRepository.findAll();
+        return productoRepository.findAllByOrderByNombreAsc();
     }
 
     public void delete(Producto producto) {

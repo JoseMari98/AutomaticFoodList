@@ -1,9 +1,11 @@
 /*package es.uca.automaticfoodlist.services;
 
 import es.uca.automaticfoodlist.entities.HorarioComidas;
+import es.uca.automaticfoodlist.entities.IntoleranciaUsuario;
 import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.entities.UsuarioReceta;
 import org.junit.Test;
+import java.util.*;
 import org.junit.jupiter.api.Timeout;
 import org.junit.runner.RunWith;
 import org.optaplanner.core.api.solver.SolverStatus;
@@ -25,6 +27,10 @@ public class OptaPlannerServiceTest {
     private UsuarioService usuarioService;
     @Autowired
     private UsuarioRecetaService usuarioRecetaService;
+    @Autowired
+    private IntoleranciaUsuarioService intoleranciaUsuarioService;
+    @Autowired
+    private IntoleranciaRecetaService intoleranciaRecetaService;
 
     @Test
     @Timeout(600_000)
@@ -53,5 +59,44 @@ public class OptaPlannerServiceTest {
             assertNotNull(usuarioReceta.getComida());
         }
         assertFalse(horarioComidas.getUsuarioRecetas().size() > 21);
+    }
+
+    public boolean comidaFechaTest(Usuario usuario){
+        boolean valido = true;
+
+        for(UsuarioReceta usuarioReceta : usuarioRecetaService.findByUsuario(usuario)){
+            for(UsuarioReceta usuarioReceta1 : usuarioRecetaService.findByUsuario(usuario)){
+                if(usuarioReceta.getComida() == usuarioReceta1.getComida() && usuarioReceta.getFecha() == usuarioReceta1.getFecha()){
+                    valido = false;
+                    break;
+                }
+            }
+        }
+        return valido;
+    }
+
+    public boolean comidaRepetidaTest(Usuario usuario){
+        boolean valido = true;
+
+        for(UsuarioReceta usuarioReceta : usuarioRecetaService.findByUsuario(usuario)){
+            for(UsuarioReceta usuarioReceta1 : usuarioRecetaService.findByUsuario(usuario)){
+                if(usuarioReceta.getReceta().getId().equals(usuarioReceta1.getReceta().getId())){
+                    valido = false;
+                    break;
+                }
+            }
+        }
+        return valido;
+    }
+
+    /*public boolean intoleranciasTest(Usuario usuario) {
+        boolean valido = true;
+        List<IntoleranciaUsuario> intoleranciaUsuarios = intoleranciaUsuarioService.buscarPorUsuario(usuario);
+        if(!intoleranciaUsuarios.isEmpty()){
+            for(UsuarioReceta usuarioReceta : usuarioRecetaService.findByUsuario(usuario)){
+
+            }
+        }
+        return valido;
     }
 }*/

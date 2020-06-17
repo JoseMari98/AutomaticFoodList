@@ -75,9 +75,9 @@ public class CrearRecetaForm extends FormLayout {
         Receta receta = crearRecetaView.receta;
         List<RecetaIngrediente> recetaIngredienteList = crearRecetaView.ingredienteList;
         ValoresNutricionales valoresNutricionales = new ValoresNutricionales();
-        if(nombre.getValue() != null && (precioAproximado.getValue() > 0 && precioAproximado.getValue() != null) && (caloriasPlato.getValue() > 0 && caloriasPlato.getValue() != null) &&
-                (grasaPlato.getValue() > 0 && grasaPlato.getValue() != null) && (hidratosPlato.getValue() > 0 && hidratosPlato.getValue() != null) &&
-                (proteinaPlato.getValue() > 0 && proteinaPlato.getValue() != null)){
+        if (nombre.getValue() != null && (precioAproximado.getValue() != null && precioAproximado.getValue() > 0) && (caloriasPlato.getValue() != null && caloriasPlato.getValue() > 0) &&
+                (grasaPlato.getValue() != null && grasaPlato.getValue() > 0) && (hidratosPlato.getValue() != null && hidratosPlato.getValue() > 0) &&
+                (proteinaPlato.getValue() != null && proteinaPlato.getValue() > 0)) {
             valoresNutricionales.setUsuario(null);
             valoresNutricionales.setProteinaPlato(proteinaPlato.getValue().intValue());
             valoresNutricionales.setHidratosPlato(hidratosPlato.getValue().intValue());
@@ -98,7 +98,7 @@ public class CrearRecetaForm extends FormLayout {
                 recetaIngredienteService.create(recetaIngrediente);
             }
             Notification.show("Receta introducida con exito", 3000, Notification.Position.MIDDLE);
-            UI.getCurrent().navigate("");
+            UI.getCurrent().navigate("GestionReceta");
         } else {
             Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);
         }

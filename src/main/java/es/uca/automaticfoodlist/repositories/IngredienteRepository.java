@@ -8,6 +8,8 @@ import java.util.List;
 public interface IngredienteRepository extends JpaRepository<Ingrediente, Long> {
     List<Ingrediente> findByNombreStartsWithIgnoreCase(String ingrediente);
 
+    List<Ingrediente> findAllByOrderByNombreAsc();
+
     Ingrediente findByNombre(String ingrediente);
 
     Ingrediente findByIdApi(String idApi);

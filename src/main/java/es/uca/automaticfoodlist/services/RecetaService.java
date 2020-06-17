@@ -52,7 +52,7 @@ public class RecetaService {
     }
 
     public List<Receta> findAll() {
-        return recetaRepository.findAll();
+        return recetaRepository.findAllByOrderByNombreAsc();
     }
 
     public Optional<Receta> findById(Receta receta){

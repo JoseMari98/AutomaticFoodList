@@ -37,7 +37,7 @@ public class ListaComidasView extends AbstractView{
         if(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()){
             Dialog dialog = new Dialog();
 
-            Label label = new Label("Oh, parece que no tienes ninguna lista de comidas, quieres generar una?");
+            Label label = new Label("Oh, parece que no tienes ninguna lista de comidas, quieres generar una?, esto llevará unos 30 segundos");
             Button confirmButton = new Button("Confirmar", event -> {
                 try {
                     usuarioRecetaService.generarListaCompra(UI.getCurrent().getSession().getAttribute(Usuario.class));

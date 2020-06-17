@@ -45,8 +45,9 @@ public class RecetasForm extends FormLayout {
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
         delete.addClickListener(event -> {
-            if(receta != null)
-                delete();});
+            if (receta != null)
+                delete();
+        });
     }
 
     public void setReceta(Receta receta) {
@@ -66,11 +67,11 @@ public class RecetasForm extends FormLayout {
         contenido.removeAll();
         this.removeAll();
         if(receta != null) {
-            String s = receta.getNombre() + "\n" + receta.getPrecioAproximado();
+            String s = receta.getNombre() + " con precio de: " + receta.getPrecioAproximado() + "€";
             datos = new Label(s);
             List<RecetaIngrediente> recetaIngredienteList = recetaIngredienteService.findByReceta(receta);
             for (RecetaIngrediente recetaIngrediente : recetaIngredienteList) {
-                ingredientes.add(recetaIngrediente.getIngrediente().getNombre() + '\n');
+                ingredientes.add(recetaIngrediente.getIngrediente().getNombre() + ", ");
             }
             informacion.add(titulo, datos, titulo2, ingredientes);
             contenido.add(informacion, delete);
@@ -85,15 +86,15 @@ public class RecetasForm extends FormLayout {
         setReceta(null);
     }
 
-    public void borrarPadres(){
-        if(valoresNutricionalesService.findByReceta(receta).isPresent())
-            valoresNutricionalesService.delete(valoresNutricionalesService.findByReceta(receta).get());
-        if(!recetaIngredienteService.findByReceta(receta).isEmpty())
-            for(RecetaIngrediente recetaIngrediente : recetaIngredienteService.findByReceta(receta))
+    public void borrarPadres() {
+        if (!recetaIngredienteService.findByReceta(receta).isEmpty())
+            for (RecetaIngrediente recetaIngrediente : recetaIngredienteService.findByReceta(receta))
                 recetaIngredienteService.delete(recetaIngrediente);
-        if(!usuarioRecetaService.findByReceta(receta).isEmpty()){
-            for(UsuarioReceta usuarioReceta : usuarioRecetaService.findByReceta(receta))
+        if (!usuarioRecetaService.findByReceta(receta).isEmpty()) {
+            for (UsuarioReceta usuarioReceta : usuarioRecetaService.findByReceta(receta))
                 usuarioRecetaService.delete(usuarioReceta);
         }
+        if (valoresNutricionalesService.findByReceta(receta.getId()).isPresent())
+            valoresNutricionalesService.delete(valoresNutricionalesService.findByReceta(receta.getId()).get());
     }
 }

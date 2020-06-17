@@ -1,6 +1,5 @@
 package es.uca.automaticfoodlist.services;
 
-import es.uca.automaticfoodlist.entities.Receta;
 import es.uca.automaticfoodlist.entities.ValoresNutricionales;
 import es.uca.automaticfoodlist.repositories.ValoresNutricionalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +25,12 @@ public class ValoresNutricionalesService {
         return valoresNutricionalesRepository.save(valoresNutricionales);
     }
 
-    public List<ValoresNutricionales> findByReceta(String receta){
+    public List<ValoresNutricionales> findByReceta(String receta) {
         return valoresNutricionalesRepository.findByReceta_NombreStartsWithIgnoreCase(receta);
     }
 
-    public Optional<ValoresNutricionales> findByReceta(Receta receta){
-        return valoresNutricionalesRepository.findByReceta(receta);
+    public Optional<ValoresNutricionales> findByReceta(Long id) {
+        return valoresNutricionalesRepository.findByReceta_Id(id);
     }
 
     public Optional<ValoresNutricionales> buscarId(Long id) {

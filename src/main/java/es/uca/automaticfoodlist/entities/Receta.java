@@ -23,7 +23,7 @@ public class Receta {
     private double precioAproximado;
     @OneToMany(mappedBy = "receta")
     private Set<RecetaIngrediente> recetaIngredientes = new HashSet<>();
-    @OneToOne
+    @ManyToOne
     private Usuario usuario;
     @OneToMany(mappedBy = "receta")
     private Set<IntoleranciaReceta> intoleranciaRecetaSet;

@@ -221,7 +221,6 @@ public class Application extends SpringBootServletInitializer {
                         valoresNutricionales.setHidratosPlato(random.nextInt(50) + 1);
                         valoresNutricionales.setProteinaPlato(random.nextInt(50) + 1);
                         receta2.setValoresNutricionales(valoresNutricionalesService.create(valoresNutricionales));
-                        receta2.setComidaAdecuada(Comida.values()[random.nextInt(2) + 1].toString());
 
                         if (jsonObject.get("title") != null) {
                             //meter los ingredientes

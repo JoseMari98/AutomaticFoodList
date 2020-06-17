@@ -13,7 +13,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.validator.EmailValidator;
 import es.uca.automaticfoodlist.entities.Usuario;
-import es.uca.automaticfoodlist.services.MailNotificationService;
 import es.uca.automaticfoodlist.services.UsuarioService;
 
 import javax.mail.MessagingException;
@@ -110,14 +109,14 @@ public class UsuarioDatosForm extends FormLayout {
                 usuarioService.create(usuario);
                 if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
                     Notification.show("Modificado con exito", 3000, Notification.Position.MIDDLE);
-                    MailNotificationService.enviaEmail(usuario.getEmail(), "Modificacion realizado con exito",
-                            "Has modificado tus credenciales " + usuario.getUsername());
+                    //MailNotificationService.enviaEmail(usuario.getEmail(), "Modificacion realizado con exito",
+                    //"Has modificado tus credenciales " + usuario.getUsername());
                     UI.getCurrent().getSession().setAttribute(Usuario.class, usuario);
                     UI.getCurrent().navigate("Inicio");
                 } else {
                     Notification.show("Registrado con exito", 3000, Notification.Position.MIDDLE);
-                    MailNotificationService.enviaEmail(usuario.getEmail(), "Registro realizado con exito",
-                            "Te has registrado " + usuario.getUsername());
+                    //MailNotificationService.enviaEmail(usuario.getEmail(), "Registro realizado con exito",
+                    //"Te has registrado " + usuario.getUsername());
                     UI.getCurrent().navigate("Login");
                 }
             } else
