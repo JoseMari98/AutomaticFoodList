@@ -32,7 +32,7 @@ public class ListaComidasForm extends FormLayout {
     private RecetaIngredienteService recetaIngredienteService;
     private BeanValidationBinder<UsuarioReceta> binder = new BeanValidationBinder<>(UsuarioReceta.class);
     private UsuarioRecetaService usuarioRecetaService;
-    private H1 titulo = new H1("Informacion de receta");
+    private H1 titulo = new H1("Información de receta");
     private H2 titulo2 = new H2("Ingredientes");
     private Label datos = new Label();
     private Paragraph ingredientes = new Paragraph();

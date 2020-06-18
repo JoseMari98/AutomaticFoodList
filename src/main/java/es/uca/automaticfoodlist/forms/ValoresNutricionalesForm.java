@@ -18,10 +18,10 @@ import es.uca.automaticfoodlist.services.ValoresNutricionalesService;
 import es.uca.automaticfoodlist.views.ValoresNutrcionalesView;
 
 public class ValoresNutricionalesForm extends FormLayout {
-    private NumberField caloriasPlato = new NumberField("Calorias");
+    private NumberField caloriasPlato = new NumberField("Calorías");
     private NumberField hidratosPlato = new NumberField("Hidratos");
     private NumberField grasaPlato = new NumberField("Grasa");
-    private NumberField proteinaPlato = new NumberField("Proteina");
+    private NumberField proteinaPlato = new NumberField("Proteína");
     private ComboBox<Usuario> usuario = new ComboBox<>("Usuario");
     private ComboBox<Receta> receta = new ComboBox<>("Receta");
     private Button save = new Button("Añadir");

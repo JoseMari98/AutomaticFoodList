@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.vaadin.klaudeta.PaginatedGrid;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +32,7 @@ public class ListaCompraView extends AbstractView {
     private UsuarioProductoService usuarioProductoService;
     private TextField filterText = new TextField();
     private Button delete = new Button("Borrar seleccion");
+    private Button borrarLista = new Button("Borrar lista");
     private double precioTotal = 0;
     private H6 precio = new H6();
 
@@ -47,6 +50,9 @@ public class ListaCompraView extends AbstractView {
                     List<UsuarioProducto> compraList = usuarioProductoService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
                     for (UsuarioProducto listaCompra : compraList)
                         precioTotal += listaCompra.getProducto().getPrecio() * listaCompra.getCantidad();
+                    BigDecimal redondeado = new BigDecimal(precioTotal)
+                            .setScale(2, RoundingMode.HALF_EVEN);
+                    precioTotal = redondeado.doubleValue();
                     precio.removeAll();
                     precio.add("Precio total de: " + precioTotal + "€");
                     updateList();
@@ -66,9 +72,19 @@ public class ListaCompraView extends AbstractView {
             List<UsuarioProducto> compraList = usuarioProductoService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
             for (UsuarioProducto usuarioProducto : compraList)
                 precioTotal += usuarioProducto.getProducto().getPrecio() * usuarioProducto.getCantidad();
+            BigDecimal redondeado = new BigDecimal(precioTotal)
+                    .setScale(2, RoundingMode.HALF_EVEN);
+            precioTotal = redondeado.doubleValue();
             precio.removeAll();
             precio.add("Precio total de: " + precioTotal + "€");
         }
+        borrarLista.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        borrarLista.addClickListener(e -> {
+            for (UsuarioProducto usuarioProducto : usuarioProductoService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class))) {
+                usuarioProductoService.delete(usuarioProducto);
+            }
+            updateList();
+        });
 
         filterText.setPlaceholder("Filtrar por producto"); //poner el campo
         filterText.setClearButtonVisible(true); //poner la cruz para borrar
@@ -86,7 +102,7 @@ public class ListaCompraView extends AbstractView {
         grid.addColumn(ListaCompra -> ListaCompra.getCantidad()).setHeader("Cantidad de producto").setSortable(true);
 
         // Sets the max number of items to be rendered on the grid for each page
-        grid.setPageSize(9);
+        grid.setPageSize(15);
 
         // Sets how many pages should be visible on the pagination before and/or after the current selected page
         grid.setPaginatorSize(3);
@@ -96,13 +112,16 @@ public class ListaCompraView extends AbstractView {
             Set<UsuarioProducto> usuarioProductos = grid.asMultiSelect().getSelectedItems();
             for (UsuarioProducto usuarioProducto : usuarioProductos)
                 precioTotal -= usuarioProducto.getProducto().getPrecio() * usuarioProducto.getCantidad();
+            BigDecimal redondeado = new BigDecimal(precioTotal)
+                    .setScale(2, RoundingMode.HALF_EVEN);
+            precioTotal = redondeado.doubleValue();
             precio.removeAll();
             precio.add("Precio total de: " + precioTotal + "€");
             if (!usuarioProductos.isEmpty())
                 delete(usuarioProductos);
         });
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, delete, precio);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText, delete, borrarLista, precio);
 
         VerticalLayout mainContent = new VerticalLayout(toolbar, grid); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();

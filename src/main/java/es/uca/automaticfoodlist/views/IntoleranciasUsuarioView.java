@@ -1,6 +1,7 @@
 package es.uca.automaticfoodlist.views;
 
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import es.uca.automaticfoodlist.forms.IntoleranciasUsuarioForm;
@@ -15,10 +16,11 @@ public class IntoleranciasUsuarioView extends AbstractView {
     private IntoleranciasUsuarioForm intoleranciasUsuarioForm;
 
     @Autowired
-    IntoleranciasUsuarioView(IntoleranciaUsuarioService intoleranciaUsuarioService, IntoleranciaService intoleranciaService){
+    IntoleranciasUsuarioView(IntoleranciaUsuarioService intoleranciaUsuarioService, IntoleranciaService intoleranciaService) {
         this.intoleranciasUsuarioForm = new IntoleranciasUsuarioForm(intoleranciaUsuarioService, intoleranciaService);
         H1 titulo = new H1("Intolerancias, alergias o dieta");
-        VerticalLayout contenido = new VerticalLayout(titulo, intoleranciasUsuarioForm);
+        Paragraph descripcion = new Paragraph("Marca las casillas si eres alérgico o sigues alguna de las siguientes dietas");
+        VerticalLayout contenido = new VerticalLayout(titulo, descripcion, intoleranciasUsuarioForm);
         contenido.setSizeFull();
         add(contenido);
         setSizeFull();

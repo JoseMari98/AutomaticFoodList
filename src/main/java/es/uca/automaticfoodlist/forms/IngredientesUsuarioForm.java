@@ -7,8 +7,6 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.select.Select;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
 import es.uca.automaticfoodlist.entities.Gusto;
 import es.uca.automaticfoodlist.entities.Ingrediente;
 import es.uca.automaticfoodlist.entities.PreferenciaIngrediente;
@@ -16,31 +14,24 @@ import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.services.PreferenciaIngredienteService;
 
 public class IngredientesUsuarioForm extends FormLayout {
-    private Select<Gusto> gusto = new Select<>(Gusto.Nada);
     private Button save = new Button("Añadir");
     private Button delete = new Button("Borrar");
-    private BeanValidationBinder<PreferenciaIngrediente> binder = new BeanValidationBinder<>(PreferenciaIngrediente.class);
     private PreferenciaIngredienteService preferenciaIngredienteService;
     private Ingrediente ingrediente;
 
     public IngredientesUsuarioForm(PreferenciaIngredienteService preferenciaIngredienteService) {
         this.preferenciaIngredienteService = preferenciaIngredienteService;
 
-        gusto.setRequiredIndicatorVisible(true);
-        gusto.setLabel("Nivel de agrado");
-
         save.addClickShortcut(Key.ENTER);
 
         HorizontalLayout buttons = new HorizontalLayout(save, delete);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        add(gusto, buttons);
+        add(buttons);
 
-        binder.bindInstanceFields(this);
 
         save.addClickListener(event -> {
-            if(gusto.getValue() != null)
-                save();
+            save();
         });
         delete.addClickListener(event -> {
             if(preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente) != null)
@@ -48,8 +39,6 @@ public class IngredientesUsuarioForm extends FormLayout {
     }
 
     public void setPreferenciaIngrediente(PreferenciaIngrediente preferenciaIngrediente, Ingrediente ingrediente) {
-        binder.setBean(preferenciaIngrediente);
-
         if(preferenciaIngrediente == null && ingrediente == null) {
             setVisible(false);
         }
@@ -63,27 +52,24 @@ public class IngredientesUsuarioForm extends FormLayout {
 
     public void save() {
         PreferenciaIngrediente preferenciaIngrediente = new PreferenciaIngrediente();
-        if(preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente) != null)
-            preferenciaIngrediente = preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente);
-        preferenciaIngrediente.setIngrediente(ingrediente);
-        preferenciaIngrediente.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
-        preferenciaIngrediente.setGusto(gusto.getValue());
-        if(binder.validate().isOk()) {
+        if (preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente) == null) {
+            preferenciaIngrediente.setIngrediente(ingrediente);
+            preferenciaIngrediente.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
+            preferenciaIngrediente.setGusto(Gusto.Nada);
             preferenciaIngredienteService.create(preferenciaIngrediente);
             setPreferenciaIngrediente(null, null);
-        }
-        else {
-            Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);
-        }
+        } else
+            Notification.show("Ya ha introducido este ingrediente", 5000, Notification.Position.MIDDLE);
+
     }
 
     public void delete() {
         PreferenciaIngrediente preferenciaIngrediente;
-        if(binder.validate().isOk() && preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente) != null) {
+        if (preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente) != null) {
             preferenciaIngrediente = preferenciaIngredienteService.findByUsuarioAndIngrediente(UI.getCurrent().getSession().getAttribute(Usuario.class), this.ingrediente);
             preferenciaIngredienteService.delete(preferenciaIngrediente);
             setPreferenciaIngrediente(null, null);
         } else
-            Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);
+            Notification.show("No has introducido agrado a este ingrediente", 5000, Notification.Position.MIDDLE);
     }
 }

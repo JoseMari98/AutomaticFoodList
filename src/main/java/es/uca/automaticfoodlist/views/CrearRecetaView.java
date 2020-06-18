@@ -11,10 +11,7 @@ import es.uca.automaticfoodlist.entities.Receta;
 import es.uca.automaticfoodlist.entities.RecetaIngrediente;
 import es.uca.automaticfoodlist.forms.AnadirIngredienteForm;
 import es.uca.automaticfoodlist.forms.CrearRecetaForm;
-import es.uca.automaticfoodlist.services.IngredienteService;
-import es.uca.automaticfoodlist.services.RecetaIngredienteService;
-import es.uca.automaticfoodlist.services.RecetaService;
-import es.uca.automaticfoodlist.services.ValoresNutricionalesService;
+import es.uca.automaticfoodlist.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.vaadin.klaudeta.PaginatedGrid;
@@ -36,8 +33,10 @@ public class CrearRecetaView extends AbstractView {
     RecetaIngrediente recetaIngrediente = new RecetaIngrediente();
 
     @Autowired
-    public CrearRecetaView(IngredienteService ingredienteService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService) {
-        this.crearRecetaForm = new CrearRecetaForm(this, recetaService, recetaIngredienteService, valoresNutricionalesService);
+    public CrearRecetaView(IngredienteService ingredienteService, RecetaService recetaService,
+                           RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService,
+                           IntoleranciaService intoleranciaService, IntoleranciaRecetaService intoleranciaRecetaService) {
+        this.crearRecetaForm = new CrearRecetaForm(this, recetaService, recetaIngredienteService, valoresNutricionalesService, intoleranciaService, intoleranciaRecetaService);
         this.anadirIngredienteForm = new AnadirIngredienteForm(this, ingredienteService);
 
         H1 titulo = new H1("Ingredientes");

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class IntoleranciasUsuarioForm extends FormLayout {
-    private Vector<Checkbox> checkboxVector = new Vector<>(9);
+    private Vector<Checkbox> checkboxVector = new Vector<>(4);
     private IntoleranciaUsuarioService intoleranciaUsuarioService;
     private IntoleranciaService intoleranciaService;
     private Button save = new Button("Siguiente");

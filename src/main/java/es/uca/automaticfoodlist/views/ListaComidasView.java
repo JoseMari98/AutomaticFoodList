@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 
 @Route(value = "ListaComidasView", layout = MainView.class)
-@Secured({"User", "Admin", "Gerente"})
+@Secured({"User", "Admin"})
 public class ListaComidasView extends AbstractView{
     private Grid<UsuarioReceta> grid = new Grid<>(UsuarioReceta.class);
     private UsuarioRecetaService usuarioRecetaService;
@@ -65,7 +65,7 @@ public class ListaComidasView extends AbstractView{
                 listaComidasForm.setVisible(false);
                 seleccionPlatoForm.setVisible(true);
             } else
-                Notification.show("No se pueden añadir mas recetas", 3000, Notification.Position.MIDDLE);
+                Notification.show("No se pueden añadir más recetas", 3000, Notification.Position.MIDDLE);
         });
 
         Button generarLista = new Button("Generar lista");
@@ -80,7 +80,10 @@ public class ListaComidasView extends AbstractView{
         });
 
         HorizontalLayout toolbar = new HorizontalLayout(addPlatoButton, generarLista);
-        grid.setColumns("fecha", "comida", "receta.nombre");
+        grid.setColumns();
+        grid.addColumn(UsuarioReceta -> UsuarioReceta.getFecha() == null ? "Sin Fecha" : UsuarioReceta.getFecha()).setHeader("Fecha").setSortable(true);
+        grid.addColumn(UsuarioReceta -> UsuarioReceta.getComida() == null ? "Sin Comida" : UsuarioReceta.getComida()).setHeader("Comida").setSortable(true);
+        grid.addColumn(UsuarioReceta -> UsuarioReceta.getReceta() == null ? "Sin Receta" : UsuarioReceta.getReceta().getNombre()).setHeader("Receta").setSortable(true);
 
         VerticalLayout mainContent = new VerticalLayout(grid, listaComidasForm, seleccionPlatoForm); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();
@@ -102,7 +105,11 @@ public class ListaComidasView extends AbstractView{
         });
     }
 
-    public void updateList(){
+    public void updateList() {
         grid.setItems(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
+        for (UsuarioReceta usuarioReceta : usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class))) {
+            if (usuarioReceta.getReceta() == null || usuarioReceta.getComida() == null || usuarioReceta.getFecha() == null)
+                Notification.show("Hay recetas vacias, vuelve a generar la lista de comidas", 5000, Notification.Position.MIDDLE);
+        }
     }
 }

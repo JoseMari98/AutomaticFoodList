@@ -10,10 +10,7 @@ import com.vaadin.flow.router.Route;
 import es.uca.automaticfoodlist.entities.Receta;
 import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.forms.RecetasForm;
-import es.uca.automaticfoodlist.services.RecetaIngredienteService;
-import es.uca.automaticfoodlist.services.RecetaService;
-import es.uca.automaticfoodlist.services.UsuarioRecetaService;
-import es.uca.automaticfoodlist.services.ValoresNutricionalesService;
+import es.uca.automaticfoodlist.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.vaadin.klaudeta.PaginatedGrid;
@@ -27,16 +24,17 @@ public class RecetasView extends AbstractView {
     private RecetasForm recetasForm;
 
     @Autowired
-    public RecetasView(RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService, UsuarioRecetaService usuarioRecetaService) {
-        if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null){
+    public RecetasView(RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService,
+                       UsuarioRecetaService usuarioRecetaService, IntoleranciaRecetaService intoleranciaRecetaService) {
+        if (UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
             this.recetaService = recetaService;
-            this.recetasForm = new RecetasForm(this, recetaService, valoresNutricionalesService, recetaIngredienteService, usuarioRecetaService);
+            this.recetasForm = new RecetasForm(this, recetaService, valoresNutricionalesService, recetaIngredienteService, usuarioRecetaService, intoleranciaRecetaService);
 
             filterText.setPlaceholder("Filtrar por nombre"); //poner el campo
             filterText.setClearButtonVisible(true); //poner la cruz para borrar
             filterText.setValueChangeMode(ValueChangeMode.EAGER); //que se hagan los cambios cuando se escriba
             filterText.addValueChangeListener(event -> {
-                if(recetaService.findByNombreList(filterText.getValue()) != null)
+                if (recetaService.findByNombreList(filterText.getValue()) != null)
                     updateList();
                 else {
                     filterText.clear();

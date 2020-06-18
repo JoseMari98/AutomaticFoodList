@@ -108,13 +108,13 @@ public class UsuarioDatosForm extends FormLayout {
                 usuario.setPresupuestoPlato(0);
                 usuarioService.create(usuario);
                 if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
-                    Notification.show("Modificado con exito", 3000, Notification.Position.MIDDLE);
+                    Notification.show("Modificado con éxito", 3000, Notification.Position.MIDDLE);
                     //MailNotificationService.enviaEmail(usuario.getEmail(), "Modificacion realizado con exito",
                     //"Has modificado tus credenciales " + usuario.getUsername());
                     UI.getCurrent().getSession().setAttribute(Usuario.class, usuario);
                     UI.getCurrent().navigate("Inicio");
                 } else {
-                    Notification.show("Registrado con exito", 3000, Notification.Position.MIDDLE);
+                    Notification.show("Registrado con éxito", 3000, Notification.Position.MIDDLE);
                     //MailNotificationService.enviaEmail(usuario.getEmail(), "Registro realizado con exito",
                     //"Te has registrado " + usuario.getUsername());
                     UI.getCurrent().navigate("Login");

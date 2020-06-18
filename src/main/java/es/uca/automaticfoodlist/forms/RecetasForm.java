@@ -8,13 +8,11 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import es.uca.automaticfoodlist.entities.IntoleranciaReceta;
 import es.uca.automaticfoodlist.entities.Receta;
 import es.uca.automaticfoodlist.entities.RecetaIngrediente;
 import es.uca.automaticfoodlist.entities.UsuarioReceta;
-import es.uca.automaticfoodlist.services.RecetaIngredienteService;
-import es.uca.automaticfoodlist.services.RecetaService;
-import es.uca.automaticfoodlist.services.UsuarioRecetaService;
-import es.uca.automaticfoodlist.services.ValoresNutricionalesService;
+import es.uca.automaticfoodlist.services.*;
 import es.uca.automaticfoodlist.views.RecetasView;
 
 import java.util.List;
@@ -27,19 +25,21 @@ public class RecetasForm extends FormLayout {
     private RecetaIngredienteService recetaIngredienteService;
     private Receta receta;
     private UsuarioRecetaService usuarioRecetaService;
-    private H1 titulo = new H1("Informacion de receta");
+    private H1 titulo = new H1("Información de receta");
     private H2 titulo2 = new H2("Ingredientes");
     private Label datos = new Label();
     private Paragraph ingredientes = new Paragraph();
     private VerticalLayout informacion = new VerticalLayout();
     private VerticalLayout contenido = new VerticalLayout();
+    private IntoleranciaRecetaService intoleranciaRecetaService;
 
     public RecetasForm(RecetasView recetasView, RecetaService recetaService, ValoresNutricionalesService valoresNutricionalesService,
-                       RecetaIngredienteService recetaIngredienteService, UsuarioRecetaService usuarioRecetaService) {
+                       RecetaIngredienteService recetaIngredienteService, UsuarioRecetaService usuarioRecetaService, IntoleranciaRecetaService intoleranciaRecetaService) {
         this.recetaService = recetaService;
         this.valoresNutricionalesService = valoresNutricionalesService;
         this.recetaIngredienteService = recetaIngredienteService;
         this.recetasView = recetasView;
+        this.intoleranciaRecetaService = intoleranciaRecetaService;
         this.usuarioRecetaService = usuarioRecetaService;
 
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -93,6 +93,10 @@ public class RecetasForm extends FormLayout {
         if (!usuarioRecetaService.findByReceta(receta).isEmpty()) {
             for (UsuarioReceta usuarioReceta : usuarioRecetaService.findByReceta(receta))
                 usuarioRecetaService.delete(usuarioReceta);
+        }
+        if (!intoleranciaRecetaService.buscarPorReceta(receta).isEmpty()) {
+            for (IntoleranciaReceta intoleranciaReceta : intoleranciaRecetaService.buscarPorReceta(receta))
+                intoleranciaRecetaService.delete(intoleranciaReceta);
         }
         if (valoresNutricionalesService.findByReceta(receta.getId()).isPresent())
             valoresNutricionalesService.delete(valoresNutricionalesService.findByReceta(receta.getId()).get());

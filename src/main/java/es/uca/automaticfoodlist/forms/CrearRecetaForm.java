@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
@@ -11,36 +12,41 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import es.uca.automaticfoodlist.entities.Receta;
-import es.uca.automaticfoodlist.entities.RecetaIngrediente;
-import es.uca.automaticfoodlist.entities.Usuario;
-import es.uca.automaticfoodlist.entities.ValoresNutricionales;
-import es.uca.automaticfoodlist.services.RecetaIngredienteService;
-import es.uca.automaticfoodlist.services.RecetaService;
-import es.uca.automaticfoodlist.services.ValoresNutricionalesService;
+import es.uca.automaticfoodlist.entities.*;
+import es.uca.automaticfoodlist.services.*;
 import es.uca.automaticfoodlist.views.CrearRecetaView;
 
 import java.util.List;
+import java.util.Vector;
 
 public class CrearRecetaForm extends FormLayout {
     private TextField nombre = new TextField("Nombre receta");
+    private Vector<Checkbox> checkboxVector = new Vector<>(4);
     private NumberField precioAproximado = new NumberField("Precio aprox.");
     private NumberField caloriasPlato = new NumberField("Calorias");
     private NumberField hidratosPlato = new NumberField("Hidratos");
     private NumberField grasaPlato = new NumberField("Grasa");
-    private NumberField proteinaPlato = new NumberField("Proteina");
+    private NumberField proteinaPlato = new NumberField("Proteína");
     private Button save = new Button("Guardar receta");
     private CrearRecetaView crearRecetaView;
     private RecetaService recetaService;
     private ValoresNutricionalesService valoresNutricionalesService;
     private RecetaIngredienteService recetaIngredienteService;
+    private IntoleranciaService intoleranciaService;
+    private IntoleranciaRecetaService intoleranciaRecetaService;
 
-    public CrearRecetaForm(CrearRecetaView crearRecetaView, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, ValoresNutricionalesService valoresNutricionalesService) {
+    public CrearRecetaForm(CrearRecetaView crearRecetaView, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService,
+                           ValoresNutricionalesService valoresNutricionalesService, IntoleranciaService intoleranciaService, IntoleranciaRecetaService intoleranciaRecetaService) {
         this.recetaService = recetaService;
+        this.intoleranciaService = intoleranciaService;
+        this.intoleranciaRecetaService = intoleranciaRecetaService;
         this.recetaIngredienteService = recetaIngredienteService;
         this.crearRecetaView = crearRecetaView;
         this.valoresNutricionalesService = valoresNutricionalesService;
         H1 titulo = new H1("Crear receta");
+        for (Intolerancia intolerancia : intoleranciaService.findAllOrderById()) {
+            checkboxVector.add(new Checkbox(intolerancia.getIntolerancia()));
+        }
 
         nombre.setRequired(true);
         nombre.setRequiredIndicatorVisible(true);
@@ -56,17 +62,18 @@ public class CrearRecetaForm extends FormLayout {
         HorizontalLayout nombrePrecio = new HorizontalLayout(nombre, precioAproximado);
         HorizontalLayout caloriasGrasa = new HorizontalLayout(caloriasPlato, grasaPlato);
         HorizontalLayout hidratosProteina = new HorizontalLayout(hidratosPlato, proteinaPlato);
-        VerticalLayout mainContent = new VerticalLayout(titulo, nombrePrecio, caloriasGrasa, hidratosProteina, save);
+        HorizontalLayout intolerancias = new HorizontalLayout(checkboxVector.elementAt(0), checkboxVector.elementAt(1));
+        HorizontalLayout intolerancias1 = new HorizontalLayout(checkboxVector.elementAt(2), checkboxVector.elementAt(3));
+        VerticalLayout mainContent = new VerticalLayout(titulo, nombrePrecio, caloriasGrasa, hidratosProteina, intolerancias, intolerancias1, save);
         add(mainContent, save);
 
         save.addClickListener(event -> {
-            if(!recetaService.findByNombre(nombre.getValue()).isPresent()){
-                if(!crearRecetaView.ingredienteList.isEmpty())
+            if (!recetaService.findByNombre(nombre.getValue()).isPresent()) {
+                if (!crearRecetaView.ingredienteList.isEmpty())
                     save();
                 else
                     Notification.show("No hay ingredientes", 5000, Notification.Position.MIDDLE);
-            }
-            else
+            } else
                 Notification.show("Nombre de receta repetido", 5000, Notification.Position.MIDDLE);
         });
     }
@@ -93,11 +100,22 @@ public class CrearRecetaForm extends FormLayout {
             receta.setValoresNutricionales(valoresNutricionales);
             receta = recetaService.create(receta);
 
-            for(RecetaIngrediente recetaIngrediente : recetaIngredienteList){
+            int i = 0;
+            for (Intolerancia intolerancia : intoleranciaService.findAllOrderById()) {
+                if (checkboxVector.elementAt(i).getValue()) { //Para el caso de que se haya marcado y no exista
+                    IntoleranciaReceta intoleranciaReceta = new IntoleranciaReceta();
+                    intoleranciaReceta.setIntolerancia(intolerancia); //Introducimos la intolerancia
+                    intoleranciaReceta.setReceta(receta); //Introducimos el usuario
+                    intoleranciaRecetaService.create(intoleranciaReceta);
+                }
+                i++;
+            }
+
+            for (RecetaIngrediente recetaIngrediente : recetaIngredienteList) {
                 recetaIngrediente.setReceta(receta);
                 recetaIngredienteService.create(recetaIngrediente);
             }
-            Notification.show("Receta introducida con exito", 3000, Notification.Position.MIDDLE);
+            Notification.show("Receta introducida con éxito", 3000, Notification.Position.MIDDLE);
             UI.getCurrent().navigate("GestionReceta");
         } else {
             Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);

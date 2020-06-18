@@ -1,6 +1,7 @@
 package es.uca.automaticfoodlist.views;
 
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import es.uca.automaticfoodlist.forms.ValoresNutricionalesUsuarioForm;
@@ -15,10 +16,12 @@ public class ValoresNutrcionalesUsuarioView extends AbstractView{
     private ValoresNutricionalesUsuarioForm valoresNutricionalesUsuarioForm;
 
     @Autowired
-    ValoresNutrcionalesUsuarioView(UsuarioService usuarioService, ValoresNutricionalesService valoresNutricionalesService){
+    ValoresNutrcionalesUsuarioView(UsuarioService usuarioService, ValoresNutricionalesService valoresNutricionalesService) {
         this.valoresNutricionalesUsuarioForm = new ValoresNutricionalesUsuarioForm(valoresNutricionalesService, usuarioService);
         H1 titulo = new H1("Valores nutricionales");
-        VerticalLayout contenido = new VerticalLayout(titulo, valoresNutricionalesUsuarioForm);
+        Paragraph descripcion = new Paragraph("Aquí podras introducir umbrales a los valores nutricionales de las recetas." + '\n'
+                + "Por ejemplo no quieres que un plato tenga más de 500kcal.");
+        VerticalLayout contenido = new VerticalLayout(titulo, descripcion, valoresNutricionalesUsuarioForm);
         contenido.setSizeFull();
         add(contenido);
         setSizeFull();
