@@ -52,7 +52,7 @@ public class MainView extends AppLayout {
         img.setHeight("44px");
         img.addClickListener(e -> UI.getCurrent().navigate(""));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.add(createTab(VaadinIcon.HOME, "Inicio", MainView.class));
+        tabs.add(createTab(VaadinIcon.HOME, "Inicio", InicioView.class));
 
         if (!SecurityUtils.isUserLoggedIn()) {
             tabs.add(createTab(VaadinIcon.SIGN_IN, "Iniciar sesion", LoginView.class));

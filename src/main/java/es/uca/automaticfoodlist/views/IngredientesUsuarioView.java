@@ -3,7 +3,6 @@ package es.uca.automaticfoodlist.views;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
@@ -19,11 +18,12 @@ import es.uca.automaticfoodlist.services.IngredienteService;
 import es.uca.automaticfoodlist.services.PreferenciaIngredienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.vaadin.klaudeta.PaginatedGrid;
 
 @Route(value = "IngredientesUsuarioView", layout = MainView.class)
 @Secured("User")
 public class IngredientesUsuarioView extends AbstractView{
-    private Grid<Ingrediente> grid = new Grid<>(Ingrediente.class);
+    private PaginatedGrid<Ingrediente> grid = new PaginatedGrid<>();
     private TextField filterText = new TextField();
     private IngredienteService ingredienteService;
     private IngredientesUsuarioForm ingredientesUsuarioForm;
@@ -52,7 +52,13 @@ public class IngredientesUsuarioView extends AbstractView{
         VerticalLayout texto = new VerticalLayout(titulo, descripcion);
         HorizontalLayout toolbar = new HorizontalLayout(filterText); //meter lo de la categoria
 
-        grid.setColumns("nombre");
+        grid.addColumn(Ingrediente::getNombre).setHeader("Nombre").setSortable(true);
+
+        // Sets the max number of items to be rendered on the grid for each page
+        grid.setPageSize(15);
+
+        // Sets how many pages should be visible on the pagination before and/or after the current selected page
+        grid.setPaginatorSize(3);
 
         HorizontalLayout mainContent = new HorizontalLayout(grid, ingredientesUsuarioForm); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();

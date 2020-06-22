@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
@@ -73,7 +74,9 @@ public class UsuarioDatosForm extends FormLayout {
 
         binder.bindInstanceFields(this);
 
+
         Dialog dialog = new Dialog();
+        Label label = new Label("¿Están correctos tus datos?");
 
         Button confirmButton = new Button("Confirmar", event -> {
             try {
@@ -85,7 +88,7 @@ public class UsuarioDatosForm extends FormLayout {
         });
         confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
         Button cancelButton = new Button("Cancelar", event -> dialog.close());
-        dialog.add(confirmButton, cancelButton);
+        dialog.add(label, confirmButton, cancelButton);
         cancelButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         save.addClickListener(event -> dialog.open());
         confirmButton.addClickShortcut(Key.ENTER);
@@ -109,14 +112,10 @@ public class UsuarioDatosForm extends FormLayout {
                 usuarioService.create(usuario);
                 if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
                     Notification.show("Modificado con éxito", 3000, Notification.Position.MIDDLE);
-                    //MailNotificationService.enviaEmail(usuario.getEmail(), "Modificacion realizado con exito",
-                    //"Has modificado tus credenciales " + usuario.getUsername());
                     UI.getCurrent().getSession().setAttribute(Usuario.class, usuario);
                     UI.getCurrent().navigate("Inicio");
                 } else {
                     Notification.show("Registrado con éxito", 3000, Notification.Position.MIDDLE);
-                    //MailNotificationService.enviaEmail(usuario.getEmail(), "Registro realizado con exito",
-                    //"Te has registrado " + usuario.getUsername());
                     UI.getCurrent().navigate("Login");
                 }
             } else

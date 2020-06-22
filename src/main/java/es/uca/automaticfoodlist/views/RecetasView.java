@@ -1,6 +1,7 @@
 package es.uca.automaticfoodlist.views;
 
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -30,6 +31,7 @@ public class RecetasView extends AbstractView {
             this.recetaService = recetaService;
             this.recetasForm = new RecetasForm(this, recetaService, valoresNutricionalesService, recetaIngredienteService, usuarioRecetaService, intoleranciaRecetaService);
 
+            Paragraph paragraph = new Paragraph("Aquí podrás ver tus recetas creadas, si clicas en una de ellas verás su información");
             filterText.setPlaceholder("Filtrar por nombre"); //poner el campo
             filterText.setClearButtonVisible(true); //poner la cruz para borrar
             filterText.setValueChangeMode(ValueChangeMode.EAGER); //que se hagan los cambios cuando se escriba
@@ -43,7 +45,7 @@ public class RecetasView extends AbstractView {
 
             });
 
-            HorizontalLayout toolbar = new HorizontalLayout(filterText);
+            HorizontalLayout toolbar = new HorizontalLayout(filterText, paragraph);
 
             grid.addColumn(Receta::getNombre).setHeader("Nombre").setSortable(true);
             if(UI.getCurrent().getSession().getAttribute(Usuario.class).getRole().equals("Admin"))
@@ -52,7 +54,7 @@ public class RecetasView extends AbstractView {
             if(UI.getCurrent().getSession().getAttribute(Usuario.class).getRole().equals("Admin"))
                 grid.addColumn(Receta -> Receta.getUsuario() == null ? "Sin usuario" : Receta.getUsuario().getUsername()).setHeader("Usuario").setSortable(true);
 
-            grid.setPageSize(9);
+            grid.setPageSize(15);
 
             grid.setPaginatorSize(3);
 
