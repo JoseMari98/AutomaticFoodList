@@ -18,7 +18,7 @@ public class IntoleranciasUsuarioView extends AbstractView {
     @Autowired
     IntoleranciasUsuarioView(IntoleranciaUsuarioService intoleranciaUsuarioService, IntoleranciaService intoleranciaService) {
         this.intoleranciasUsuarioForm = new IntoleranciasUsuarioForm(intoleranciaUsuarioService, intoleranciaService);
-        H1 titulo = new H1("Intolerancias, alergias o dieta");
+        H1 titulo = new H1("Intolerancias o dieta");
         Paragraph descripcion = new Paragraph("Marca las casillas si eres alérgico o sigues alguna de las siguientes dietas");
         VerticalLayout contenido = new VerticalLayout(titulo, descripcion, intoleranciasUsuarioForm);
         contenido.setSizeFull();

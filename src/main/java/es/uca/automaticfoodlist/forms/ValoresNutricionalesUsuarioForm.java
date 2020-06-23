@@ -90,15 +90,44 @@ public class ValoresNutricionalesUsuarioForm extends FormLayout {
         });
 
         grasaPlato.setMin(0);
-        grasaPlato.setMax(100);
+        grasaPlato.setMax(50);
 
         proteinaPlato.setMin(0);
-        proteinaPlato.setMax(100);
+        proteinaPlato.setMax(50);
 
         hidratosPlato.setMin(0);
-        hidratosPlato.setMax(100);
+        hidratosPlato.setMax(50);
 
         caloriasPlato.setMin(0);
+        caloriasPlato.setMax(1000);
+
+        caloriasPlato.addValueChangeListener(e -> {
+            if (caloriasPlato.getValue() > 1000 || caloriasPlato.getValue() < 0) {
+                caloriasPlato.setValue(0.0);
+                Notification.show("El valor debe estar entre 0 y 1000", 3000, Notification.Position.MIDDLE);
+            }
+        });
+
+        proteinaPlato.addValueChangeListener(e -> {
+            if (proteinaPlato.getValue() > 50 || proteinaPlato.getValue() < 0) {
+                proteinaPlato.setValue(0.0);
+                Notification.show("El valor debe estar entre 0 y 50", 3000, Notification.Position.MIDDLE);
+            }
+        });
+
+        hidratosPlato.addValueChangeListener(e -> {
+            if (hidratosPlato.getValue() > 50 || hidratosPlato.getValue() < 0) {
+                hidratosPlato.setValue(0.0);
+                Notification.show("El valor debe estar entre 0 y 50", 3000, Notification.Position.MIDDLE);
+            }
+        });
+
+        grasaPlato.addValueChangeListener(e -> {
+            if (grasaPlato.getValue() > 50 || grasaPlato.getValue() < 0) {
+                grasaPlato.setValue(0.0);
+                Notification.show("El valor debe estar entre 0 y 50", 3000, Notification.Position.MIDDLE);
+            }
+        });
 
         HorizontalLayout calorias = new HorizontalLayout(caloriasPlato, selectVector.elementAt(0));
         HorizontalLayout grasa = new HorizontalLayout(grasaPlato, selectVector.elementAt(1));
