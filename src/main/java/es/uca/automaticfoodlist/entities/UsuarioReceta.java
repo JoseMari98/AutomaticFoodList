@@ -45,6 +45,14 @@ public class UsuarioReceta {
         return usuario;
     }
 
+    public FechaSemana getFechaSemana() {
+        return fechaSemana;
+    }
+
+    public void setFechaSemana(FechaSemana fechaSemana) {
+        this.fechaSemana = fechaSemana;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

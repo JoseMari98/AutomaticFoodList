@@ -122,8 +122,10 @@ public class ListaComidasView extends AbstractView{
     public void updateList() {
         grid.setItems(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
         for (UsuarioReceta usuarioReceta : usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class))) {
-            if (usuarioReceta.getReceta() == null || usuarioReceta.getComida() == null || usuarioReceta.getFecha() == null)
+            if (usuarioReceta.getReceta() == null || usuarioReceta.getComida() == null || usuarioReceta.getFecha() == null) {
                 Notification.show("Hay recetas vacias, vuelve a generar la lista de comidas", 5000, Notification.Position.MIDDLE);
+                break;
+            }
         }
     }
 }

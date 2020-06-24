@@ -29,7 +29,7 @@ public class InicioView extends VerticalLayout {
             Label listaCompraTexto = new Label("Lista de la compra");
 
             configuracion.addClickListener(e -> UI.getCurrent().navigate("IntoleranciasUsuarioView"));
-            listaComida.addClickListener(e -> UI.getCurrent().navigate("ListaComidaView"));
+            listaComida.addClickListener(e -> UI.getCurrent().navigate("ListaComidasView"));
             listaCompra.addClickListener(e -> UI.getCurrent().navigate("ListaCompraView"));
             listaComida.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
             listaCompra.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
