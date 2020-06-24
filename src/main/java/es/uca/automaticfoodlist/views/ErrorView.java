@@ -18,7 +18,8 @@ public class ErrorView extends VerticalLayout {
         buttonInside.addClickShortcut(Key.ENTER);
 
         buttonInside.addClickListener(event -> {
-            UI.getCurrent().navigate("");
+            UI.getCurrent().navigate("Inicio");
+            UI.getCurrent().getPage().reload();
             notification.close();
         });
         notification.setPosition(Notification.Position.MIDDLE);

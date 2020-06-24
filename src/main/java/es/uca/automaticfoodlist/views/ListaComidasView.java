@@ -40,7 +40,7 @@ public class ListaComidasView extends AbstractView{
             Label label = new Label("Oh, parece que no tienes ninguna lista de comidas, quieres generar una?, esto llevará unos 30 segundos");
             Button confirmButton = new Button("Confirmar", event -> {
                 try {
-                    usuarioRecetaService.generarListaCompra(UI.getCurrent().getSession().getAttribute(Usuario.class));
+                    usuarioRecetaService.generarListaComida(UI.getCurrent().getSession().getAttribute(Usuario.class));
                     grid.setItems(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -69,14 +69,28 @@ public class ListaComidasView extends AbstractView{
         });
 
         Button generarLista = new Button("Generar lista");
+
         generarLista.addClickListener(e -> {
-            try {
-                usuarioRecetaService.generarListaCompra(UI.getCurrent().getSession().getAttribute(Usuario.class));
-                grid.setItems(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
-            } catch (InterruptedException interruptedException) {
-                interruptedException.printStackTrace();
-            }
-            UI.getCurrent().navigate("ListaComidasView");
+            Dialog dialog = new Dialog();
+
+            Label label = new Label("Vas a borrar la lista actual y generar una nueva, ¿Quieres continuar?");
+            Button confirmButton = new Button("Confirmar", event -> {
+                try {
+                    usuarioRecetaService.generarListaComida(UI.getCurrent().getSession().getAttribute(Usuario.class));
+                    grid.setItems(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)));
+                } catch (InterruptedException ee) {
+                    ee.printStackTrace();
+                    Thread.currentThread().interrupt();
+                }
+                UI.getCurrent().navigate("ListaComidasView");
+                dialog.close();
+            });
+            confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+            Button cancelButton = new Button("Cancelar", event -> {
+                dialog.close();
+            });
+            dialog.add(label, confirmButton, cancelButton);
+            dialog.open();
         });
 
         HorizontalLayout toolbar = new HorizontalLayout(addPlatoButton, generarLista);

@@ -39,8 +39,7 @@ public class MainView extends AppLayout {
     Tabs tabs = new Tabs();
     final DrawerToggle drawerToggle = new DrawerToggle();
     final VerticalLayout menuLayout = new VerticalLayout();
-    Image img = new Image("https://i.imgur.com/GPpnszs.png", "Vaadin Logo");
-    H1 titulo = new H1("Bienvenido/a a Automatic Food List");
+    H1 titulo = new H1("Recargue la página");
     private Image imagen = new Image("https://www.tododisca.com/wp-content/uploads/2019/04/dia-mundial-de-la-salud-1000x600.jpg", "fondo");
 
     final boolean touchOptimized = true;
@@ -49,8 +48,6 @@ public class MainView extends AppLayout {
     public MainView() throws InterruptedException {
         logout.addClickListener(e -> signOut());
         logout.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        img.setHeight("44px");
-        img.addClickListener(e -> UI.getCurrent().navigate(""));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         tabs.add(createTab(VaadinIcon.HOME, "Inicio", InicioView.class));
 
@@ -76,13 +73,14 @@ public class MainView extends AppLayout {
             }
         }
         addToDrawer(menuLayout, tabs); //anadirlo al desplegable
-        addToNavbar(touchOptimized, drawerToggle, img); //anadirlo a la barra vertical
+        addToNavbar(touchOptimized, drawerToggle); //anadirlo a la barra vertical
         if (SecurityUtils.isUserLoggedIn()) {
             logout.getStyle().set("center", "auto");
             addToDrawer(logout);
         } else
             drawerToggle.clickInClient();
-        this.setContent(titulo);
+        UI.getCurrent().navigate("Inicio");
+        setContent(titulo);
     }
 
     public static Tab createTab(Component content) {

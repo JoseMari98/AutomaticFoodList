@@ -41,7 +41,7 @@ public class IngredientesUsuarioView extends AbstractView {
         this.preferenciaIngredienteService = preferenciaIngredienteService;
 
         H1 titulo = new H1("Lista de ingredientes");
-        Paragraph descripcion = new Paragraph("Aquí podras decir que ingrediente deseas quitar, si no introduces nada se presupone que te gusta.");
+        Paragraph descripcion = new Paragraph("Aquí podras decir que ingrediente deseas quitar, si no introduces nada se presupone que te gusta."), descripcion2 = new Paragraph("Clica en algun ingrediente y luego en No me gusta o borrar apreciación para guardar la información.");
         filterText.setPlaceholder("Filtrar por ingrediente"); //poner el campo
         filterText.setClearButtonVisible(true); //poner la cruz para borrar
         filterText.setValueChangeMode(ValueChangeMode.EAGER); //que se hagan los cambios cuando se escriba
@@ -54,7 +54,7 @@ public class IngredientesUsuarioView extends AbstractView {
             }
         });
 
-        VerticalLayout texto = new VerticalLayout(titulo, descripcion);
+        VerticalLayout texto = new VerticalLayout(titulo, descripcion, descripcion2);
         HorizontalLayout toolbar = new HorizontalLayout(filterText, save, delete); //meter lo de la categoria
 
         grid.addColumn(Ingrediente::getNombre).setHeader("Nombre").setSortable(true);

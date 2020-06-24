@@ -62,7 +62,7 @@ public class UsuarioRecetaService {
         usuarioRecetaRepository.delete(usuarioReceta);
     }
 
-    public void generarListaCompra(Usuario usuario) throws InterruptedException {
+    public void generarListaComida(Usuario usuario) throws InterruptedException {
         for (UsuarioReceta usuarioReceta : findByUsuario(usuario))
             delete(usuarioReceta);
         for (UsuarioProducto usuarioProducto : usuarioProductoService.findByUsuario(usuario))
