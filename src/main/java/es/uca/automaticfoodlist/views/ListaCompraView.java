@@ -61,7 +61,6 @@ public class ListaCompraView extends AbstractView {
                 confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
                 Button cancelButton = new Button("Cancelar", event -> {
                     dialog.close();
-                    UI.getCurrent().navigate("Inicio");
                 });
                 dialog.add(label, cancelButton, confirmButton);
                 dialog.open();

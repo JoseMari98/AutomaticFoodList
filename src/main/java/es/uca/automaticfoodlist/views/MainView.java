@@ -11,12 +11,10 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
@@ -28,7 +26,7 @@ import es.uca.automaticfoodlist.springclasses.SecurityUtils;
  * The main view contains a button and a click listener.
  */
 @Theme(Lumo.class)
-@Route(value = "")
+//@Route(value = "")
 @PWA(name = "AutomaticFoodList app",
         shortName = "AFL app",
         description = "Planificaci'on automatica de tu comida",
@@ -78,8 +76,7 @@ public class MainView extends AppLayout {
             addToDrawer(logout);
         } else
             drawerToggle.clickInClient();
-        UI.getCurrent().navigate("Inicio");
-        Notification.show("Recargue la página", 5000, Notification.Position.MIDDLE);
+        //UI.getCurrent().navigate("Inicio");
     }
 
     public static Tab createTab(Component content) {

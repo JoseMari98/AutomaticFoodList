@@ -113,7 +113,7 @@ public class UsuarioDatosForm extends FormLayout {
                 if(UI.getCurrent().getSession().getAttribute(Usuario.class) != null) {
                     Notification.show("Modificado con éxito", 3000, Notification.Position.MIDDLE);
                     UI.getCurrent().getSession().setAttribute(Usuario.class, usuario);
-                    UI.getCurrent().navigate("Inicio");
+                    UI.getCurrent().navigate("");
                 } else {
                     Notification.show("Registrado con éxito", 3000, Notification.Position.MIDDLE);
                     UI.getCurrent().navigate("Login");

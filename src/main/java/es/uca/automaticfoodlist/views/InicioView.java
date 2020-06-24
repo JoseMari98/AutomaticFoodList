@@ -11,7 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import es.uca.automaticfoodlist.springclasses.SecurityUtils;
 
-@Route(value = "Inicio", layout = MainView.class)
+@Route(value = "", layout = MainView.class)
 public class InicioView extends VerticalLayout {
     private Button configuracion = new Button("Ir");
     private Button listaComida = new Button("Ir");

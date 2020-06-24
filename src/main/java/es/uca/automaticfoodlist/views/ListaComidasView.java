@@ -52,7 +52,6 @@ public class ListaComidasView extends AbstractView{
             confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
             Button cancelButton = new Button("Cancelar", event -> {
                 dialog.close();
-                UI.getCurrent().navigate("Inicio");
             });
             dialog.add(label, confirmButton, cancelButton);
             dialog.open();

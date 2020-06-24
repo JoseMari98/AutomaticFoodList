@@ -39,7 +39,7 @@ public class LoginView extends VerticalLayout {
         if (authenticate(e.getUsername(), e.getPassword())) {
             loginForm.close();
             UI.getCurrent().getSession().setAttribute(Usuario.class, service.loadUserByUsername(e.getUsername()));
-            UI.getCurrent().navigate("Inicio");
+            UI.getCurrent().navigate("");
             UI.getCurrent().getPage().reload();
         } else {
             loginForm.setError(true);
