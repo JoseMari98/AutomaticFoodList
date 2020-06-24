@@ -8,10 +8,10 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabVariant;
@@ -39,7 +39,6 @@ public class MainView extends AppLayout {
     Tabs tabs = new Tabs();
     final DrawerToggle drawerToggle = new DrawerToggle();
     final VerticalLayout menuLayout = new VerticalLayout();
-    H1 titulo = new H1("Recargue la página");
     private Image imagen = new Image("https://www.tododisca.com/wp-content/uploads/2019/04/dia-mundial-de-la-salud-1000x600.jpg", "fondo");
 
     final boolean touchOptimized = true;
@@ -52,24 +51,24 @@ public class MainView extends AppLayout {
         tabs.add(createTab(VaadinIcon.HOME, "Inicio", InicioView.class));
 
         if (!SecurityUtils.isUserLoggedIn()) {
-            tabs.add(createTab(VaadinIcon.SIGN_IN, "Iniciar sesion", LoginView.class));
-            tabs.add(createTab(VaadinIcon.USER_CARD, "Registrate", UsuarioDatosView.class));
+            tabs.add(createTab(VaadinIcon.SIGN_IN, "Iniciar sesión", LoginView.class));
+            tabs.add(createTab(VaadinIcon.USER_CARD, "Regístrate", UsuarioDatosView.class));
         } else {
             tabs.add(createTab(VaadinIcon.PLUS, "Crear receta", CrearRecetaView.class));
             if (SecurityUtils.hasRole("User")) {
                 tabs.add(createTab(VaadinIcon.RECORDS, "Mis recetas", RecetasView.class));
-                tabs.add(createTab(VaadinIcon.COGS, "Configuracion dietetica", IntoleranciasUsuarioView.class));
+                tabs.add(createTab(VaadinIcon.COGS, "Configuración dietética", IntoleranciasUsuarioView.class));
                 tabs.add(createTab(VaadinIcon.CALENDAR, "Lista de Comidas", ListaComidasView.class));
                 tabs.add(createTab(VaadinIcon.LIST, "Lista de la compra", ListaCompraView.class));
-                tabs.add(createTab(VaadinIcon.COG, "Configuracion de datos", UsuarioDatosView.class));
+                tabs.add(createTab(VaadinIcon.COG, "Configuración de datos", UsuarioDatosView.class));
             }
 
-            if (SecurityUtils.hasRole("Admin") || SecurityUtils.hasRole("Gerente")) {
-                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion recetas", RecetasView.class));
-                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion intolerancias", IntoleranciasView.class));
-                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion ingrediente", IngredienteView.class));
-                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion producto", ProductoView.class));
-                tabs.add(createTab(VaadinIcon.RECORDS, "Gestion valores nutricionales", ValoresNutrcionalesView.class));
+            if (SecurityUtils.hasRole("Admin")) {
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestión recetas", RecetasView.class));
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestión intolerancias", IntoleranciasView.class));
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestión ingrediente", IngredienteView.class));
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestión producto", ProductoView.class));
+                tabs.add(createTab(VaadinIcon.RECORDS, "Gestión valores nutricionales", ValoresNutrcionalesView.class));
             }
         }
         addToDrawer(menuLayout, tabs); //anadirlo al desplegable
@@ -80,7 +79,7 @@ public class MainView extends AppLayout {
         } else
             drawerToggle.clickInClient();
         UI.getCurrent().navigate("Inicio");
-        setContent(titulo);
+        Notification.show("Recargue la página", 5000, Notification.Position.MIDDLE);
     }
 
     public static Tab createTab(Component content) {

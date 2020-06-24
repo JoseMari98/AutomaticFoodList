@@ -18,7 +18,7 @@ public class UsuarioDatosView extends VerticalLayout{
     UsuarioDatosView(UsuarioService usuarioService){
         this.usuarioDatosForm = new UsuarioDatosForm(usuarioService);
         if(UI.getCurrent().getSession().getAttribute(Usuario.class) == null)
-            titulo.add("Registrate");
+            titulo.add("Regístrate");
         else
             titulo.add("Modifica tus datos.");
         VerticalLayout contenido = new VerticalLayout(titulo, usuarioDatosForm);
