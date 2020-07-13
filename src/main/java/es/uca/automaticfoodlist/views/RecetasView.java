@@ -1,9 +1,9 @@
 package es.uca.automaticfoodlist.views;
 
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
@@ -31,6 +31,7 @@ public class RecetasView extends AbstractView {
             this.recetaService = recetaService;
             this.recetasForm = new RecetasForm(this, recetaService, valoresNutricionalesService, recetaIngredienteService, usuarioRecetaService, intoleranciaRecetaService);
 
+            H1 titulo = new H1("Mis recetas");
             Paragraph paragraph = new Paragraph("Aquí podrás ver tus recetas creadas, si clicas en una de ellas verás su información");
             filterText.setPlaceholder("Filtrar por nombre"); //poner el campo
             filterText.setClearButtonVisible(true); //poner la cruz para borrar
@@ -45,7 +46,7 @@ public class RecetasView extends AbstractView {
 
             });
 
-            HorizontalLayout toolbar = new HorizontalLayout(filterText, paragraph);
+            VerticalLayout toolbar = new VerticalLayout(titulo, paragraph, filterText);
 
             grid.addColumn(Receta::getNombre).setHeader("Nombre").setSortable(true);
             if(UI.getCurrent().getSession().getAttribute(Usuario.class).getRole().equals("Admin"))

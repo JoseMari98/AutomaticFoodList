@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -44,6 +45,8 @@ public class CrearRecetaForm extends FormLayout {
         this.crearRecetaView = crearRecetaView;
         this.valoresNutricionalesService = valoresNutricionalesService;
         H1 titulo = new H1("Crear receta");
+        Paragraph descripcion = new Paragraph("Aquí podrás registrar tus propias recetas. Introduce los datos requeridos.");
+
         for (Intolerancia intolerancia : intoleranciaService.findAllOrderById()) {
             checkboxVector.add(new Checkbox(intolerancia.getIntolerancia()));
         }
@@ -64,7 +67,7 @@ public class CrearRecetaForm extends FormLayout {
         HorizontalLayout hidratosProteina = new HorizontalLayout(hidratosPlato, proteinaPlato);
         HorizontalLayout intolerancias = new HorizontalLayout(checkboxVector.elementAt(0), checkboxVector.elementAt(1));
         HorizontalLayout intolerancias1 = new HorizontalLayout(checkboxVector.elementAt(2), checkboxVector.elementAt(3));
-        VerticalLayout mainContent = new VerticalLayout(titulo, nombrePrecio, caloriasGrasa, hidratosProteina, intolerancias, intolerancias1, save);
+        VerticalLayout mainContent = new VerticalLayout(titulo, descripcion, nombrePrecio, caloriasGrasa, hidratosProteina, intolerancias, intolerancias1, save);
         add(mainContent, save);
 
         save.addClickListener(event -> {

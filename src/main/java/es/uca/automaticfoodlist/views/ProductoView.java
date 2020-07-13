@@ -1,9 +1,9 @@
 package es.uca.automaticfoodlist.views;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
@@ -14,11 +14,12 @@ import es.uca.automaticfoodlist.services.ProductoService;
 import es.uca.automaticfoodlist.services.UsuarioProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.vaadin.klaudeta.PaginatedGrid;
 
 @Route(value = "GestionProducto", layout = MainView.class)
 @Secured({"Admin", "Gerente"})
 public class ProductoView extends AbstractView {
-    private Grid<Producto> grid = new Grid<>(Producto.class);
+    private PaginatedGrid<Producto> grid = new PaginatedGrid<>();
     private TextField filterText = new TextField();
     private ProductoService productoService;
     private ProductoForm productoForm;
@@ -50,11 +51,21 @@ public class ProductoView extends AbstractView {
         HorizontalLayout toolbar = new HorizontalLayout(filterText,
                 addProductoBtn);
 
-        grid.setColumns("nombre", "peso", "unidad");
-        grid.addColumn(Producto -> Producto.getPrecio() + "€").setSortable(true).setHeader("Precio");
+        //grid.setColumns("nombre", "peso", "unidad");
+
+        grid.addColumn(Producto -> Producto.getNombre() == null ? "Sin nombre" : Producto.getNombre()).setSortable(true).setHeader("Nombre");
+        grid.addColumn(Producto::getPeso).setSortable(true).setHeader("Precio");
+        grid.addColumn(Producto -> Producto.getUnidad() == null ? "Sin unidad" : Producto.getUnidad()).setSortable(true).setHeader("Unidad");
+        grid.addColumn(Producto -> Producto.getIngrediente() == null ? "Sin precio" : Producto.getPrecio() + "€").setSortable(true).setHeader("Precio");
         grid.addColumn(Producto -> Producto.getIngrediente() == null ? "Sin ingrediente" : Producto.getIngrediente().getNombre()).setHeader("Ingrediente").setSortable(true);
 
-        HorizontalLayout mainContent = new HorizontalLayout(grid, productoForm); //metemos en un objeto el grid y formulario
+        grid.setPageSize(15);
+
+        // Sets how many pages should be visible on the pagination before and/or after the current selected page
+        grid.setPaginatorSize(3);
+
+        VerticalLayout gridLayout = new VerticalLayout(grid);
+        HorizontalLayout mainContent = new HorizontalLayout(gridLayout, productoForm); //metemos en un objeto el grid y formulario
         mainContent.setSizeFull();
         grid.setSizeFull();
 

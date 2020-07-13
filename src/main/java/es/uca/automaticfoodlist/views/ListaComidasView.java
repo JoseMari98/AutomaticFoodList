@@ -14,6 +14,7 @@ import es.uca.automaticfoodlist.entities.Usuario;
 import es.uca.automaticfoodlist.entities.UsuarioReceta;
 import es.uca.automaticfoodlist.forms.ListaComidasForm;
 import es.uca.automaticfoodlist.forms.SeleccionPlatoForm;
+import es.uca.automaticfoodlist.services.HorarioComidasService;
 import es.uca.automaticfoodlist.services.RecetaIngredienteService;
 import es.uca.automaticfoodlist.services.RecetaService;
 import es.uca.automaticfoodlist.services.UsuarioRecetaService;
@@ -29,12 +30,12 @@ public class ListaComidasView extends AbstractView{
     private SeleccionPlatoForm seleccionPlatoForm;
 
     @Autowired
-    public ListaComidasView(UsuarioRecetaService usuarioRecetaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService) {
+    public ListaComidasView(UsuarioRecetaService usuarioRecetaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, HorarioComidasService horarioComidasService) {
         this.usuarioRecetaService = usuarioRecetaService;
-        this.listaComidasForm = new ListaComidasForm(this, usuarioRecetaService, recetaService, recetaIngredienteService);
-        this.seleccionPlatoForm = new SeleccionPlatoForm(this, usuarioRecetaService, recetaService);
+        this.listaComidasForm = new ListaComidasForm(this, usuarioRecetaService, recetaService, recetaIngredienteService, horarioComidasService);
+        this.seleccionPlatoForm = new SeleccionPlatoForm(this, usuarioRecetaService, recetaService, horarioComidasService);
 
-        if(usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()){
+        if (usuarioRecetaService.findByUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class)).isEmpty()) {
             Dialog dialog = new Dialog();
 
             Label label = new Label("Oh, parece que no tienes ninguna lista de comidas, quieres generar una?, esto llevará unos 30 segundos");

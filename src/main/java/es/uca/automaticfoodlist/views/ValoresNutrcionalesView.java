@@ -66,7 +66,7 @@ public class ValoresNutrcionalesView extends AbstractView {
 
         valoresNutricionalesForm.setValoresNutricionales(null);
 
-        grid.asSingleSelect().addValueChangeListener(event -> valoresNutricionalesForm.setValoresNutricionales( grid.asSingleSelect().getValue()));
+        grid.asSingleSelect().addValueChangeListener(event -> valoresNutricionalesForm.setValoresNutricionales(grid.asSingleSelect().getValue()));
     }
 
     public void updateList() {

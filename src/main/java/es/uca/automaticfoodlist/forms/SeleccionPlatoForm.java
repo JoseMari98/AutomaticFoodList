@@ -11,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import es.uca.automaticfoodlist.entities.*;
+import es.uca.automaticfoodlist.services.HorarioComidasService;
 import es.uca.automaticfoodlist.services.RecetaService;
 import es.uca.automaticfoodlist.services.UsuarioRecetaService;
 import es.uca.automaticfoodlist.views.ListaComidasView;
@@ -25,12 +26,14 @@ public class SeleccionPlatoForm extends FormLayout {
     private Button cancelar = new Button("Cancelar");
     private UsuarioReceta usuarioReceta;
     private RecetaService recetaService;
+    private HorarioComidasService horarioComidasService;
     private UsuarioRecetaService usuarioRecetaService;
     private ListaComidasView listaComidasView;
     private Random random = new Random();
 
-    public SeleccionPlatoForm(ListaComidasView listaComidasView, UsuarioRecetaService usuarioRecetaService, RecetaService recetaService) {
+    public SeleccionPlatoForm(ListaComidasView listaComidasView, UsuarioRecetaService usuarioRecetaService, RecetaService recetaService, HorarioComidasService horarioComidasService) {
         this.recetaService = recetaService;
+        this.horarioComidasService = horarioComidasService;
         this.usuarioRecetaService = usuarioRecetaService;
         this.listaComidasView = listaComidasView;
         usuarioReceta = new UsuarioReceta();
@@ -54,7 +57,7 @@ public class SeleccionPlatoForm extends FormLayout {
             usuarioReceta.setUsuario(UI.getCurrent().getSession().getAttribute(Usuario.class));
             usuarioReceta.setComida(comidaSelect.getValue());
             if (!usuarioRecetaService.findByUsuarioAndComidaAndFecha(usuarioReceta.getUsuario(), usuarioReceta.getComida(), usuarioReceta.getFecha()).isPresent()) { //buscar si existe esta tupla
-                List<Receta> recetaList = recetaService.findAll();
+                List<Receta> recetaList = horarioComidasService.recetasAdecuadas(UI.getCurrent().getSession().getAttribute(Usuario.class));
                 int numero = random.nextInt(recetaList.size());
                 usuarioReceta.setReceta(recetaList.get(numero)); //genero una comida random sin tener en cuenta los requisitos del usuario
                 usuarioRecetaService.update(usuarioReceta);

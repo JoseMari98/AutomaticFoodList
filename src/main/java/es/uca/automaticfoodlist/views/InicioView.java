@@ -24,7 +24,7 @@ public class InicioView extends VerticalLayout {
         H1 titulo = new H1("Bienvenido/a a Automatic Food List");
 
         if (SecurityUtils.isUserLoggedIn()) {
-            Label configuracionTexto = new Label("Genera tu configuración");
+            Label configuracionTexto = new Label("Configuración dietética");
             Label listaComidaTexto = new Label("Lista de comidas");
             Label listaCompraTexto = new Label("Lista de la compra");
 

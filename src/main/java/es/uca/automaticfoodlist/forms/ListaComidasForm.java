@@ -1,6 +1,7 @@
 package es.uca.automaticfoodlist.forms;
 
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -11,10 +12,8 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
-import es.uca.automaticfoodlist.entities.FechaSemana;
-import es.uca.automaticfoodlist.entities.Receta;
-import es.uca.automaticfoodlist.entities.RecetaIngrediente;
-import es.uca.automaticfoodlist.entities.UsuarioReceta;
+import es.uca.automaticfoodlist.entities.*;
+import es.uca.automaticfoodlist.services.HorarioComidasService;
 import es.uca.automaticfoodlist.services.RecetaIngredienteService;
 import es.uca.automaticfoodlist.services.RecetaService;
 import es.uca.automaticfoodlist.services.UsuarioRecetaService;
@@ -40,8 +39,11 @@ public class ListaComidasForm extends FormLayout {
     private HorizontalLayout buttons = new HorizontalLayout();
     private VerticalLayout contenido = new VerticalLayout();
     private Random random = new Random();
+    private HorarioComidasService horarioComidasService;
 
-    public ListaComidasForm(ListaComidasView listaComidasView, UsuarioRecetaService usuarioRecetaService, RecetaService recetaService, RecetaIngredienteService recetaIngredienteService) {
+    public ListaComidasForm(ListaComidasView listaComidasView, UsuarioRecetaService usuarioRecetaService,
+                            RecetaService recetaService, RecetaIngredienteService recetaIngredienteService, HorarioComidasService horarioComidasService) {
+        this.horarioComidasService = horarioComidasService;
         this.usuarioRecetaService = usuarioRecetaService;
         this.recetaService = recetaService;
         this.recetaIngredienteService = recetaIngredienteService;
@@ -95,7 +97,7 @@ public class ListaComidasForm extends FormLayout {
         UsuarioReceta usuarioReceta = binder.getBean();
         FechaSemana fecha = usuarioReceta.getFecha();
         if (binder.validate().isOk()) {
-            List<Receta> recetaList = recetaService.findAll();
+            List<Receta> recetaList = horarioComidasService.recetasAdecuadas(UI.getCurrent().getSession().getAttribute(Usuario.class));
             int numero = random.nextInt(recetaList.size());
             while (recetaList.get(numero).getId().equals(usuarioReceta.getReceta().getId()))
                 numero = random.nextInt(recetaList.size());

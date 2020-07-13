@@ -1,6 +1,7 @@
 package es.uca.automaticfoodlist.forms;
 
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -31,6 +32,7 @@ public class ValoresNutricionalesForm extends FormLayout {
     private ValoresNutricionalesService valoresNutricionalesService;
     private UsuarioService usuarioService;
     private RecetaService recetaService;
+    private ValoresNutricionales valoresNutricionales;
 
     public ValoresNutricionalesForm(ValoresNutrcionalesView valoresNutrcionalesView, ValoresNutricionalesService valoresNutricionalesService, RecetaService recetaService, UsuarioService usuarioService) {
         this.valoresNutrcionalesView = valoresNutrcionalesView;
@@ -75,28 +77,55 @@ public class ValoresNutricionalesForm extends FormLayout {
     public void setValoresNutricionales(ValoresNutricionales valoresNutricionales) {
         binder.setBean(valoresNutricionales);
 
-        setVisible(valoresNutricionales != null);
+        if (valoresNutricionales != null) {
+            this.valoresNutricionales = valoresNutricionales;
+            proteinaPlato.setValue((double) valoresNutricionales.getProteinaPlato());
+            caloriasPlato.setValue((double) valoresNutricionales.getCaloriasPlato());
+            grasaPlato.setValue((double) valoresNutricionales.getGrasaPlato());
+            hidratosPlato.setValue((double) valoresNutricionales.getHidratosPlato());
+            usuario.setValue(valoresNutricionales.getUsuario());
+            receta.setValue(valoresNutricionales.getReceta());
+            setVisible(true);
+        } else {
+            this.valoresNutricionales = null;
+            setVisible(false);
+        }
+
+        //setVisible(valoresNutricionales != null);
     }
 
     public void save() {
-        ValoresNutricionales valoresNutricionales = binder.getBean();
         if(binder.validate().isOk()) {
+            if (valoresNutricionales.getUsuario() != null) {
+                Usuario usuario = valoresNutricionales.getUsuario();
+                usuario.setValoresNutricionales(null);
+                usuarioService.update(usuario);
+            }
+
+            if (valoresNutricionales.getReceta() != null) {
+                Receta receta = valoresNutricionales.getReceta();
+                receta.setValoresNutricionales(null);
+                recetaService.update(receta);
+            }
+
             valoresNutricionales.setReceta(null);
             valoresNutricionales.setUsuario(null);
             valoresNutricionalesService.create(valoresNutricionales);
-            if(!usuario.isEmpty()) {
+            if (!usuario.isEmpty()) {
                 //hacer que sea nulo o lo contrario
                 Usuario usuarioObject = usuario.getValue();
                 usuarioObject.setValoresNutricionales(valoresNutricionales);
                 usuarioService.update(usuarioObject);
             }
-            if(!receta.isEmpty()){
+            if (!receta.isEmpty()) {
                 Receta recetaObject = receta.getValue();
                 recetaObject.setValoresNutricionales(valoresNutricionales);
                 recetaService.update(recetaObject);
             }
-            this.valoresNutrcionalesView.updateList();
-            setValoresNutricionales(null);
+            //setValoresNutricionales(null);
+            setVisible(false);
+            //this.valoresNutrcionalesView.updateList();
+            UI.getCurrent().getPage().reload();
         }
         else {
             Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);
@@ -114,7 +143,7 @@ public class ValoresNutricionalesForm extends FormLayout {
                 }
             }
             if(!recetaService.findByValores(valoresNutricionales).isEmpty()){
-                for(Receta receta : recetaService.findByValores(valoresNutricionales)) {
+                for (Receta receta : recetaService.findByValores(valoresNutricionales)) {
                     receta.setValoresNutricionales(null);
                     recetaService.update(receta);
                 }
@@ -122,8 +151,10 @@ public class ValoresNutricionalesForm extends FormLayout {
             valoresNutricionales.setReceta(null);
             valoresNutricionales.setUsuario(null);
             valoresNutricionalesService.delete(valoresNutricionales);
-            this.valoresNutrcionalesView.updateList();
+            //this.valoresNutrcionalesView.updateList();
             setValoresNutricionales(null);
+            UI.getCurrent().getPage().reload();
+
         } else
             Notification.show("Rellene los campos", 5000, Notification.Position.MIDDLE);
     }

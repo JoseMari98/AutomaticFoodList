@@ -3,7 +3,6 @@ package es.uca.automaticfoodlist.views;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -21,7 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Route(value = "CrearRecetaView", layout = MainView.class)
-@Secured("User")
+@Secured({"User", "Admin"})
 public class CrearRecetaView extends AbstractView {
     public PaginatedGrid<RecetaIngrediente> grid = new PaginatedGrid<>();
     public Receta receta = new Receta();
@@ -41,16 +40,15 @@ public class CrearRecetaView extends AbstractView {
         this.anadirIngredienteForm = new AnadirIngredienteForm(this, ingredienteService);
 
         H1 titulo = new H1("Ingredientes");
-        Paragraph descripcion = new Paragraph("Aquí podrás registrar tus propias recetas. Introduce los datos requeridos.");
 
         HorizontalLayout toolbar = new HorizontalLayout(anadir, borrar); //meter lo de la categoria
-        fullGrid.add(titulo, descripcion, toolbar, grid);
+        fullGrid.add(titulo, toolbar, grid);
 
         grid.addColumn(RecetaIngrediente -> RecetaIngrediente.getIngrediente().getNombre()).setHeader("Ingrediente").setSortable(true);
         grid.addColumn(RecetaIngrediente -> RecetaIngrediente.getCantidad() + " " + RecetaIngrediente.getUnidadMedida()).setHeader("Cantidad").setSortable(true);
 
         // Sets the max number of items to be rendered on the grid for each page
-        grid.setPageSize(9);
+        grid.setPageSize(15);
 
         // Sets how many pages should be visible on the pagination before and/or after the current selected page
         grid.setPaginatorSize(3);

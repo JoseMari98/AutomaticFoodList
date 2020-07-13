@@ -24,7 +24,7 @@ public class HorarioComidasService {
     private RecetaIngredienteService recetaIngredienteService;
     public Usuario usuario;
 
-    public HorarioComidas findByUsuario(Usuario usuario) {
+    public List<Receta> recetasAdecuadas(Usuario usuario) {
         List<Receta> recetaList = recetaService.findAll();
         List<Receta> recetas = recetaService.findAll();
 
@@ -115,6 +115,12 @@ public class HorarioComidasService {
                     recetaList.removeIf(receta1 -> receta1.getId().equals(receta.getId()));
             }
         }
+
+        return recetaList;
+    }
+
+    public HorarioComidas findByUsuario(Usuario usuario) {
+        List<Receta> recetaList = recetasAdecuadas(usuario);
 
         return new HorarioComidas(recetaList, usuarioRecetaService.findByUsuario(usuario), Arrays.asList(FechaSemana.values()), Arrays.asList(Comida.values()));
     }
